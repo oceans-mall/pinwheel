@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "oceans-mall",
+    "slug": "Pinwheel",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.jpg",
+    "splash": {
+      "image": "./assets/splash.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff",
+      "text": "from oceansmall"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.jpg",
+        "backgroundColor": "#00a5f4"
+      }
+    },
+    "web": {
+      "favicon": "./assets/icon.jpg"
+    }
+  }
+}

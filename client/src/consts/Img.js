@@ -1,0 +1,1 @@
+export const Image = require("../assets/useravatar.jpg")
