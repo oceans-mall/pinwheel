@@ -8,6 +8,9 @@ const tradeRoute = require("./routes/trade")
 const profileRoute = require("./routes/profile")
 const cors = require('cors')
 
+app(cors())
+app.use(express.json())
+
 dotenv.config();
 
 mongoose.connect(
@@ -16,9 +19,6 @@ mongoose.connect(
 ).catch((err) => {
     console.log(err)
 })
-
-app(cors())
-app.use(express.json())
 
 app.use("/api/auth", authRoute )
 app.use("/api/user", userRoute)
