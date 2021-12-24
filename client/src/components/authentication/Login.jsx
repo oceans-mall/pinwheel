@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -10,38 +9,29 @@ import {
   View,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import logo from "../../assets/logo.png";
 import COLORS from "../../consts/colors";
 import { DontHaveAcc } from "../general/DontHaveAcc";
 import { login } from "../../redux/apiCalls";
 
-export const Login = ({ navigation }) => {
+export const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [message, setMessage] = useState('')
   const { isFetching, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch((state) => state.user);
 
-  //GET THE USER STATE
-  const user = useSelector((state) => state.user.currentUser);
-
-  const dispatch = useDispatch();
-
+  const handle = React.useMemo(() => {
+      const click = async () => {
+          login(dispatch, {username, password})
+      }
+      click()
+  })
   const handleClick = () => {
     login(dispatch, { username, password });
-    //check if it is the correct user and navigate to page
-    navigation.navigate("Agent")
-    console.log(`username ${username},password ${password} `);
   };
-
-  // const getMessage = () => {
-  //   const status = !error ? `Error` : `Success`;
-  //   return status + message;
-  // }
 
   return (
     <SafeAreaView style={styles.loginContainer}>
       <View style={styles.login}>
-        <Image style={styles.logo} source={logo} alt="logo" />
         <View style={{ flex: 0.6 }}>
           <Text
             style={{
@@ -84,9 +74,9 @@ export const Login = ({ navigation }) => {
               <Text style={styles.btnTxt}>LOGIN</Text>
             </View>
           </TouchableOpacity>
-            <Text style={[styles.message,{color:error ? 'red': 'green'}]}>
-              {error && "Incorrect details"}
-            </Text>
+          <Text style={[styles.message, { color: error ? "red" : "green" }]}>
+            {error && "Incorrect details"}
+          </Text>
           <DontHaveAcc onPress={() => navigation.navigate("Register")} />
         </View>
       </View>
@@ -158,5 +148,5 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     textDecorationLine: "underline",
   },
-  message:{ color: "red", marginBottom: 5, fontSize: 13 }
+  message: { color: "red", marginBottom: 5, fontSize: 13 },
 });

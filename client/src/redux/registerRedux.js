@@ -6,7 +6,8 @@ const registerSlice = createSlice({
     initialState:{
         newUser : null,
         isRegistering: false,
-        error: false
+        error: false,
+        success: false
     },
     reducers:{
         registerUser: (state, action) => {
@@ -14,7 +15,8 @@ const registerSlice = createSlice({
         },
         registerSuccess: (state, action) => {
             state.isRegistering = false;
-            state.newUser = action.payload
+            state.newUser = action.payload;
+            state.success = true
         },
         registerFailure: (state, action) => {
             state.isRegistering = false;

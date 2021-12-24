@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import COLORS from "../consts/colors";
+import * as Animatable from "react-native-animatable"
 
 export const Service = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.secondary }}>
-      <View style={styles.container}>
+      <Animatable.View animation="fadeInDown" style={styles.container}>
         <View style={styles.s_wrapper}>
           <Text style={[styles.s_txt, styles.titleTxt]}>OCEANS-MALL</Text>
           <View style={styles.services}>
@@ -55,7 +56,7 @@ export const Service = ({ navigation }) => {
             </View>
           </View>
         </View>
-      </View>
+      </Animatable.View>
     </SafeAreaView>
   );
 };

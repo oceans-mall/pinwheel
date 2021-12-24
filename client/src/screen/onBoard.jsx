@@ -7,7 +7,7 @@ import { PrimaryButton } from "../components/general/Buttons";
 export const OnBoard = ({navigation}) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-        <Image
+        {/* <Image
           source={raw2}
           style={{
             flex: 0.5,
@@ -15,7 +15,7 @@ export const OnBoard = ({navigation}) => {
             width: "100%",
             resizeMode: "cover",
           }}
-        />
+        /> */}
       <View style={styles.textContainer}>
       <View style={{padding:5}}>
         <Text style={styles.onBoardText}>Welcome Buddy</Text>

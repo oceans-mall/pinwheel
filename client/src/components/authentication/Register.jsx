@@ -23,14 +23,11 @@ export const Register = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.register.newUser)
-
   useEffect(() => {
     const handleRegister = () => {
       register(dispatch, {
         name, email, phone, password, confirmPswd
       })
-      user ? navigation.navigate("Login") : navigation.navigate("Register")
     }
     handleRegister()
   }, [])

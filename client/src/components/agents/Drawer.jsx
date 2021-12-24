@@ -3,7 +3,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Dashboard } from "./Dashboard";
 import { DrawerContent } from './DrawerContent'
 import { Sell } from './Sell'
-import { Tables } from './Table'
+// import { Tables } from './Table'
 import { Profile } from './Profile'
 import { Support } from "./Support";
 import { Settings } from "./Settings";

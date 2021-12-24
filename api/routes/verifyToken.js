@@ -46,7 +46,7 @@ const verifyTokenAgentAndAdmin = (req, res, next) => {
 const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
         req.user.isAdmin ? next() 
-        : res.status(403).json("You are not allowed")
+        : res.status(403).json("access denied")
     })
 }
 module.exports ={

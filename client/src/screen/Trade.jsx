@@ -4,28 +4,32 @@ import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../consts/colors";
 
 export const Trade = ({ quantity, price, img, type }) => {
-
   const [newquantity, setNewQuantity] = useState(quantity);
   const [salesprice, setPrice] = useState(price);
-  let [totalcost, setTotalCost] = useState(0)
+  let [totalcost, setTotalCost] = useState(0);
 
   useEffect(() => {
-    setTotalCost( salesprice * newquantity )
-  }, [salesprice,newquantity])
+    setTotalCost(salesprice * newquantity);
+  }, [salesprice, newquantity]);
 
   // console.log("net cost", totalcost += totalcost)
   // console.log([totalcost])
   return (
     <View style={styles.container}>
-      <View style={{flexDirection:'row'}}>
-      <Image
-        source={img}
-        style={{ width: 80, height: 80, resizeMode: "cover", borderRadius: 50 }}
-      />
-      <View style={{ flexDirection: "column",marginHorizontal:5 }}>
-        <Text style={styles.text}>{type}</Text>
-        <Text style={styles.text}>GHS {salesprice}</Text>
-      </View>
+      <View style={{ flexDirection: "row" }}>
+        <Image
+          source={img}
+          style={{
+            width: 80,
+            height: 80,
+            resizeMode: "cover",
+            borderRadius: 50,
+          }}
+        />
+        <View style={{ flexDirection: "column", marginHorizontal: 5 }}>
+          <Text style={styles.text}>{type}</Text>
+          <Text style={styles.text}>GHS {salesprice}</Text>
+        </View>
       </View>
       <View style={{ flexDirection: "column" }}>
         <Text style={styles.text}>{newquantity}</Text>

@@ -1,14 +1,15 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 import StackNavigation from "./StackNavigation";
-import {store} from './src/redux/store'
-
+import { persistor, store } from "./src/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App() {
   return (
     <Provider store={store}>
-      <StackNavigation />
+      <PersistGate loading={null} persistor={persistor}>
+        <StackNavigation />
+      </PersistGate>
     </Provider>
   );
 }

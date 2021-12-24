@@ -3,10 +3,12 @@ import { View, StyleSheet, Text, SafeAreaView } from "react-native";
 import COLORS from "../../consts/colors";
 import { Chart } from "./LineChart";
 import { RecentTrade } from "./RecentTrade";
+import * as Animatable from "react-native-animatable"
+
 export const Dashboard = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <Animatable.View animation="zoomIn" style={{ flex: 1 }}>
         <View
           style={{
             flex: 2,
@@ -33,8 +35,8 @@ export const Dashboard = () => {
           </View>
         </View>
         <Chart />
-        <RecentTrade />
-      </View>
+        {/* <RecentTrade /> */}
+      </Animatable.View>
     </SafeAreaView>
   );
 };
