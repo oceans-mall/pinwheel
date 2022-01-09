@@ -4,7 +4,7 @@
     "slug": "Pinwheel",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.jpg",
+    "icon": "../src/assets/icon.png",
     "splash": {
       "image": "./assets/splash.jpg",
       "resizeMode": "contain",
@@ -24,10 +24,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.jpg",
         "backgroundColor": "#00a5f4"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.oceansmall.Pinwheel"
     },
     "web": {
       "favicon": "./assets/icon.jpg"
-    }
+    },
+    "description": ""
   }
 }

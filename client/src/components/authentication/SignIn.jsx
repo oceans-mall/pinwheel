@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -23,6 +24,7 @@ export const SignIn = ({ navigation }) => {
     check_textInputChange: false,
     secureTextEntry: true,
   });
+  const [message, setMessage] = useState("");
   //calling state from redux
   const { isFetching, error, success } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -75,6 +77,11 @@ export const SignIn = ({ navigation }) => {
     });
   };
 
+  const getMessage = () => {
+    const status = error ? `failed` : `successful`;
+    return status;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -122,7 +129,6 @@ export const SignIn = ({ navigation }) => {
             <TouchableOpacity
               style={{ width: "100%", alignItems: "center" }}
               onPress={handleSubmit}
-              // disabled={isFetching}
             >
               <Text
                 style={[
@@ -136,11 +142,9 @@ export const SignIn = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </LinearGradient>
-          {error ? (
-            <Text style={{ color: "red", padding:5 }}>Something went wrong....</Text>
-          ) : success ? (
-            <Text style={{ color: "green" }}>login successful</Text>
-          ) : null}
+          <Text style={[styles.message, { color: error ? "red" : "green" }]}>
+            {error ? `process failed` : success ? `successful` : null}
+          </Text>
           <TouchableOpacity
             style={[
               styles.signIn,
@@ -240,5 +244,9 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  message: {
+    fontSize: 16,
+    marginVertical: "5%",
   },
 });

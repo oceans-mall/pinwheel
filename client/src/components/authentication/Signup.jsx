@@ -30,8 +30,10 @@ export const Signup = ({ navigation }) => {
     secureTextEntry: true,
     // mobile_secureTextEntry: true,
   });
-  const { isRegistering, error, success } = useSelector((state) => state.register);
-  
+  const { isRegistering, error, success } = useSelector(
+    (state) => state.register
+  );
+
   const dispatch = useDispatch();
 
   const { check_textInputChange, secureTextEntry, ...others } = data;
@@ -41,7 +43,7 @@ export const Signup = ({ navigation }) => {
     register(dispatch, {
       ...others,
     });
-    console.log({...others});
+    console.log({ ...others });
   };
   //Activity indicator
   if (isRegistering) {
@@ -65,26 +67,25 @@ export const Signup = ({ navigation }) => {
     //   });
     // }
     // else{
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-      });
+    setData({
+      ...data,
+      email: val,
+      check_textInputChange: false,
+    });
   };
   const textInputChangeFname = (fname) => {
-  //   if(fname.length !==0 ){
-  //     setData({
-  //       ...data,
-  //       check_textInputChange: true
-  //     })
-  //   }
-  //  else{
+    //   if(fname.length !==0 ){
+    //     setData({
+    //       ...data,
+    //       check_textInputChange: true
+    //     })
+    //   }
+    //  else{
     setData({
       ...data,
       firstname: fname,
       check_textInputChange: false,
     });
-   
   };
   const textInputChangeLname = (lname) => {
     // if(lname.length !==0 ){
@@ -94,21 +95,20 @@ export const Signup = ({ navigation }) => {
     //   })
     // }
     // else{
-      setData({
-        ...data,
-        lastname: lname,
-        check_textInputChange: false,
-      });
-    
+    setData({
+      ...data,
+      lastname: lname,
+      check_textInputChange: false,
+    });
   };
   const textInputChangePhone = (mobile) => {
-  //   if(mobile.length !==0 ){
-  //     setData({
-  //       ...data,
-  //       check_textInputChange: true
-  //     })
-  //   }
-  //  else{
+    //   if(mobile.length !==0 ){
+    //     setData({
+    //       ...data,
+    //       check_textInputChange: true
+    //     })
+    //   }
+    //  else{
     setData({
       ...data,
       phone: mobile,
@@ -117,13 +117,13 @@ export const Signup = ({ navigation }) => {
   };
 
   const handlePasswordChange = (val) => {
-  //   if(val.length !== 0){
-  //     setData({
-  //       ...data,
-  //       check_textInputChange: true
-  //     })
-  //   }
-  //  else{
+    //   if(val.length !== 0){
+    //     setData({
+    //       ...data,
+    //       check_textInputChange: true
+    //     })
+    //   }
+    //  else{
     setData({
       ...data,
       password: val,
@@ -144,6 +144,7 @@ export const Signup = ({ navigation }) => {
   //   });
   // };
 
+ 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -273,17 +274,9 @@ export const Signup = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             </LinearGradient>
-            {
-              error ?  (
-                <Text style={{ color: "red" }}>
-                  registration failed try again...
-                </Text>
-              )
-              : success ? (
-                <Text style={{ color: "green" }}>Registeration successful</Text>
-              ):
-              null
-            }
+            <Text style={{color: error ? 'red': 'green'}}>
+              {error ? `process failed` : success ? `successful` : null}
+            </Text>
             <TouchableOpacity
               style={[
                 styles.signIn,

@@ -52,20 +52,12 @@ router.post("/login", async (req, res) => {
       { expiresIn: "10d" }
     );
       console.log(user._doc);
-    const { password, ...others } = user._doc;
+    const { password,...others } = user._doc;
     res.status(200).json({ ...others, accessToken });
   } 
   catch (err) {
     res.status(500).json(err);
   }
 });
-
-//LOGOUT
-// router.get("/logout",verifyToken , (req, res) => {
-//   req.user.deleteToken(req.token, (err, user) => {
-//     err && res.status(403).json(err);
-//   })
-//   res.status(200).redirect("/")
-// })
 
 module.exports = router;

@@ -1,36 +1,41 @@
-import React, {useEffect, useState} from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import COLORS from "../../consts/colors";
-import { register } from "../../redux/apiCalls"
+import { register } from "../../redux/apiCalls";
 
 export const Register = ({ navigation }) => {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPswd, setConfirmPswd] = useState("");
-  const { isRegistering, error } = useSelector((state) => state.register)
+  const { isRegistering, error, success } = useSelector(
+    (state) => state.register
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const handleRegister = () => {
       register(dispatch, {
-        name, email, phone, password, confirmPswd
-      })
-    }
-    handleRegister()
-  }, [])
+        name,
+        email,
+        phone,
+        password,
+        confirmPswd,
+      });
+    };
+    const handleError = () => {
+      setTimeout(() => {
+        error ? `failed` : success  `successful` 
+      }, 2000);
+    };
+    handleRegister();
+    handleError()
+  }, []);
   return (
     <SafeAreaView style={styles.loginContainer}>
       <View style={styles.login}>
@@ -51,7 +56,7 @@ export const Register = ({ navigation }) => {
             underlineColorAndroid={"transparent"}
             textDecorationLine="#fff"
             style={styles.textLayout}
-            onChangeText = {(name) => setName(name)}
+            onChangeText={(name) => setName(name)}
           />
           <TextInput
             placeholder="Email"
@@ -59,7 +64,7 @@ export const Register = ({ navigation }) => {
             underlineColorAndroid={"transparent"}
             textDecorationLine="#fff"
             style={styles.textLayout}
-            onChangeText = {(email) => setEmail(email)}
+            onChangeText={(email) => setEmail(email)}
           />
           <TextInput
             placeholder="Phone Number"
@@ -67,7 +72,7 @@ export const Register = ({ navigation }) => {
             underlineColorAndroid={"transparent"}
             textDecorationLine="#fff"
             style={styles.textLayout}
-            onChangeText = {(phone) => setPhone(phone)}
+            onChangeText={(phone) => setPhone(phone)}
           />
           <TextInput
             placeholder="Password"
@@ -76,7 +81,7 @@ export const Register = ({ navigation }) => {
             underlineColorAndroid={"transparent"}
             textDecorationLine="#fff"
             style={styles.textLayout}
-            onChangeText = {(password) => setPassword(password)}
+            onChangeText={(password) => setPassword(password)}
           />
           <TextInput
             placeholder="Confirm Password"
@@ -85,7 +90,7 @@ export const Register = ({ navigation }) => {
             underlineColorAndroid={"transparent"}
             textDecorationLine="#fff"
             style={styles.textLayout}
-            onChangeText = {(confirmPswd) => setConfirmPswd(confirmPswd)}
+            onChangeText={(confirmPswd) => setConfirmPswd(confirmPswd)}
           />
         </View>
         <TouchableOpacity
@@ -97,7 +102,7 @@ export const Register = ({ navigation }) => {
             <Text style={styles.btnTxt}>SIGNUP</Text>
           </View>
         </TouchableOpacity>
-        {error && <Text style={{color:'red',fontSize:13,marginBottom:5}}>Complete all fields</Text>}
+        <Text style={{color: error ? 'red': 'green'}}>{handleError()}</Text>
         <View>
           <Text>By signinup you concent to our</Text>
           <TouchableOpacity>

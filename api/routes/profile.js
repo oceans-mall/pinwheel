@@ -2,8 +2,9 @@ const router = require("express").Router();
 const Profile = require("../models/Profile");
 const { verifyTokenAgentAndAdmin, verifyTokenAndAdmin } = require("./verifyToken");
 
-//CREATE FISHERMAN PROFILE
-router.post("/fisherman", verifyTokenAgentAndAdmin, async (req, res) => {
+//create profile
+//verifyTokenAgentAndAdmin
+router.post("/fisherman", async (req, res) => {
   const { firstname, lastname, location, age, region, contact } = req.body;
   const newProfile = new Profile({
     lastname,
@@ -21,8 +22,9 @@ router.post("/fisherman", verifyTokenAgentAndAdmin, async (req, res) => {
   }
 });
 
-//UPDATE PROFILE
-router.put("/fisherman/:id", verifyTokenAgentAndAdmin, async (req, res) => {
+//update profile 
+//verifyTokenAgentAndAdmin
+router.put("/fisherman/:id", async (req, res) => {
   try {
     const updatedUser = await Profile.findByIdAndUpdate(
       req.params.id,
@@ -38,8 +40,9 @@ router.put("/fisherman/:id", verifyTokenAgentAndAdmin, async (req, res) => {
     res.status(403).json(err);
   }
 });
-//DELETE
-router.delete("/fisherman", verifyTokenAndAdmin, async (req, res) => {
+//delete Profile
+//VerifyTokenAndAdmin
+router.delete("/fisherman", async (req, res) => {
   try {
     await Profile.findByIdAndDelete(req.body.id)
     res.status(200).json("profile deleted")
@@ -47,8 +50,9 @@ router.delete("/fisherman", verifyTokenAndAdmin, async (req, res) => {
     res.status(401).json(err)
   }
 })
-//GET FISHER FOLK
-router.get("/find/:id", verifyTokenAgentAndAdmin, async (req, res) => {
+//get a fisherfolks
+//verifyTokenAgentAndAdmin
+router.get("/find/:id", async (req, res) => {
   try {
     const folk = await Profile.findById(req.params.id);
     const { password, ...others } = folk._doc;
@@ -58,8 +62,9 @@ router.get("/find/:id", verifyTokenAgentAndAdmin, async (req, res) => {
   }
 });
 
-//GET ALL FISHER-FOLKS
-router.get("/folk",verifyTokenAgentAndAdmin, async (req, res) => {
+//get all fisher folks
+//verifyTokenAgentAndAdmin
+router.get("/folk", async (req, res) => {
   const query = req.query.new;
   try {
     const fisherman = query

@@ -8,7 +8,7 @@ import * as Animatable from "react-native-animatable"
 export const Dashboard = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Animatable.View animation="zoomIn" style={{ flex: 1 }}>
+      <View animation="zoomIn" style={{ flex: 1 }}>
         <View
           style={{
             flex: 2,
@@ -36,7 +36,7 @@ export const Dashboard = () => {
         </View>
         <Chart />
         {/* <RecentTrade /> */}
-      </Animatable.View>
+      </View>
     </SafeAreaView>
   );
 };

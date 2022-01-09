@@ -21,6 +21,12 @@ export const Profile = () => {
       firstname, lastname, age, contact, location, region
     })
   }
+  
+
+  const getMessage = () => {
+    const status = error ? `failed` : `successful`;
+      return status;
+  }
   return (
     <SafeAreaView style={styles.loginContainer}>
       <View style={styles.login}>
@@ -29,7 +35,7 @@ export const Profile = () => {
             style={{
               fontSize: 20,
               marginBottom: 20,
-              fontWeight: "bold",
+              fontWeight: "bold", 
               color: COLORS.primary,
             }}
           >
@@ -94,9 +100,7 @@ export const Profile = () => {
             <Text style={styles.btnTxt}>CREATE</Text>
           </View>
         </TouchableOpacity>
-        {
-          error && <Text>Missing Details...</Text>
-        }
+        <Text style={[styles.message, {color: error ? 'red': 'green'}]}>{message ? getMessage(): null}</Text>
       </View>
     </SafeAreaView>
   );
@@ -149,6 +153,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.white,
   },
+  message: {
+    fontSize: 16,
+    marginVertical: '5%',
+},
   
 });
 

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../consts/colors";
+import { useSelector } from "react-redux";
 
 export const Trade = ({ quantity, price, img, type }) => {
   const [newquantity, setNewQuantity] = useState(quantity);
   const [salesprice, setPrice] = useState(price);
   let [totalcost, setTotalCost] = useState(0);
+
+  const order = useSelector(state => state.order)
 
   useEffect(() => {
     setTotalCost(salesprice * newquantity);

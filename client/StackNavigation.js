@@ -15,12 +15,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createStackNavigator();
 
 export default function StackNavigation() {
-  const [agent, setAgent] = useState(false);
-
+  const [agent, setAgent] = useState("");
+  
   const getUser = async () => {
     try {
       const value = await AsyncStorage.getItem("user");
-      return value != null ? setAgent(JSON.parse(value).isAgent) : null;
+      return value !== null ? setAgent(JSON.parse(value)) : null;
     } catch (e) {
       // read error
       console.log(e);
