@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
-  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -24,7 +23,6 @@ export const SignIn = ({ navigation }) => {
     check_textInputChange: false,
     secureTextEntry: true,
   });
-  const [message, setMessage] = useState("");
   //calling state from redux
   const { isFetching, error, success } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -50,12 +48,6 @@ export const SignIn = ({ navigation }) => {
     );
   }
   const textInputChange = (val) => {
-    // if (val.length !== 0) {
-    //   setData({
-    //     ...data,
-    //     check_textInputChange: true,
-    //   });
-    // } else {
     setData({
       ...data,
       email: val,
@@ -75,11 +67,6 @@ export const SignIn = ({ navigation }) => {
       ...data,
       secureTextEntry: !data,
     });
-  };
-
-  const getMessage = () => {
-    const status = error ? `failed` : `successful`;
-    return status;
   };
 
   return (
@@ -143,7 +130,7 @@ export const SignIn = ({ navigation }) => {
             </TouchableOpacity>
           </LinearGradient>
           <Text style={[styles.message, { color: error ? "red" : "green" }]}>
-            {error ? `process failed` : success ? `successful` : null}
+            {error ? ` ` : success ? `successful` : null}
           </Text>
           <TouchableOpacity
             style={[
@@ -247,6 +234,5 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 16,
-    marginVertical: "5%",
   },
 });

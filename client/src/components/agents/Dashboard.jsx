@@ -1,13 +1,31 @@
-import React from "react";
-import { View, StyleSheet, Text, SafeAreaView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Text, SafeAreaView , TouchableOpacity} from "react-native";
 import COLORS from "../../consts/colors";
 import { Chart } from "./LineChart";
-import { RecentTrade } from "./RecentTrade";
-import * as Animatable from "react-native-animatable"
+import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
-export const Dashboard = () => {
+
+export const Dashboard = ({navigation}) => {
+  const [fishermen, setFishermen] = useState(0);
+  const [tradeTotal, settradeTotal] = useState(0);
+  const [purchase, setPurchase] = useState(0);
+  const getProfile = async () => {
+    try {
+      const value = await AsyncStorage.getItem("folk");
+      setFishermen(value)
+    } catch (e) {}
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Ionicons name="menu" size={25} color={'white'} style={{marginLeft:3}} />
+        </TouchableOpacity>
+      </View>
       <View animation="zoomIn" style={{ flex: 1 }}>
         <View
           style={{
@@ -22,16 +40,16 @@ export const Dashboard = () => {
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Trade Total</Text>
             <Text style={styles.tradeAmount}>GHS</Text>
-            <Text style={styles.tradeAmount}>1000</Text>
+          <Text style={styles.tradeAmount}>{tradeTotal}</Text>
           </View>
           <View style={styles.trade}>
-            <Text style={styles.tradeTitle}>Fishermen</Text>
-            <Text style={styles.tradeAmount}>50</Text>
+            <Text style={styles.tradeTitle}>Number of Fishermen</Text>
+            <Text style={styles.tradeAmount}>{fishermen}</Text>
           </View>
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Purchase</Text>
             <Text style={styles.tradeAmount}>GHS</Text>
-            <Text style={styles.tradeAmount}>100</Text>
+            <Text style={styles.tradeAmount}>{purchase}</Text>
           </View>
         </View>
         <Chart />
@@ -64,6 +82,7 @@ const styles = StyleSheet.create({
     elevation: 7,
   },
   tradeTitle: {
+    textAlign:'center',
     color: COLORS.gray,
     fontSize: 16,
     fontWeight: "600",
@@ -72,5 +91,16 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     marginTop: 5,
     fontSize: 20,
+  },
+  header: {
+    height: 60,
+    paddingTop: 15,
+    backgroundColor: COLORS.primary,
+  },
+  title: {
+    textAlign: "center",
+    color: COLORS.white,
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });

@@ -1,162 +1,189 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  FlatList,
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  View,
+  TouchableWithoutFeedback,
+} from "react-native";
 import COLORS from "../../consts/colors";
-import { profile } from "../../redux/apiCalls";
-
-export const Profile = () => {
-
-  const [ firstname, setFirstname ] = useState("")
-  const [ lastname, setLastname ] = useState("")
-  const [ age, setAge ] = useState("")
-  const [ contact, setContact ] = useState("")
-  const [ location, setLocation ] = useState("")
-  const [ region, setRegion ] = useState("")
-
-  const { isProfiling, error } = useSelector((state) => state.profile)
+import { Form } from "./Form";
+import { login, profileFolk } from "../../redux/apiCalls";
+export const Profile = ({ navigation }) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const handleProfile = () => {
-    profile(dispatch, {
-      firstname, lastname, age, contact, location, region
-    })
-  }
-  
+  //fetching data from redux
+  const profile = useSelector((state) => state.profile.folks);
+  //fetching data from the api
+  useEffect(() => {
+    profileFolk(dispatch);
+  }, [dispatch]);
 
-  const getMessage = () => {
-    const status = error ? `failed` : `successful`;
-      return status;
-  }
-  return (
-    <SafeAreaView style={styles.loginContainer}>
-      <View style={styles.login}>
-        <View>
-          <Text
+  //adding info to database
+  const addFisherman = (details) => {
+    login(dispatch, {
+      ...details,
+    });
+    setModalOpen(false);
+  };
+
+  const Card = ({ items }) => {
+    return (
+      <View
+        style={{
+          maxWidth: 160,
+          maxHeight: 160,
+          backgroundColor: COLORS.primary,
+          borderRadius: 10,
+          zIndex: 3,
+          elevation: 5,
+          padding: 5,
+          margin: 5,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("Edit", items)}>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.name}>{items.firstname}</Text>
+            <Text style={[styles.name, styles.lname]}>{items.lastname}</Text>
+          </View>
+          <View>
+            <Text style={styles.details}>Age: {items.age}</Text>
+            <Text style={styles.details}>Location: {items.location}</Text>
+            <Text style={styles.details}>Region: {items.region}</Text>
+            <Text style={styles.details}>Contact: {items.contact}</Text>
+          </View>
+          <View
             style={{
-              fontSize: 20,
-              marginBottom: 20,
-              fontWeight: "bold", 
-              color: COLORS.primary,
+              padding: 5,
+              backgroundColor: "green",
+              margin: 5,
+              borderRadius: 5,
             }}
           >
-            CREATE FISHERMAN
-          </Text>
-          <TextInput
-            placeholder="Firstame"
-            placeholderTextColor={COLORS.primary}
-            underlineColorAndroid={"transparent"}
-            textDecorationLine="#fff"
-            style={styles.textLayout}
-            onChangeText={(firstname) => setFirstname(firstname)}
-          />
-          <TextInput
-            placeholder="Lastname"
-            placeholderTextColor={COLORS.primary}
-            underlineColorAndroid={"transparent"}
-            textDecorationLine="#fff"
-            style={styles.textLayout}
-            onChangeText={(lastname) => setLastname(lastname)}
-          />
-          <TextInput
-            placeholder="Age"
-            placeholderTextColor={COLORS.primary}
-            underlineColorAndroid={"transparent"}
-            textDecorationLine="#fff"
-            style={styles.textLayout}
-            onChangeText={(age) => setAge(age)}
-          />
-          <TextInput
-            placeholder="Phone Number"
-            placeholderTextColor={COLORS.primary}
-            underlineColorAndroid={"transparent"}
-            textDecorationLine="#fff"
-            style={styles.textLayout}
-            keyboardType='number-pad'
-            onChangeText={(contact) => setContact(contact)}
-          />
-          <TextInput
-            placeholder="Location"
-            placeholderTextColor={COLORS.primary}
-            underlineColorAndroid={"transparent"}
-            textDecorationLine="#fff"
-            style={styles.textLayout}
-            onChangeText={(location) => setLocation(location)}
-          />
-          <TextInput
-            placeholder="Region"
-            placeholderTextColor={COLORS.primary}
-            underlineColorAndroid={"transparent"}
-            textDecorationLine="#fff"
-            style={styles.textLayout}
-            onChangeText={(region) => setRegion(region)}
-          />
-        </View>
-        <TouchableOpacity
-          disabled={isProfiling}
-          activeOpacity={0.8}
-          onPress={handleProfile}
-        >
-          <View style={styles.btnContainer}>
-            <Text style={styles.btnTxt}>CREATE</Text>
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              Edit
+            </Text>
           </View>
         </TouchableOpacity>
-        <Text style={[styles.message, {color: error ? 'red': 'green'}]}>{message ? getMessage(): null}</Text>
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 4,
+          padding: 10,
+          paddingTop: 20,
+          backgroundColor: "#fff",
+        }}
+      >
+        <Text
+          style={{
+            textAlign: "center",
+            color: COLORS.primary,
+            fontSize: 15,
+            margin: 5,
+            fontWeight: "600",
+          }}
+        >
+          REGISTERED FISHER FOLKS
+        </Text>
+        <TextInput
+          style={{
+            padding: 7,
+            marginVertical: 10,
+            fontSize: 18,
+            borderColor: COLORS.primary,
+            borderWidth: 1,
+            borderRadius: 5,
+          }}
+          placeholder="search"
+        />
+        <FlatList
+          numColumns={2}
+          data={profile}
+          renderItem={({ item }) => <Card items={item} />}
+        />
+        <Modal visible={modalOpen} animationType="fade">
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={{ flex: 1 }}>
+              <View style={styles.modalContainer}>
+                <Ionicons
+                  onPress={() => setModalOpen(false)}
+                  name="close"
+                  size={24}
+                  style={styles.toggleModal}
+                />
+              </View>
+              <Form addFisherman={addFisherman} />
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+        <View style={styles.modalContainer}>
+          <Ionicons
+            onPress={() => setModalOpen(true)}
+            name="add-outline"
+            size={24}
+            style={styles.toggleModal}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  loginContainer: {
-    flex: 1,
+  head: {
+    height: 40,
+    backgroundColor: "#f1f8ff",
   },
-  login: {
-    flex: 1,
-    top: -15,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-
-    elevation: 8,
-  },
-  textLayout: {
-    fontSize: 16,
-    alignSelf: "stretch",
-    height: 50,
-    borderRadius: 5,
-    width: 270,
-    marginBottom: 20,
-    paddingLeft: 5,
-    borderWidth: 0.5,
-    borderColor: COLORS.primary,
+  text: {
     textAlign: "center",
-    color: COLORS.primary,
-    backgroundColor: COLORS.silver,
+    margin: 3,
   },
-  btnContainer: {
-    backgroundColor: COLORS.primary,
-    height: 50,
-    width: 270,
-    borderRadius: 10,
-    justifyContent: "center",
+  border: { borderWidth: 2, borderColor: "#c8e1ff" },
+  modalContainer: {
+    alignSelf: "center",
     alignItems: "center",
-    marginVertical: 20,
+    justifyContent: "center",
+    position: "relative",
+    width: 60,
+    height: 40,
+    backgroundColor: COLORS.primary,
+    zIndex: 3,
+    elevation: 8,
+    borderRadius: 50,
+    marginTop: 10,
   },
-  btnTxt: {
-    fontSize: 15,
-    fontWeight: "bold",
+  toggleModal: { color: "white", fontWeight: "800" },
+  name: {
+    fontSize: 18,
+    fontWeight: "600",
+    textTransform: "capitalize",
     color: COLORS.white,
   },
-  message: {
-    fontSize: 16,
-    marginVertical: '5%',
-},
-  
+  lname: {
+    marginLeft: 3,
+  },
+  details: {
+    color: COLORS.white,
+    fontSize: 15,
+  },
 });
-

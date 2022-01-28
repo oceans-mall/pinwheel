@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import COLORS from "../consts/colors";
-import * as Animatable from "react-native-animatable"
+import * as Animatable from "react-native-animatable";
 
 export const Service = ({ navigation }) => {
   return (
@@ -31,8 +31,14 @@ export const Service = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.item}>
-              <Text style={styles.txt}>SHOP</Text>
-              <Ionicons name="cart-outline" size={50} color={COLORS.primary} />
+              <TouchableOpacity onPress={() =>navigation.navigate("Store")}>
+                <Text style={styles.txt}>SHOP</Text>
+                <Ionicons
+                  name="cart-outline"
+                  size={50}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
             </View>
             <View style={styles.item}>
               <Text style={styles.txt}>MARKET INFO</Text>

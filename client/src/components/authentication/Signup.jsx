@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Platform,
   StyleSheet,
@@ -25,10 +25,8 @@ export const Signup = ({ navigation }) => {
     firstname: "",
     lastname: "",
     phone: "",
-    // confirm_password: "",
     check_textInputChange: false,
     secureTextEntry: true,
-    // mobile_secureTextEntry: true,
   });
   const { isRegistering, error, success } = useSelector(
     (state) => state.register

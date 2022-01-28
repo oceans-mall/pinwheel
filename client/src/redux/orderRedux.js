@@ -4,6 +4,7 @@ const orderSlice = createSlice({
     name: 'order',
     initialState:{
         product: [],
+        price:0,
         quantity: 0,
         total: 0
     },

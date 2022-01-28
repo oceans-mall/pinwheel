@@ -1,5 +1,8 @@
 import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
+  Alert,
   Image,
   ImageBackground,
   Text,
@@ -14,6 +17,15 @@ import COLORS from "../../consts/colors";
 import { Ionicons } from "@expo/vector-icons";
 
 export const DrawerContent = (props) => {
+  // logout user
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem("user");
+      Alert.alert("logout complete");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -39,18 +51,12 @@ export const DrawerContent = (props) => {
         </View>
       </DrawerContentScrollView>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
-        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Ionicons name="share-social-outline" size={22} />
-            <Text style={{ fontSize: 16, marginLeft: 5 }}>Share</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Ionicons name="exit-outline" size={22} />
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Ionicons name="exit-outline" size={22} />
+          <TouchableOpacity onPress={() => logout()}>
             <Text style={{ fontSize: 16, marginLeft: 5 }}>Sign Out</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

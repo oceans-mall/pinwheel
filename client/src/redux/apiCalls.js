@@ -4,10 +4,21 @@ import {
   registerUser,
   registerFailure,
 } from "./registerRedux";
-import { profileUser, profileSuccess, profileFailure } from "./profileRedux";
+import {
+  addProfile,
+  addProfileSuccess,
+  addProfileFailure,
+  getProfileStart,
+  getProfileSuccess,
+  getProfileFailure,
+  updatedProfile,
+  updateProfileSuccess,
+  updateProfileFailure,
+} from "./profilesRedux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { publicRequest, usersRequest } from "../requestMethods";
+import { publicRequest } from "../requestMethods";
 
+//log user in
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -20,6 +31,7 @@ export const login = async (dispatch, user) => {
   }
 };
 
+//register user
 export const register = async (dispatch, register) => {
   dispatch(registerUser());
   try {
@@ -32,12 +44,31 @@ export const register = async (dispatch, register) => {
 
 //create profile
 export const profile = async (dispatch, profile) => {
-  dispatch(profileUser());
+  dispatch(addProfile());
   try {
     await publicRequest
       .post("profile/fisherman", profile)
-      .then((res) => dispatch(profileSuccess(res.data)));
+      .then((res) => dispatch(addProfileSuccess(res.data)));
   } catch (err) {
-    dispatch(profileFailure());
+    dispatch(addProfileFailure());
+  }
+};
+//get profile
+export const profileFolk = async (dispatch, id) => {
+  dispatch(getProfileStart())
+  try {
+     const info = await publicRequest.get("profile/folk/?:id",id)
+      dispatch(getProfileSuccess(info.data))
+  } catch (err) {
+    dispatch(getProfileFailure())
+  }
+};
+//edit profile
+export const updateProfile = async (dispatch, id, folk) => {
+  dispatch(updatedProfile());
+  try {
+    dispatch(updateProfileSuccess({ id, folk }));
+  } catch (err) {
+    dispatch(updateProfileFailure());
   }
 };

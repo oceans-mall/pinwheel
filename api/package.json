@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "oceansmall-mobileapp",
   "main": "index.js",
+  "homepage": ".",
   "scripts": {
     "start": "node index.js"
   },

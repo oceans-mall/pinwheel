@@ -1,8 +1,8 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./userRedux";
 import registerReducer from "./registerRedux";
-import orderReducer from "./orderRedux"
-import profileReducer from "./profileRedux";
+import orderReducer from "./orderRedux";
+import profileReducer from "./profilesRedux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { persistStore, persistReducer } from "redux-persist";
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   register: registerReducer,
   profile: profileReducer,
-  order: orderReducer
+  order: orderReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

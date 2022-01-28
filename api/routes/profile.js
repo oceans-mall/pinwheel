@@ -5,8 +5,9 @@ const { verifyTokenAgentAndAdmin, verifyTokenAndAdmin } = require("./verifyToken
 //create profile
 //verifyTokenAgentAndAdmin
 router.post("/fisherman", async (req, res) => {
-  const { firstname, lastname, location, age, region, contact } = req.body;
+  const { userId,firstname, lastname, location, age, region, contact } = req.body;
   const newProfile = new Profile({
+    userId,
     lastname,
     firstname,
     location,

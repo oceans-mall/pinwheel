@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { PrimaryButton } from "../components/general/Buttons";
+import { FlatButton, PrimaryButton } from "../components/general/Buttons";
 import COLORS from "../consts/colors";
 import { trades } from "../consts/dummyData";
 import { Trade } from "./Trade";
@@ -64,7 +64,7 @@ export const Cart = ({ navigation }) => {
             <Text style={styles.txt}>GHS </Text>
           </TouchableOpacity>
         </View>
-        <PrimaryButton title="CHECKOUT"/>
+        <FlatButton title="CHECKOUT"/>
         {/* <View
           style={{
             flex: 0.05,

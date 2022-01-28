@@ -15,8 +15,6 @@ export const Trade = ({ quantity, price, img, type }) => {
     setTotalCost(salesprice * newquantity);
   }, [salesprice, newquantity]);
 
-  // console.log("net cost", totalcost += totalcost)
-  // console.log([totalcost])
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>

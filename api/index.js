@@ -6,6 +6,7 @@ const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
 const tradeRoute = require("./routes/trade")
 const profileRoute = require("./routes/profile")
+const productRoute = require("./routes/product")
 const cors = require('cors')
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(cors())
 app.use("/api/auth", authRoute )
 app.use("/api/user", userRoute)
 app.use("/api/trade", tradeRoute)
+app.use("/api/product",productRoute)
 app.use("/api/profile", profileRoute)
 
 

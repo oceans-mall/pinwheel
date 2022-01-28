@@ -1,5 +1,5 @@
-import React from 'react'
-import { Ionicons } from "@expo/vector-icons"
+import React from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
@@ -7,15 +7,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../consts/colors";
 import { fish, source } from "../../consts/dummyData";
-import {PrimaryButton} from '../general/Buttons'
-
+import { FlatButton, PrimaryButton } from "../general/Buttons";
 
 export const Sell = ({ navigation }) => {
   const [quantity, setQuantity] = useState(0);
-  const [sourcetype, setSource] = useState('--source--');
-  const [selectedValue, setSelectedValue] = useState('--select--');
-  const [location, setLocation] = useState('')
-  const [sell, setSellQuantity] = useState('')
+  const [sourcetype, setSource] = useState("--source--");
+  const [selectedValue, setSelectedValue] = useState("--select--");
+  const [location, setLocation] = useState("");
+  const [sell, setSellQuantity] = useState("");
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -26,7 +25,7 @@ export const Sell = ({ navigation }) => {
             alignItems: "center",
             justifyContent: "space-between",
             padding: 5,
-            backgroundColor:COLORS.primary
+            backgroundColor: COLORS.primary,
           }}
         >
           {/* back navigator icon */}
@@ -107,15 +106,21 @@ export const Sell = ({ navigation }) => {
           <View style={styles.sell_info}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.text}>Name:</Text>
-              <Text style={{fontSize:20, color:COLORS.secondary,marginLeft:10}}>User Name</Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: COLORS.secondary,
+                  marginLeft: 10,
+                }}
+              >
+                User Name
+              </Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.text}>Fish-Type:</Text>
               <Picker
                 selectedValue={selectedValue}
-                onValueChange={(itemValue) =>
-                  setSelectedValue(itemValue)
-                }
+                onValueChange={(itemValue) => setSelectedValue(itemValue)}
                 style={{ width: "45%", marginLeft: 10 }}
                 dropdownIconColor={COLORS.primary}
               >
@@ -135,9 +140,7 @@ export const Sell = ({ navigation }) => {
               <Text style={styles.text}>Source:</Text>
               <Picker
                 sourcetype={sourcetype}
-                onValueChange={(itemValue) =>
-                  setSource(itemValue)
-                }
+                onValueChange={(itemValue) => setSource(itemValue)}
                 style={{ width: "45%", marginLeft: 10 }}
                 dropdownIconColor={COLORS.primary}
               >
@@ -159,7 +162,7 @@ export const Sell = ({ navigation }) => {
                 placeholder="add your location"
                 name="location"
                 // value={inputs.location || ''}
-                onChangeText={text => setLocation(text)}
+                onChangeText={(text) => setLocation(text)}
                 placeholderTextColor={COLORS.secondary}
                 style={styles.sell_input}
                 underlineColorAndroid="transparent"
@@ -170,7 +173,7 @@ export const Sell = ({ navigation }) => {
               <TextInput
                 placeholder="enter quantity"
                 name="quantity"
-                onChangeText={text => setSellQuantity(text)}
+                onChangeText={(text) => setSellQuantity(text)}
                 placeholderTextColor={COLORS.secondary}
                 style={styles.sell_input}
                 underlineColorAndroid="transparent"
@@ -201,7 +204,10 @@ export const Sell = ({ navigation }) => {
                   Add to Basket
                 </Text>
               </TouchableOpacity> */}
-              <PrimaryButton onPress={() => setQuantity(quantity+1)} title="ADD TO CART" />
+              <FlatButton
+                onPress={() => setQuantity(quantity + 1)}
+                title="ADD TO CART"
+              />
             </View>
           </View>
         </View>
@@ -228,6 +234,6 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS.primary,
     marginLeft: 10,
     fontSize: 20,
-    color:COLORS.primary
+    color: COLORS.primary,
   },
 });
