@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Image,
@@ -9,30 +9,41 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../consts/colors";
+import { addToCart } from "../redux/cartRedux";
 
 export const Details = ({ navigation, route }) => {
   const fish = route.params;
-  const [amount, setAmount] = useState(0);
-  const [cart, setCart] = useState(0);
-  //......******.....//////
+  const [quantity, setQty] = useState(0);
+
+  const disptach = useDispatch();
+  const cart = useSelector((state) => state.cart?.quantity );
+
   const handlePress = (direction) => {
-    if (direction === "l" && amount >= 1) {
-      setAmount(amount - 1);
-    }
-    if (direction === "r" && amount >= 0) {
-      setAmount(amount + 1);
+    if (direction === "l") {
+      quantity > 1 && setQty(quantity - 1);
+    } else {
+      setQty(quantity + 1);
     }
   };
   //handle buy button method
   const handleBuyBtn = () => {
-    if (amount === 0) {
+    if (quantity === 0) {
       Alert.alert("please add quantity");
+    } else {
+      disptach(addToCart({...fish,quantity}));
     }
   };
-  //handle cart
+  useEffect(() => {
+    handleBuyBtn();
+  }, [fish._id]);
+
+  //handle cart?
   const cartPressed = () => {
-    cart === 0 ? Alert.alert("sorry your cart is empty") : setCart(cart + 1);
+    cart === 0
+      ? Alert.alert("sorry your cart is empty")
+      : navigation.navigate("ShoppingCart");
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -42,7 +53,7 @@ export const Details = ({ navigation, route }) => {
           size={25}
           onPress={() => navigation.goBack()}
         />
-        {/* {cart incon container} */}
+        {/* {cart? incon container} */}
         <View
           style={{
             postion: "relative",
@@ -57,7 +68,7 @@ export const Details = ({ navigation, route }) => {
           <Ionicons
             name="cart-outline"
             size={25}
-            color={'white'}
+            color={"white"}
             onPress={() => cartPressed()}
           />
           <Text
@@ -65,7 +76,7 @@ export const Details = ({ navigation, route }) => {
               position: "absolute",
               color: COLORS.red,
               fontSize: 18,
-              fontWeight:'bold',
+              fontWeight: "bold",
               top: -13,
               left: 10,
             }}
@@ -75,7 +86,10 @@ export const Details = ({ navigation, route }) => {
         </View>
       </View>
       <View style={style.imgContainer}>
-        <Image source={fish.img} style={{ resizeMode: "contain", flex: 1 }} />
+        <Image
+          source={fish.img}
+          style={{ resizeMode: "contain", flex: 1, height: 300, width: 300 }}
+        />
       </View>
       <View style={style.detailsContaner}>
         <View
@@ -104,7 +118,7 @@ export const Details = ({ navigation, route }) => {
                 marginLeft: 15,
                 color: "white",
                 fontSize: 16,
-                textAlign:'center',
+                textAlign: "center",
                 fontWeight: "bold",
               }}
             >
@@ -122,7 +136,7 @@ export const Details = ({ navigation, route }) => {
               marginTop: 10,
             }}
           >
-            {fish.about}
+            {fish.desc}
           </Text>
           <View
             style={{
@@ -144,7 +158,7 @@ export const Details = ({ navigation, route }) => {
                   fontWeight: "bold",
                 }}
               >
-                {amount}
+                {quantity}
               </Text>
               <View style={style.borderBtn}>
                 <TouchableOpacity onPress={() => handlePress("r")}>
@@ -155,7 +169,7 @@ export const Details = ({ navigation, route }) => {
               </View>
             </View>
             <View style={style.buyBtn}>
-              <TouchableOpacity onPress={() => handleBuyBtn()}>
+              <TouchableOpacity onPress={handleBuyBtn}>
                 <Text
                   style={{
                     color: COLORS.white,
@@ -163,7 +177,7 @@ export const Details = ({ navigation, route }) => {
                     fontWeight: "bold",
                   }}
                 >
-                  Buy
+                  ADD
                 </Text>
               </TouchableOpacity>
             </View>

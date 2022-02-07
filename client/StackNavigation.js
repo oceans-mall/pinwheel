@@ -10,11 +10,11 @@ import { Agent } from "./src/components/agents/Drawer";
 import { SplashScreen } from "./src/screen/SplashScreen";
 import { Signup } from "./src/components/authentication/Signup";
 import { SignIn } from "./src/components/authentication/SignIn";
-import { Store } from "./src/screen/Store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Edit } from "./src/screen/Edit";
-import { Details } from "./src/screen/Details";
 import { useSelector } from "react-redux";
+import { Payment } from "./src/screen/Payment";
+import { BottomNavigation } from "./src/components/navigation/BottomNavigation";
 
 const Stack = createStackNavigator();
 
@@ -32,7 +32,7 @@ export default function StackNavigation() {
   useEffect(() => {
     getUser();
   }, []);
-  // const user = useSelector((state) => state.user.currentUser.isAgent);
+  // const user = useSelector((state) => state.user.currentUser.isAgent); 
   // console.log(user);
   return (
     <NavigationContainer>
@@ -45,13 +45,13 @@ export default function StackNavigation() {
             <Stack.Screen name="Agent" component={Agent} />
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="Edit" component={Edit} />
-            <Stack.Screen name="Details" component={Details} />
+            <Stack.Screen  name="Payment" component={Payment} />
           </Stack.Group>
         ) : (
           <Stack.Group>
             <Stack.Screen name="Welcome" component={SplashScreen} />
             <Stack.Screen name="Services" component={Service} />
-            <Stack.Screen name="Store" component={Store} />
+            <Stack.Screen name="Shop" component={BottomNavigation} />
             <Stack.Screen name="Login" component={SignIn} />
             <Stack.Screen name="Register" component={Signup} />
             <Stack.Screen name="Reset" component={ResetPassword} />

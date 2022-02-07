@@ -10,7 +10,7 @@ export const Trade = ({ quantity, price, img, type }) => {
   let [totalcost, setTotalCost] = useState(0);
 
   const order = useSelector(state => state.order)
-
+  console.log(order);
   useEffect(() => {
     setTotalCost(salesprice * newquantity);
   }, [salesprice, newquantity]);

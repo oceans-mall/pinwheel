@@ -6,22 +6,14 @@ import COLORS from "../../consts/colors";
 export const Chart = () => {
   const linedata = {
     labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      "Week 1",
+      "Week 2",
+      "Week 3",
+      "Week 4",
     ],
     datasets: [
       {
-        data: [600, 500, 800, 200, 100, 900, 150, 400, 200, 300, 700, 100],
+        data: [600,500,200,1000],
         strokeWidth: 3,
       },
     ],

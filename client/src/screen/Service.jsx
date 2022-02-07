@@ -15,7 +15,7 @@ export const Service = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.secondary }}>
       <Animatable.View animation="fadeInDown" style={styles.container}>
         <View style={styles.s_wrapper}>
-          <Text style={[styles.s_txt, styles.titleTxt]}>OCEANS-MALL</Text>
+          <Text style={[styles.s_txt, styles.titleTxt]}>PINWHEEL</Text>
           <View style={styles.services}>
             <View style={styles.item}>
               <TouchableOpacity
@@ -31,7 +31,7 @@ export const Service = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.item}>
-              <TouchableOpacity onPress={() =>navigation.navigate("Store")}>
+              <TouchableOpacity onPress={() =>navigation.navigate("Shop")}>
                 <Text style={styles.txt}>SHOP</Text>
                 <Ionicons
                   name="cart-outline"

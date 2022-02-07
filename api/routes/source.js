@@ -1,29 +1,20 @@
 const router = require("express").Router();
-const Product = require("../models/Products");
+const Source = require("../models/Source");
 
 //create product
 router.post("/", async (req, res) => {
-  const newProduct = new Product(req.body);
+  const newSource = new Source(req.body);
   try {
-    const savedProduct = await newProduct.save();
-    res.status(201).json(savedProduct);
+    const savedSource = await newSource.save();
+    res.status(201).json(savedSource);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-//find product by id
-router.get("/find/:id", async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id)
-        res.status(200).json(product)
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
-//get all products
+//get all source
 router.get("/", async (req, res) => {
     try {
-       const products = await Product.find()
+       const products = await Source.find()
        res.status(200).json(products)
     } catch (err) {
         res.status(500).json(err)
@@ -32,7 +23,7 @@ router.get("/", async (req, res) => {
 //update product
 router.put("/:id", async (req, res) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const updatedProduct = await Source.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
@@ -48,7 +39,7 @@ router.put("/:id", async (req, res) => {
 //delete product
 router.delete("/:id", async (req, res) => {
     try {
-        await Product.findByIdAndDelete(req.params.id)
+        await Source.findByIdAndDelete(req.params.id)
         res.status(200).json("Product has been deleted...")
     } catch (err) {
         res.status(500).json(err)

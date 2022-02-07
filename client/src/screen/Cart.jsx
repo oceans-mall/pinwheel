@@ -7,14 +7,12 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { FlatButton, PrimaryButton } from "../components/general/Buttons";
 import COLORS from "../consts/colors";
 import { trades } from "../consts/dummyData";
 import { Trade } from "./Trade";
 
 export const Cart = ({ navigation }) => {
   const [trade, setTrade] = useState(trades);
-  
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -64,26 +62,23 @@ export const Cart = ({ navigation }) => {
             <Text style={styles.txt}>GHS </Text>
           </TouchableOpacity>
         </View>
-        <FlatButton title="CHECKOUT"/>
-        {/* <View
+        <View
           style={{
             flex: 0.05,
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: COLORS.primary,
             padding: 10,
-            margin:10,
-            borderRadius:20
+            margin: 10,
+            borderRadius: 20,
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Payment")}>
             <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-              CHECKOUT
+              SUBMIT TRADE
             </Text>
-            
           </TouchableOpacity>
-          
-        </View> */}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -108,7 +103,7 @@ const styles = StyleSheet.create({
   },
   tradeDisplay: {
     flex: 0.8,
-    padding:5,
+    padding: 5,
   },
   txt: {
     fontSize: 20,

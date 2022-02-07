@@ -3,22 +3,16 @@ import { View, StyleSheet, Text, SafeAreaView , TouchableOpacity} from "react-na
 import COLORS from "../../consts/colors";
 import { Chart } from "./LineChart";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useSelector } from "react-redux";
 
 
 export const Dashboard = ({navigation}) => {
-  const [fishermen, setFishermen] = useState(0);
   const [tradeTotal, settradeTotal] = useState(0);
   const [purchase, setPurchase] = useState(0);
-  const getProfile = async () => {
-    try {
-      const value = await AsyncStorage.getItem("folk");
-      setFishermen(value)
-    } catch (e) {}
-  };
-  useEffect(() => {
-    getProfile();
-  }, []);
+
+  //get total registered fishermen
+  const count = useSelector(state => state.profile.folks.length)
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -44,7 +38,7 @@ export const Dashboard = ({navigation}) => {
           </View>
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Number of Fishermen</Text>
-            <Text style={styles.tradeAmount}>{fishermen}</Text>
+            <Text style={styles.tradeAmount}>{count}</Text>
           </View>
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Purchase</Text>

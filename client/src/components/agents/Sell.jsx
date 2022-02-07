@@ -7,14 +7,24 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../consts/colors";
 import { fish, source } from "../../consts/dummyData";
-import { FlatButton, PrimaryButton } from "../general/Buttons";
+import { useSelector } from "react-redux";
 
 export const Sell = ({ navigation }) => {
   const [quantity, setQuantity] = useState(0);
   const [sourcetype, setSource] = useState("--source--");
   const [selectedValue, setSelectedValue] = useState("--select--");
-  const [location, setLocation] = useState("");
-  const [sell, setSellQuantity] = useState("");
+  const [ filter, setFilters] = useState({})
+
+//   const handleFilters = () => {
+//     setFilters({
+//       ...filter,
+//        sourcetype, selectedValue
+//     })
+//     handleFilters()
+//   }
+// console.log(filter);
+ const fisherman = useSelector((state) => state.profile.folks)
+ console.log(fisherman);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -45,10 +55,6 @@ export const Sell = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
-          {/* <Text style={{ fontSize: 20, color: COLORS.white, fontWeight:'bold' }}>
-            Hello! Daniel
-          </Text> */}
-          {/* user container */}
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
               style={{
@@ -61,7 +67,7 @@ export const Sell = ({ navigation }) => {
             >
               <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
                 <Ionicons
-                  name="cart-outline"
+                  name="basket-outline"
                   size={20}
                   color={COLORS.primary}
                 />
@@ -93,27 +99,17 @@ export const Sell = ({ navigation }) => {
         </View>
         {/* Details container */}
         <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 20,
-              padding: 5,
-              color: COLORS.primary,
-            }}
-          >
-            WE ARE HAPPY TO BUY FROM YOU
-          </Text>
           <View style={styles.sell_info}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.text}>Name:</Text>
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 25,
                   color: COLORS.secondary,
-                  marginLeft: 10,
+                  textAlign:'center'
                 }}
               >
-                User Name
+                Fisehrman name
               </Text>
             </View>
             <View style={{ flexDirection: "row" }}>
@@ -158,18 +154,10 @@ export const Sell = ({ navigation }) => {
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.text}>Location:</Text>
-              <TextInput
-                placeholder="add your location"
-                name="location"
-                // value={inputs.location || ''}
-                onChangeText={(text) => setLocation(text)}
-                placeholderTextColor={COLORS.secondary}
-                style={styles.sell_input}
-                underlineColorAndroid="transparent"
-              />
+              <Text>Keta</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.text}>Quantity:</Text>
+              <Text style={styles.text}>Weight:</Text>
               <TextInput
                 placeholder="enter quantity"
                 name="quantity"
@@ -193,21 +181,17 @@ export const Sell = ({ navigation }) => {
                 borderRadius: 10,
               }}
             >
-              {/* <TouchableOpacity onPress={() => setQuantity(quantity + 1)}>
+              <TouchableOpacity onPress={() => setQuantity(quantity + 1)}>
                 <Text
                   style={{
-                    fontSize: 25,
+                    fontSize: 20,
                     color: COLORS.white,
-                    fontWeight: "bold",
+                    fontWeight:'bold'
                   }}
                 >
-                  Add to Basket
+                  ADD TO BASKET
                 </Text>
-              </TouchableOpacity> */}
-              <FlatButton
-                onPress={() => setQuantity(quantity + 1)}
-                title="ADD TO CART"
-              />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -230,10 +214,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   sell_input: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.primary,
+    borderWidth:0.5,
     marginLeft: 10,
-    fontSize: 20,
+    padding:5,
+    fontSize: 18,
     color: COLORS.primary,
   },
 });

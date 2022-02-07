@@ -6,7 +6,7 @@ const fish = [
     like: true,
     img: require("../assets/raw2.jpg"),
     about:
-      "Succulent fresh fish from source  fresh fish from source  fresh fish from source  fresh fish from source  fresh fish from source",
+      "Succulent fresh fish from source  fresh fish from source  fresh fish from source"
   },
   {
     id: 2,
@@ -26,12 +26,13 @@ const fish = [
   },
   {
     id: 4,
-    name: "Cat Fish",
+    name: "Oceanp-Mix",
+    mix:"SHRIMP, SQUID,CLAMS,OCTOPUS",
     price: "55",
     like: true,
     img: require("../assets/cassava.jpg"),
     about:
-      "Succulent fresh fish from source fresh fish from source fresh fish from source fresh fish from source fresh fish from sourcev ",
+      "Succulent fresh fish from source fresh fish from source",
   },
   {
     id: 5,

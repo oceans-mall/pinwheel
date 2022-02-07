@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import COLORS from "../../consts/colors";
 
-export const FlatButton = ({ text, onPress }) => {
+export const FlatButton = ({ text, onPress = () =>{}}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={style.btn}>
@@ -13,6 +13,7 @@ export const FlatButton = ({ text, onPress }) => {
 };
 const style = StyleSheet.create({
   btn: {
+    height:60,
     borderRadius: 8,
     paddingVertical: 14,
     paddingHorizontal: 10,

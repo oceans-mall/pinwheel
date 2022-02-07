@@ -3,6 +3,7 @@ import userReducer from "./userRedux";
 import registerReducer from "./registerRedux";
 import orderReducer from "./orderRedux";
 import profileReducer from "./profilesRedux";
+import cartReducer from "./cartRedux"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { persistStore, persistReducer } from "redux-persist";
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   register: registerReducer,
   profile: profileReducer,
+  cart: cartReducer,
   order: orderReducer,
 });
 

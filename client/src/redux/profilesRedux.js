@@ -15,7 +15,7 @@ const profilesSlice = createSlice({
     },
     addProfileSuccess: (state, action) => {
       state.isProfiling = false, 
-      state.folks = action.payload;
+       state.folks.push(action.payload);
     },
     addProfileFailure: (state, action) => {
       state.isProfiling = false;
@@ -35,24 +35,25 @@ const profilesSlice = createSlice({
       state.error = true;
     },
     //update profile
-    updatedProfile: (state) => {
-      state.isLoading = true;
-      error = false;
+    updateProfile: (state) => {
+      state.isProfiling = true;
+      state.error = false;
     },
     updateProfileSuccess: (state, action) => {
-      state.isLoading = false;
+      state.isProfiling = false;
       state.folks[
         state.folks.findIndex((item) => item._id === action.payload.id)
       ] = action.payload.folk;
+      state.error = false
     },
     updateProfileFailure: (state) => {
-      state.isLoading = false;
+      state.isProfiling = false;
       state.error = true;
     },
     //delete profile
     deleteProfile: (state) => {
       state.isLoading = true;
-      error = false;
+      state.error = false;
     },
     deleteProfileSuccess: (state, action) => {
       state.isLoading = false;
@@ -74,7 +75,7 @@ export const {
   getProfileStart,
   getProfileSuccess,
   getProfileFailure,
-  updatedProfile,
+  updateProfile,
   updateProfileSuccess,
   updateProfileFailure,
   deleteProfile,

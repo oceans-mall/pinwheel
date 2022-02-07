@@ -2,13 +2,44 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../consts/colors";
+import { updatedProfile } from "../redux/apiCalls";
 
-export const Edit = ({ route, navigation}) => {
-  const { firstname, lastname, age, location, contact, region } = route.params;
+export const Edit = ({ route, navigation }) => {
+  const { _id } = route.params;
+  const [firstname, setFirstname] = useState(route.params.firstname);
+  const [lastname, setLastname] = useState(route.params.lastname)
+  const [age, setAge] = useState(route.params.age)
+  const [location, setLocation] = useState(route.params.location)
+  const [region, setRegion] = useState(route.params.region)
+  const [contact, setContact] = useState(route.params.contact)
+
+  const dispatch = useDispatch();
+
+  const profileId = useSelector((state) =>
+    state.profile.folks.find((profile) => profile._id === _id)
+  );
+
+  const handleEdit = () => {
+    const id = profileId._id
+    const folk = {
+      firstname,lastname,age,location,region,contact
+    }
+    updatedProfile(dispatch,{id, folk});
+    console.log(folk);
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{margin:5, backgroundColor:COLORS.primary, borderRadius:50, width:35, alignItems:'center'}}>
+      <View
+        style={{
+          margin: 5,
+          backgroundColor: COLORS.primary,
+          borderRadius: 50,
+          width: 35,
+          alignItems: "center",
+        }}
+      >
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={20} color="white" />
         </TouchableOpacity>
@@ -17,47 +48,48 @@ export const Edit = ({ route, navigation}) => {
         <Text style={{ fontSize: 20, margin: 10, color: COLORS.primary }}>
           UPDATE RECORDS
         </Text>
-        <TextInput
+         <TextInput
           style={styles.inputItems}
-          defaultValue={firstname}
+          defaultValue={profileId.firstname}
           editable={true}
           multiline={false}
-          onChangeText={(inputText) => setinputText(inputText)}
+          onChangeText={(fname) => setFirstname(fname)}
         />
         <TextInput
           style={styles.inputItems}
-          defaultValue={lastname}
+          defaultValue={profileId.lastname}
           editable={true}
           multiline={false}
-          onChangeText={(inputText) => setinputText(inputText)}
+          onChangeText={(lname) => setLastname(lname)}
         />
         <TextInput
           style={styles.inputItems}
-          defaultValue={age}
+          defaultValue={profileId.age}
           editable={true}
           multiline={false}
-          onChangeText={(inputText) => setinputText(inputText)}
+          onChangeText={(age) => setAge(age)}
         />
         <TextInput
           style={styles.inputItems}
-          defaultValue={contact}
+          defaultValue={profileId.contact}
           editable={true}
           multiline={false}
-          onChangeText={(inputText) => setinputText(inputText)}
+          onChangeText={(cont) => setContact(cont)}
         />
         <TextInput
           style={styles.inputItems}
-          defaultValue={location}
+          defaultValue={profileId.location}
           editable={true}
-          multiline={false}
-          onChangeText={(inputText) => setinputText(inputText)}
+          mul
+          tiline={false}
+          onChangeText={(loc) => setLocation(loc)}
         />
         <TextInput
           style={styles.inputItems}
-          defaultValue={region}
+          defaultValue={profileId.region}
           editable={true}
           multiline={false}
-          onChangeText={(text) => setText(text)}
+          onChangeText={(reg) => setRegion(reg)}
         />
         <TouchableOpacity
           style={{
@@ -68,7 +100,7 @@ export const Edit = ({ route, navigation}) => {
             paddingTop: 10,
             borderRadius: 3,
           }}
-          onPress={() => handleEdit()}
+          onPress={handleEdit}
         >
           <Text
             style={{

@@ -16,6 +16,7 @@ import {
 import COLORS from "../../consts/colors";
 import { Form } from "./Form";
 import { login, profileFolk } from "../../redux/apiCalls";
+
 export const Profile = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -37,18 +38,7 @@ export const Profile = ({ navigation }) => {
 
   const Card = ({ items }) => {
     return (
-      <View
-        style={{
-          maxWidth: 160,
-          maxHeight: 160,
-          backgroundColor: COLORS.primary,
-          borderRadius: 10,
-          zIndex: 3,
-          elevation: 5,
-          padding: 5,
-          margin: 5,
-        }}
-      >
+      <View style={styles.cardContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("Edit", items)}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.name}>{items.firstname}</Text>
@@ -58,26 +48,7 @@ export const Profile = ({ navigation }) => {
             <Text style={styles.details}>Age: {items.age}</Text>
             <Text style={styles.details}>Location: {items.location}</Text>
             <Text style={styles.details}>Region: {items.region}</Text>
-            <Text style={styles.details}>Contact: {items.contact}</Text>
-          </View>
-          <View
-            style={{
-              padding: 5,
-              backgroundColor: "green",
-              margin: 5,
-              borderRadius: 5,
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                fontSize: 15,
-                textAlign: "center",
-              }}
-            >
-              Edit
-            </Text>
+            <Text style={styles.details}>Contact: 0{items.contact}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -117,7 +88,6 @@ export const Profile = ({ navigation }) => {
           placeholder="search"
         />
         <FlatList
-          numColumns={2}
           data={profile}
           renderItem={({ item }) => <Card items={item} />}
         />
@@ -173,17 +143,32 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   toggleModal: { color: "white", fontWeight: "800" },
+  cardContainer: {
+    width: "90%",
+    borderRadius: 10,
+    padding: 10,
+    margin: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
   name: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 20,
+    fontWeight: "bold",
     textTransform: "capitalize",
-    color: COLORS.white,
+    color: COLORS.dark,
   },
   lname: {
     marginLeft: 3,
   },
   details: {
-    color: COLORS.white,
-    fontSize: 15,
+    color: COLORS.dark,
+    fontSize: 18,
   },
 });
