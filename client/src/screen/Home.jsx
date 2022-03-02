@@ -18,25 +18,28 @@ import { useSelector } from "react-redux";
 import categories from "../consts/categories";
 import COLORS from "../consts/colors";
 import { publicRequest } from "../requestMethods";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { products } from "../redux/apiCalls";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
 
 export const Home = ({ navigation }) => {
   const [selectedCatIndex, setselectedCatIndex] = useState(0);
-  const [data, setData] = useState([]);
-
+  const dispatch = useDispatch();
   const username = useSelector((state) => state.user.currentUser?.firstname);
-  //making api call
+  const product = useSelector((state) => state.product.products);
+
+  const [query, setQuery] = useState("");
+  //getting data from api
   useEffect(() => {
-    const getFishes = async () => {
-      try {
-        const res = await publicRequest.get("product/");
-        setData(res.data);
-      } catch {}
-    };
-    getFishes();
-  }, []);
+    products(dispatch);
+  }, [dispatch]);
+
+  //search function
+  const search = (data) =>
+    data.filter((item) => item.name.toLowerCase().includes(query));
 
   const ListCat = () => {
     return (
@@ -138,7 +141,17 @@ export const Home = ({ navigation }) => {
             </View>
           </View>
           <View>
-            <Text style={{margin:10, textAlign: "left",fontWeight:'bold', fontSize: 15, color: items.inStock ? 'green' : 'red' }}>inStock</Text>
+            <Text
+              style={{
+                margin: 10,
+                textAlign: "left",
+                fontWeight: "bold",
+                fontSize: 15,
+                color: items.inStock ? "green" : "red",
+              }}
+            >
+              inStock
+            </Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -168,7 +181,11 @@ export const Home = ({ navigation }) => {
       >
         <View style={style.inputContainer}>
           <AntDesign name="search1" size={28} />
-          <TextInput style={{ flex: 1, fontSize: 18 }} placeholder="Search" />
+          <TextInput
+            style={{ flex: 1, fontSize: 18 }}
+            placeholder="Search"
+            onChangeText={(val) => setQuery(val)}
+          />
         </View>
         <View style={style.sortBtn}>
           <AntDesign name="filter" size={28} color={COLORS.white} />
@@ -180,7 +197,7 @@ export const Home = ({ navigation }) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={data}
+        data={search(product)}
         renderItem={(item) => <CardList items={item.item} />}
       />
     </SafeAreaView>

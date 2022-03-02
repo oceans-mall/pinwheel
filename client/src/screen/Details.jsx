@@ -27,6 +27,10 @@ export const Details = ({ navigation, route }) => {
       setQty(quantity + 1);
     }
   };
+  useEffect(() => {
+    handleBuyBtn();
+  }, []);
+
   //handle buy button method
   const handleBuyBtn = () => {
     if (quantity === 0) {
@@ -35,25 +39,17 @@ export const Details = ({ navigation, route }) => {
       disptach(addToCart({...fish,quantity}));
     }
   };
-  useEffect(() => {
-    handleBuyBtn();
-  }, [fish._id]);
-
   //handle cart?
-  const cartPressed = () => {
+   const cartPressed = () => {
     cart === 0
       ? Alert.alert("sorry your cart is empty")
-      : navigation.navigate("ShoppingCart");
+      : navigation.navigate("Cart");
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={style.header}>
-        <Ionicons
-          name="arrow-back"
-          size={25}
-          onPress={() => navigation.goBack()}
-        />
-        {/* {cart? incon container} */}
+        <View></View>
+        {/* {cart? icon container} */}
         <View
           style={{
             postion: "relative",
@@ -69,7 +65,7 @@ export const Details = ({ navigation, route }) => {
             name="cart-outline"
             size={25}
             color={"white"}
-            onPress={() => cartPressed()}
+            onPress={cartPressed}
           />
           <Text
             style={{
@@ -87,8 +83,8 @@ export const Details = ({ navigation, route }) => {
       </View>
       <View style={style.imgContainer}>
         <Image
-          source={fish.img}
-          style={{ resizeMode: "contain", flex: 1, height: 300, width: 300 }}
+          source={fish?.img}
+          style={{ resizeMode: "contain", flex: 1, height: 250, width: 250 }}
         />
       </View>
       <View style={style.detailsContaner}>
@@ -111,7 +107,7 @@ export const Details = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "bold" }}>{fish.name}</Text>
+          <Text style={{ fontSize: 22, fontWeight: "bold" }}>{fish?.name}</Text>
           <View style={style.priceTag}>
             <Text
               style={{
@@ -122,12 +118,11 @@ export const Details = ({ navigation, route }) => {
                 fontWeight: "bold",
               }}
             >
-              &#x20B5;{fish.price}
+              &#x20B5;{fish?.price}
             </Text>
           </View>
         </View>
         <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>About</Text>
           <Text
             style={{
               color: "gray",
@@ -135,8 +130,9 @@ export const Details = ({ navigation, route }) => {
               lineHeight: 22,
               marginTop: 10,
             }}
+            numberOfLines={3}
           >
-            {fish.desc}
+            {fish?.desc || 'Nothing selected'}
           </Text>
           <View
             style={{

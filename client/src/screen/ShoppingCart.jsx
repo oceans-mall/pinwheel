@@ -7,19 +7,24 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
-import fish from "../consts/fish";
 
 export const ShoppingCart = ({ navigation }) => {
+  //get cart state
+  const cart = useSelector((state) => state.cart.cart);
+  //get total cost
+  const total = useSelector((state) => state.cart.total);
+  //check if use is loggedin and navigate to payment
 
-//get cart state
-const cart = useSelector((state) => state.cart.cart)
+  //verify user
+  const user = useSelector((state) => state.user.currentUser.accessToken);
 
-//get total cost
-const total = useSelector((state) => state.cart.total)
+  const verifyUserLogin = () => {
+    user ? navigation.navigate("Payment") : navigation.navigate("Login");
+  };
   const CartCard = ({ items }) => {
     return (
       <View style={style.cartCard}>
@@ -43,11 +48,13 @@ const total = useSelector((state) => state.cart.total)
             {items.mix}
           </Text>
           <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-          &#x20B5;{items.price}
+            &#x20B5;{items.price}
           </Text>
         </View>
         <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{items.quantity}</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+            {items.quantity}kg
+          </Text>
           <View style={style.actionBtn}>
             <Ionicons name="remove" size={25} color={COLORS.white} />
             <Ionicons name="add" size={25} color={COLORS.white} />
@@ -58,23 +65,6 @@ const total = useSelector((state) => state.cart.total)
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      <View style={style.header}>
-        <AntDesign
-          name="arrowleft"
-          size={28}
-          onPress={() => navigation.goBack()}
-        />
-        <Text
-          style={{
-            fontSize: 23,
-            marginLeft: 8,
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
-          Cart
-        </Text>
-      </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 80 }}
@@ -92,10 +82,12 @@ const total = useSelector((state) => state.cart.total)
               <Text style={{ fontSize: 18, fontWeight: "bold" }}>
                 Total Cost
               </Text>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>&#x20B5; {total}</Text>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                &#x20B5; {total}
+              </Text>
             </View>
             <View style={{ marginHorizontal: 30 }}>
-              <TouchableOpacity onPress={() =>navigation.navigate("Payment")}>
+              <TouchableOpacity onPress={verifyUserLogin}>
                 <View style={style.btn}>
                   <Text style={style.btnText}>CHECKOUT</Text>
                 </View>
@@ -121,7 +113,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.white,
     marginVertical: 10,
     marginHorizontal: 20,
-    flexDirection: " row",
+    flexDirection: "row",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -143,11 +135,11 @@ const style = StyleSheet.create({
     justifyContent: "center",
   },
   btn: {
-    height:60,
+    height: 60,
     borderRadius: 8,
     paddingVertical: 14,
     paddingHorizontal: 10,
-    backgroundColor: COLORS.primary, 
+    backgroundColor: COLORS.primary,
   },
   btnText: {
     color: "white",

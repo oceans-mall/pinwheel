@@ -33,16 +33,16 @@ export const Dashboard = ({navigation}) => {
         >
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Trade Total</Text>
-            <Text style={styles.tradeAmount}>GHS</Text>
+            <Text style={styles.tradeAmount}>&#x20B5;</Text>
           <Text style={styles.tradeAmount}>{tradeTotal}</Text>
           </View>
           <View style={styles.trade}>
-            <Text style={styles.tradeTitle}>Number of Fishermen</Text>
+            <Text style={styles.tradeTitle}>Registered Fishermen</Text>
             <Text style={styles.tradeAmount}>{count}</Text>
           </View>
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Purchase</Text>
-            <Text style={styles.tradeAmount}>GHS</Text>
+            <Text style={styles.tradeAmount}> &#x20B5;</Text>
             <Text style={styles.tradeAmount}>{purchase}</Text>
           </View>
         </View>

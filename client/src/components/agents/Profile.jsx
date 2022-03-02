@@ -15,14 +15,14 @@ import {
 } from "react-native";
 import COLORS from "../../consts/colors";
 import { Form } from "./Form";
-import { login, profileFolk } from "../../redux/apiCalls";
+import { profile, profileFolk } from "../../redux/apiCalls";
 
 export const Profile = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   //fetching data from redux
-  const profile = useSelector((state) => state.profile.folks);
+  const getProfile = useSelector((state) => state.profile.folks);
   //fetching data from the api
   useEffect(() => {
     profileFolk(dispatch);
@@ -30,7 +30,7 @@ export const Profile = ({ navigation }) => {
 
   //adding info to database
   const addFisherman = (details) => {
-    login(dispatch, {
+    profile(dispatch, {
       ...details,
     });
     setModalOpen(false);
@@ -88,7 +88,7 @@ export const Profile = ({ navigation }) => {
           placeholder="search"
         />
         <FlatList
-          data={profile}
+          data={getProfile}
           renderItem={({ item }) => <Card items={item} />}
         />
         <Modal visible={modalOpen} animationType="fade">

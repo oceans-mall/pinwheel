@@ -29,7 +29,7 @@ export const Trade = ({ quantity, price, img, type }) => {
         />
         <View style={{ flexDirection: "column", marginHorizontal: 5 }}>
           <Text style={styles.text}>{type}</Text>
-          <Text style={styles.text}>GHS {salesprice}</Text>
+          <Text style={styles.text}>&#x20B5; {salesprice}</Text>
         </View>
       </View>
       <View style={{ flexDirection: "column" }}>

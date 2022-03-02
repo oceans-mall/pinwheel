@@ -33,7 +33,7 @@ export const ShopDetails = ({ navigation, route }) => {
           }}
         >
           <Image
-            source={item.img}
+            source={item?.img}
             style={{ height: 220, width: 220, borderRadius: 30 }}
           />
         </View>
@@ -46,14 +46,13 @@ export const ShopDetails = ({ navigation, route }) => {
             }}
           >
             <Text style={{ fontSize: 25, fontWeight: "bold", color: "white" }}>
-              {item.name}
+              {item?.name}
             </Text>
             <View style={style.iconContainer}>
               <Ionicons name="heart-outline" size={25} color={COLORS.primary} />
             </View>
           </View>
-          <Text style={style.detailsTxt}>{item.about}</Text>
-        
+          <Text style={style.detailsTxt}>{item?.about}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -68,7 +67,7 @@ const style = StyleSheet.create({
     marginHorizontal: 20,
   },
   details: {
-      flex:1,
+    flex: 1,
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 60,
@@ -84,10 +83,10 @@ const style = StyleSheet.create({
     alignItems: "center",
     borderRadius: 30,
   },
-  detailsTxt:{
-      marginTop:10,
-      lineHeight: 22,
-      fontSize: 18,
-      color: COLORS.white
-  }
+  detailsTxt: {
+    marginTop: 10,
+    lineHeight: 22,
+    fontSize: 18,
+    color: COLORS.white,
+  },
 });

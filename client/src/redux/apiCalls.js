@@ -20,6 +20,18 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { publicRequest } from "../requestMethods";
 import { addToCart } from "./cartRedux";
+import { getProducts, getProductsSuccess } from "./productsRedux";
+
+//get Products
+export const products = async (dispatch) => {
+  dispatch(getProducts());
+  try {
+    const res = await publicRequest.get("product/");
+    dispatch(getProductsSuccess(res.data))
+  } catch (err) {
+    dispatch(getProfileFailure())
+  }
+}
 
 //log user in
 export const login = async (dispatch, user) => {

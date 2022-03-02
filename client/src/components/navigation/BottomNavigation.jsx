@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../consts/colors";
@@ -21,11 +21,11 @@ const tabItems = [
     id: "2",
     name: "Details",
     component: Details,
-    icon: "menu",
+    icon: "information-outline",
   },
   {
     id: "3",
-    name: "ShoppingCart",
+    name: "Cart",
     component: ShoppingCart,
     icon: "cart-outline",
   },
@@ -45,58 +45,47 @@ const tabItems = [
 
 export const BottomNavigation = () => {
   const Tab = createBottomTabNavigator();
-  const [selectIndex, setselectedIndex] = useState(0);
   return (
     <Tab.Navigator
-      screenOptions={{
-        style: {
-          height: 55,
-          borderTopWidth: 0,
-          elevation: 0,
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, size, color }) => {
+          let iconName;
+          tabItems.map((item, i) => {
+            route.name === item.name
+              ? ((size = focused ? 25 : 20),
+                (color = focused ? COLORS.primary : color),
+                (iconName = item.icon))
+              : null;
+          });
+          return (
+            <View style={focused && iconName ? style.selectedTab : null}>
+              <Ionicons name={iconName} size={size} color={color} />
+            </View>
+          );
         },
-        tabBarActiveTintColor: COLORS.primary,
         tabBarShowLabel: false,
-        tabBarStyle: [
-          {
-            display: "flex",
-          },
-          null,
-        ],
-      }}
+      })}
     >
-      {tabItems.map((tab, i) => (
-        <Tab.Screen
-          key={i}
-          name={tab.name}
-          component={tab.component}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <View  style={selectIndex == i ? style.selectedTab : null}>
-                <Ionicons
-                  name={tab.icon}
-                  size={28}
-                  color={selectIndex == i ? COLORS.primary : color}
-                />
-              </View>
-            ),
-          }}
-        />
-      ))}
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Details" component={Details} />
+      <Tab.Screen name="Cart" component={ShoppingCart} />
+      <Tab.Screen name="Payment" component={Payment} />
+      <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );
 };
 
 const style = StyleSheet.create({
   selectedTab: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.white,
     borderColor: COLORS.primary,
     borderWidth: 2,
     borderRadius: 30,
-    top: -25,
+    top: -20,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

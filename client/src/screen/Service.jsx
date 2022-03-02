@@ -31,7 +31,7 @@ export const Service = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.item}>
-              <TouchableOpacity onPress={() =>navigation.navigate("Shop")}>
+              <TouchableOpacity onPress={() => navigation.navigate("Shop")}>
                 <Text style={styles.txt}>SHOP</Text>
                 <Ionicons
                   name="cart-outline"
@@ -57,8 +57,14 @@ export const Service = ({ navigation }) => {
               <Ionicons name="rainy-outline" size={50} color={COLORS.primary} />
             </View>
             <View style={styles.item}>
-              <Text style={styles.txt}>CONTACT US</Text>
-              <Ionicons name="call-outline" size={50} color={COLORS.primary} />
+              <TouchableOpacity onPress={() => navigation.navigate("Contact")}>
+                <Text style={styles.txt}>CONTACT US</Text>
+                <Ionicons
+                  name="call-outline"
+                  size={50}
+                  color={COLORS.primary}
+                />
+              </TouchableOpacity>
             </View>
           </View>
         </View>

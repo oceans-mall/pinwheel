@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Platform,
   StyleSheet,
@@ -13,8 +13,11 @@ import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import COLORS from "../../consts/colors";
-import { login } from "../../redux/apiCalls";
+//import { login } from "../../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
+import { loginStart } from "../../redux/userRedux";
+import { publicRequest } from "../../requestMethods";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const SignIn = ({ navigation }) => {
   const [data, setData] = useState({
@@ -28,25 +31,39 @@ export const SignIn = ({ navigation }) => {
   const dispatch = useDispatch();
   const { check_textInputChange, secureTextEntry, ...others } = data;
 
-  const handleSubmit = () => {
-    login(dispatch, {
-      ...others,
-    });
-  };
+  // const handleSubmit = () => {
+  //   login(dispatch, {
+  //     ...others,
+  //   });
+  // };
 
+  const handleLogin = async () => {
+    dispatch(loginStart());
+    try {
+      const user = await publicRequest.post("auth/login", others);
+      const token = JSON.stringify(user.data.accessToken);
+      await AsyncStorage.setItem("Token", token);
+      dispatch(loginSuccess(token));
+      navigation.navigate("Agent");
+    } catch (err) {
+      dispatch(loginFailure);
+    }
+  };
   //Activity indicator
-  if (isFetching) {
-    return (
-      <ActivityIndicator
-        size="large"
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      />
-    );
-  }
+  // if (isFetching) {
+  //   return (
+  //     <ActivityIndicator
+  //       size="large"
+  //       style={{
+  //         flex: 1,
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //         backgroundColor: "#00000099",
+  //       }}
+  //     />
+  //   );
+  // }
+
   const textInputChange = (val) => {
     setData({
       ...data,
@@ -115,7 +132,9 @@ export const SignIn = ({ navigation }) => {
           >
             <TouchableOpacity
               style={{ width: "100%", alignItems: "center" }}
-              onPress={handleSubmit}
+              onPress={handleLogin}
+              disabled={isFetching}
+              activeOpacity={0.5}
             >
               <Text
                 style={[
@@ -130,7 +149,7 @@ export const SignIn = ({ navigation }) => {
             </TouchableOpacity>
           </LinearGradient>
           <Text style={[styles.message, { color: error ? "red" : "green" }]}>
-            {error ? ` ` : success ? `successful` : null}
+            {error ? `failed` : success ? `successful ` : null}
           </Text>
           <TouchableOpacity
             style={[

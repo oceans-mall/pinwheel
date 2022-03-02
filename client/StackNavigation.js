@@ -15,24 +15,27 @@ import { Edit } from "./src/screen/Edit";
 import { useSelector } from "react-redux";
 import { Payment } from "./src/screen/Payment";
 import { BottomNavigation } from "./src/components/navigation/BottomNavigation";
+import { Contact } from "./src/screen/Contact";
 
 const Stack = createStackNavigator();
 
 export default function StackNavigation() {
   const [token, setToken] = useState();
+ 
+  useEffect(() => {
+    getUser();
+  }, []);
   const getUser = async () => {
     try {
-      const value = await AsyncStorage.getItem("user");
+      const value = await AsyncStorage.getItem("Token");
       return value !== null ? setToken(JSON.parse(value)) : null;
     } catch (e) {
       // read error
       console.log(e);
     }
   };
-  useEffect(() => {
-    getUser();
-  }, []);
-  // const user = useSelector((state) => state.user.currentUser.isAgent); 
+ 
+  // const user = useSelector((state) => state.user.currentUser.isAgent);
   // console.log(user);
   return (
     <NavigationContainer>
@@ -42,10 +45,10 @@ export default function StackNavigation() {
       >
         {token ? (
           <Stack.Group>
-            <Stack.Screen name="Agent" component={Agent} />
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="Edit" component={Edit} />
-            <Stack.Screen  name="Payment" component={Payment} />
+            <Stack.Screen name="Payment" component={Payment} />
+            <Stack.Screen name="Agent" component={Agent} />
           </Stack.Group>
         ) : (
           <Stack.Group>
@@ -55,6 +58,7 @@ export default function StackNavigation() {
             <Stack.Screen name="Login" component={SignIn} />
             <Stack.Screen name="Register" component={Signup} />
             <Stack.Screen name="Reset" component={ResetPassword} />
+            <Stack.Screen name="Contact" component={Contact} />
           </Stack.Group>
         )}
       </Stack.Navigator>

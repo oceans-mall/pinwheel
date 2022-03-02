@@ -17,6 +17,8 @@ import COLORS from "../../consts/colors";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/apiCalls";
+import { loginFailure, loginStart } from "../../redux/userRedux";
+import { publicRequest } from "../../requestMethods";
 
 export const Signup = ({ navigation }) => {
   const [data, setData] = useState({
@@ -43,6 +45,9 @@ export const Signup = ({ navigation }) => {
     });
     console.log({ ...others });
   };
+
+
+
   //Activity indicator
   if (isRegistering) {
     return (
@@ -142,7 +147,6 @@ export const Signup = ({ navigation }) => {
   //   });
   // };
 
- 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -272,7 +276,7 @@ export const Signup = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             </LinearGradient>
-            <Text style={{color: error ? 'red': 'green'}}>
+            <Text style={{ color: error ? "red" : "green" }}>
               {error ? `process failed` : success ? `successful` : null}
             </Text>
             <TouchableOpacity

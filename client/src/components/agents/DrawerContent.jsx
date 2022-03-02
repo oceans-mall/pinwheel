@@ -22,6 +22,7 @@ export const DrawerContent = (props) => {
     try {
       await AsyncStorage.removeItem("user");
       Alert.alert("logout complete");
+      // navigation.navigate("Service")
     } catch (err) {
       console.log(err);
     }

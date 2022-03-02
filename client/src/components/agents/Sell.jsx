@@ -13,18 +13,12 @@ export const Sell = ({ navigation }) => {
   const [quantity, setQuantity] = useState(0);
   const [sourcetype, setSource] = useState("--source--");
   const [selectedValue, setSelectedValue] = useState("--select--");
-  const [ filter, setFilters] = useState({})
+  const [filter, setFilters] = useState({});
+  
+  console.log(sourcetype, selectedValue);
 
-//   const handleFilters = () => {
-//     setFilters({
-//       ...filter,
-//        sourcetype, selectedValue
-//     })
-//     handleFilters()
-//   }
-// console.log(filter);
- const fisherman = useSelector((state) => state.profile.folks)
- console.log(fisherman);
+  const { folks, location } = useSelector((state) => state.profile);
+  console.log(folks, location);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -106,7 +100,7 @@ export const Sell = ({ navigation }) => {
                 style={{
                   fontSize: 25,
                   color: COLORS.secondary,
-                  textAlign:'center'
+                  textAlign: "center",
                 }}
               >
                 Fisehrman name
@@ -169,7 +163,7 @@ export const Sell = ({ navigation }) => {
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.text}>Price(/kg):</Text>
-              <Text style={styles.sell_input}>GHS 20</Text>
+              <Text style={styles.sell_input}>&#x20B5; 20</Text>
             </View>
             <Text style={styles.text}>Total Amount:</Text>
             <View
@@ -186,7 +180,7 @@ export const Sell = ({ navigation }) => {
                   style={{
                     fontSize: 20,
                     color: COLORS.white,
-                    fontWeight:'bold'
+                    fontWeight: "bold",
                   }}
                 >
                   ADD TO BASKET
@@ -214,9 +208,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   sell_input: {
-    borderWidth:0.5,
+    borderWidth: 0.5,
     marginLeft: 10,
-    padding:5,
+    padding: 5,
     fontSize: 18,
     color: COLORS.primary,
   },

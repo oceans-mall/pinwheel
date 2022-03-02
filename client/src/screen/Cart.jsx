@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+ import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   SafeAreaView,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 0.1,
     justifyContent: "space-between",
     backgroundColor: COLORS.primary,
-    flexDirection: "row",
+    flexDirection:"row",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
