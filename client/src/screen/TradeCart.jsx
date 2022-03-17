@@ -6,14 +6,18 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
+import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { trades } from "../consts/dummyData";
 import { Trade } from "./Trade";
 
-export const Cart = ({ navigation }) => {
+export const TradeCart = ({ navigation }) => {
   const [trade, setTrade] = useState(trades);
-
+const total = useSelector((state) => state.order?.total)
+const orders = useSelector(state => state.order?.product)
+console.log(orders);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -36,18 +40,19 @@ export const Cart = ({ navigation }) => {
           </Text>
           <View></View>
         </View>
+        <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
         <View style={styles.tradeDisplay}>
-          {trade.length > 0 &&
-            trade.map((trade) => (
+          {orders.length > 0 &&
+            orders.map((order) => (
               <Trade
-                price={trade.price}
-                quantity={trade.quantity}
-                img={trade.img}
-                type={trade.fishType}
-                key={trade.id}
+                price={order.price}
+                weight={order.weight}
+                name={order.name}
+                key={order.id}
               />
             ))}
         </View>
+        </ScrollView>
         <View
           style={{
             flex: 0.05,
@@ -57,9 +62,9 @@ export const Cart = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          <Text style={styles.txt}>Total Cash</Text>
+          <Text style={styles.txt}>Total Amount:</Text>
           <TouchableOpacity>
-            <Text style={styles.txt}>GHS </Text>
+            <Text style={styles.txt}> &#x20B5;{total} </Text>
           </TouchableOpacity>
         </View>
         <View
@@ -73,9 +78,10 @@ export const Cart = ({ navigation }) => {
             borderRadius: 20,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("Payment")}>
+          {/* onPress={() => navigation.navigate('Agent', {screen:"Order History"})} */}
+          <TouchableOpacity onPress={() => navigation.navigate('Payment')}>
             <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-              SUBMIT TRADE
+              SELL
             </Text>
           </TouchableOpacity>
         </View>
@@ -102,7 +108,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   tradeDisplay: {
-    flex: 0.8,
+    flex: 1,
     padding: 5,
   },
   txt: {

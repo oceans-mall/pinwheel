@@ -16,13 +16,13 @@ const folksSchema = yup.object({
 });
 export const Form = ({ addFisherman }) => {
   const [user_id, setuserId ] = useState("")
-  const userID = useSelector((state) => state.user.currentUser);
-  const {_id} = userID
+  const userID = useSelector((state) => state.user?.currentUser);
+  // const {_id} = userID
 
-  useEffect(() => {
-    setuserId(_id)
-  }, [])
-  console.log(user_id);
+  // useEffect(() => {
+  //   setuserId(_id)
+  // }, [])
+  // console.log(user_id);
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 20 }}>

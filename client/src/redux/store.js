@@ -3,11 +3,13 @@ import userReducer from "./userRedux";
 import registerReducer from "./registerRedux";
 import orderReducer from "./orderRedux";
 import profileReducer from "./profilesRedux";
+import sourceReducer from "./sourceRedux"
 import cartReducer from "./cartRedux"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { persistStore, persistReducer } from "redux-persist";
 import productsReducer from "./productsRedux";
+import fishReducer from "./fishRedux";
 
 const persistConfig = {
   key: "users",
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   product: productsReducer,
   cart: cartReducer,
   order: orderReducer,
+  source: sourceReducer,
+  fish: fishReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

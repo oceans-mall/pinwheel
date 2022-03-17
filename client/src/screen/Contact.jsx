@@ -12,7 +12,7 @@ export const Contact = () => {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "white",
-          margin: 10,
+          margin: 5,
         }}
       >
         <Text
@@ -41,7 +41,7 @@ export const Contact = () => {
               name="facebook-square"
               color="blue"
               size={25}
-              style={{ borderRadius: "50%", padding: 5 }}
+              style={{ borderRadius: 50, padding: 5 }}
             />
             <Text style={style.contactTxt}>oceansmallgh</Text>
           </View>
@@ -70,8 +70,8 @@ const style = StyleSheet.create({
   contact: {
     flexDirection: "row",
     backgroundColor: COLORS.primary,
-    padding: 20,
-    margin: 20,
+    padding: 15,
+    margin: 15,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -85,7 +85,7 @@ const style = StyleSheet.create({
   },
   contactTxt: {
     marginLeft: 10,
-    fontSize: 25,
+    fontSize: 20,
     fontWeight:'normal',
     fontStyle:'italic',
     color:'white',

@@ -1,5 +1,4 @@
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -17,8 +16,6 @@ import {
 import { useSelector } from "react-redux";
 import categories from "../consts/categories";
 import COLORS from "../consts/colors";
-import { publicRequest } from "../requestMethods";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { products } from "../redux/apiCalls";
 
@@ -162,27 +159,29 @@ export const Home = ({ navigation }) => {
       <View style={style.header}>
         <View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: 28 }}>Hello,</Text>
-            <Text style={{ fontSize: 28, fontWeight: "bold", marginLeft: 10 }}>
+            <Text style={{ fontSize: 25 }}>Hello,</Text>
+            <Text style={{ fontSize: 25, fontWeight: "bold", marginLeft: 10 }}>
               {username}
             </Text>
           </View>
-          <Text style={{ marginTop: 5, fontSize: 22, color: "gray" }}>
+          <Text style={{ marginTop: 5, fontSize: 20, color: "gray" }}>
             What do you want today
           </Text>
         </View>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Image
           source={require("../assets/useravatar.jpg")}
-          style={{ height: 50, width: 50, borderRadius: 25 }}
+          style={{ height: 40, width: 40, borderRadius: 25 }}
         />
+        </TouchableOpacity>
       </View>
       <View
         style={{ marginTop: 40, flexDirection: "row", paddingHorizontal: 20 }}
       >
         <View style={style.inputContainer}>
-          <AntDesign name="search1" size={28} />
+          <AntDesign name="search1" size={25} />
           <TextInput
-            style={{ flex: 1, fontSize: 18 }}
+            style={{ flex: 1, fontSize: 18, height:30}}
             placeholder="Search"
             onChangeText={(val) => setQuery(val)}
           />

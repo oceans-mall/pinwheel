@@ -34,6 +34,7 @@ export const Edit = ({ route, navigation }) => {
       <View
         style={{
           margin: 5,
+          padding: 5,
           backgroundColor: COLORS.primary,
           borderRadius: 50,
           width: 35,
@@ -59,7 +60,7 @@ export const Edit = ({ route, navigation }) => {
           style={styles.inputItems}
           defaultValue={profileId.lastname}
           editable={true}
-          multiline={false}
+          multiline={false} 
           onChangeText={(lname) => setLastname(lname)}
         />
         <TextInput

@@ -44,6 +44,7 @@ export const Signup = ({ navigation }) => {
       ...others,
     });
     console.log({ ...others });
+    navigation.navigate("Login")
   };
 
 

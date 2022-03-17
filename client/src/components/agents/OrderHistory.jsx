@@ -22,7 +22,7 @@ export const OrderHistory = ({ navigation }) => {
         <Text
           style={{ fontSize: 18, fontWeight: "bold", color: COLORS.primary }}
         >
-          Orders History
+          Order History
         </Text>
         <View></View>
       </View>
@@ -38,7 +38,7 @@ export const OrderHistory = ({ navigation }) => {
               <Text>{fish.price}</Text>
             </View>
             <View>
-                <Text>{fish.date}</Text>
+              <Text>{fish.date}</Text>
               <Text>REORDER</Text>
             </View>
           </View>
@@ -59,8 +59,8 @@ const style = StyleSheet.create({
   },
   card: {
     height: 100,
-    borderRadius: 5,
     backgroundColor: COLORS.white,
+    borderRadius: 5,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 10,

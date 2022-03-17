@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Source = require("../models/Source");
 
-//create product
+//create source
 router.post("/", async (req, res) => {
   const newSource = new Source(req.body);
   try {
@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
         res.status(500).json(err)
     }
 })
-//update product
+//update source
 router.put("/:id", async (req, res) => {
   try {
     const updatedProduct = await Source.findByIdAndUpdate(
@@ -36,7 +36,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//delete product
+//delete source
 router.delete("/:id", async (req, res) => {
     try {
         await Source.findByIdAndDelete(req.params.id)

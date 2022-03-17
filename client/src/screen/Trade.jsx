@@ -1,60 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import COLORS from "../consts/colors";
-import { useSelector } from "react-redux";
 
-export const Trade = ({ quantity, price, img, type }) => {
-  const [newquantity, setNewQuantity] = useState(quantity);
-  const [salesprice, setPrice] = useState(price);
-  let [totalcost, setTotalCost] = useState(0);
-
-  const order = useSelector(state => state.order)
-  console.log(order);
-  useEffect(() => {
-    setTotalCost(salesprice * newquantity);
-  }, [salesprice, newquantity]);
-
+export const Trade = ({ weight, price, name }) => {
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row" }}>
-        <Image
-          source={img}
-          style={{
-            width: 80,
-            height: 80,
-            resizeMode: "cover",
-            borderRadius: 50,
-          }}
-        />
-        <View style={{ flexDirection: "column", marginHorizontal: 5 }}>
-          <Text style={styles.text}>{type}</Text>
-          <Text style={styles.text}>&#x20B5; {salesprice}</Text>
+      <View>
+        <View style={{ marginHorizontal: 5 }}>
+          <Text
+            style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}
+          >
+            {name.toUpperCase()}
+          </Text>
         </View>
       </View>
-      <View style={{ flexDirection: "column" }}>
-        <Text style={styles.text}>{newquantity}</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            backgroundColor: COLORS.primary,
-            padding: 10,
-            borderRadius: 5,
-          }}
-        >
-          <TouchableOpacity onPress={() => setNewQuantity(newquantity - 1)}>
-            <AntDesign
-              name="minus"
-              size={20}
-              color="white"
-              style={{ marginRight: 10 }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setNewQuantity(newquantity + 1)}>
-            <AntDesign name="plus" size={20} color="white" />
-          </TouchableOpacity>
-        </View>
+      <View style={{ flexDirection: "row" }}>
+        <Text style={styles.text}>Price: &#x20B5;{price}</Text>
+        <Text style={styles.text}>Quantity: {weight}kg</Text>
       </View>
     </View>
   );
@@ -62,11 +24,13 @@ export const Trade = ({ quantity, price, img, type }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
-    padding: 15,
+    width: "95%",
+    height: "20%",
+    alignItems: "center",
+    padding: 5,
     backgroundColor: "white",
     margin: 10,
     borderRadius: 10,
@@ -80,5 +44,5 @@ const styles = StyleSheet.create({
 
     elevation: 10,
   },
-  text: { fontSize: 18, padding: 5 },
+  text: { fontSize: 18, padding: 5, fontWeight: "600", color: COLORS.primary },
 });

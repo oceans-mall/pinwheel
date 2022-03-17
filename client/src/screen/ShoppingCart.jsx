@@ -17,14 +17,7 @@ export const ShoppingCart = ({ navigation }) => {
   const cart = useSelector((state) => state.cart.cart);
   //get total cost
   const total = useSelector((state) => state.cart.total);
-  //check if use is loggedin and navigate to payment
-
-  //verify user
-  const user = useSelector((state) => state.user.currentUser.accessToken);
-
-  const verifyUserLogin = () => {
-    user ? navigation.navigate("Payment") : navigation.navigate("Login");
-  };
+  const user = useSelector((state) => state.user.currentUser);
   const CartCard = ({ items }) => {
     return (
       <View style={style.cartCard}>
@@ -87,7 +80,15 @@ export const ShoppingCart = ({ navigation }) => {
               </Text>
             </View>
             <View style={{ marginHorizontal: 30 }}>
-              <TouchableOpacity onPress={verifyUserLogin}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (user === null) {
+                    navigation.navigate("Login");
+                  } else {
+                    navigation.navigate("Payment");
+                  }
+                }}
+              >
                 <View style={style.btn}>
                   <Text style={style.btnText}>CHECKOUT</Text>
                 </View>

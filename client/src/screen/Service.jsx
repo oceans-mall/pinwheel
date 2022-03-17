@@ -22,7 +22,7 @@ export const Service = ({ navigation }) => {
                 style={{ alignItems: "center" }}
                 onPress={() => navigation.navigate("Login")}
               >
-                <Text style={styles.txt}>TRADE</Text>
+                <Text style={styles.txt}>AGENTS</Text>
                 <Ionicons
                   name="card-outline"
                   size={50}

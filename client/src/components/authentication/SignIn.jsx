@@ -13,9 +13,8 @@ import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import COLORS from "../../consts/colors";
-//import { login } from "../../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
-import { loginStart } from "../../redux/userRedux";
+import { loginStart, loginSuccess, loginFailure } from "../../redux/userRedux";
 import { publicRequest } from "../../requestMethods";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -26,6 +25,7 @@ export const SignIn = ({ navigation }) => {
     check_textInputChange: false,
     secureTextEntry: true,
   });
+  const [fetchUser, setFetchUser] = useState();
   //calling state from redux
   const { isFetching, error, success } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -37,32 +37,22 @@ export const SignIn = ({ navigation }) => {
   //   });
   // };
 
-  const handleLogin = async () => {
-    dispatch(loginStart());
-    try {
-      const user = await publicRequest.post("auth/login", others);
-      const token = JSON.stringify(user.data.accessToken);
-      await AsyncStorage.setItem("Token", token);
-      dispatch(loginSuccess(token));
-      navigation.navigate("Agent");
-    } catch (err) {
-      dispatch(loginFailure);
-    }
-  };
-  //Activity indicator
-  // if (isFetching) {
-  //   return (
-  //     <ActivityIndicator
-  //       size="large"
-  //       style={{
-  //         flex: 1,
-  //         alignItems: "center",
-  //         justifyContent: "center",
-  //         backgroundColor: "#00000099",
-  //       }}
-  //     />
-  //   );
-  // }
+  // const handleLogin = async () => {
+  //   dispatch(loginStart());
+  //   try {
+  //     const user = await publicRequest.post("auth/login", others);
+  //     const token = JSON.stringify(user.data.accessToken);
+  //     await AsyncStorage.setItem("token", token);
+  //     navigation.navigate("Agent");
+  //     return user;
+  //   } catch (err) {
+  //     dispatch(loginFailure);
+  //   }
+  // };
+  
+  setTimeout(() => {
+    setFetchUser(!fetchUser);
+  }, 3000);
 
   const textInputChange = (val) => {
     setData({
@@ -132,9 +122,9 @@ export const SignIn = ({ navigation }) => {
           >
             <TouchableOpacity
               style={{ width: "100%", alignItems: "center" }}
-              onPress={handleLogin}
-              disabled={isFetching}
               activeOpacity={0.5}
+              onPress={() => navigation.navigate("Agent")}
+              disabled={isFetching}
             >
               <Text
                 style={[
@@ -148,9 +138,9 @@ export const SignIn = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </LinearGradient>
-          <Text style={[styles.message, { color: error ? "red" : "green" }]}>
-            {error ? `failed` : success ? `successful ` : null}
-          </Text>
+          {/* {fetchUser ? (
+            <ActivityIndicator size="small" color="#00ff00"  />
+          ) : null} */}
           <TouchableOpacity
             style={[
               styles.signIn,

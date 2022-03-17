@@ -64,13 +64,15 @@ export const BottomNavigation = () => {
           );
         },
         tabBarShowLabel: false,
+        headerTitleAlign:'center',
+        headerTintColor:COLORS.primary
       })}
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Details" component={Details} />
       <Tab.Screen name="Cart" component={ShoppingCart} />
       <Tab.Screen name="Payment" component={Payment} />
-      <Tab.Screen name="Account" component={Account} />
+      {/* <Tab.Screen name="Account" component={Account} /> */}
     </Tab.Navigator>
   );
 };

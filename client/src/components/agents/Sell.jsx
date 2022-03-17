@@ -1,24 +1,82 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../consts/colors";
-import { fish, source } from "../../consts/dummyData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Fishes, Sources } from "../../redux/apiCalls";
+import { addOrder } from "../../redux/orderRedux";
 
 export const Sell = ({ navigation }) => {
   const [quantity, setQuantity] = useState(0);
   const [sourcetype, setSource] = useState("--source--");
-  const [selectedValue, setSelectedValue] = useState("--select--");
-  const [filter, setFilters] = useState({});
-  
-  console.log(sourcetype, selectedValue);
+  const [selectedFish, setSelectedFish] = useState("--select--");
+  const [weight, setWeight] = useState("");
+  const [price, setPrice] = useState("");
+  const [fisherman, setFisherman] = useState("");
+  const [query, setQuery] = useState("");
+  const [location, setLocation] = useState("");
+  const dispatch = useDispatch();
 
-  const { folks, location } = useSelector((state) => state.profile);
-  console.log(folks, location);
+  const folk = useSelector((state) => state.profile?.folks);
+  const sources = useSelector((state) => state.source?.sources);
+  const fishes = useSelector((state) => state.fish?.fish);
+  const cart = useSelector((state) => state.order.quantity);
+
+  //24578942
+  useEffect(() => {
+    Sources(dispatch);
+    Fishes(dispatch);
+    getPrice();
+  }, [dispatch, selectedFish]);
+
+  const name = () => {
+    const person = folk.filter((item) =>
+      item.contact.toString().includes(query)
+    );
+    person.forEach((element) => {
+      setFisherman(element.firstname) || setLocation(element.location);
+    });
+    //: setFisherman("sorry name does not exist");
+  };
+
+  const fish = fishes.map((fish, i) => (
+    <Picker.Item
+      key={i}
+      label={fish.name}
+      value={fish.name.toLowerCase()}
+      color={COLORS.primary}
+      style={styles.picker}
+    />
+  ));
+
+  const m = sources.map((el) =>
+    el.source.map((item, i) => (
+      <Picker.Item
+        key={i}
+        label={item}
+        value={item.toLowerCase()}
+        color={COLORS.primary}
+        style={styles.picker}
+      />
+    ))
+  );
+
+  //get selected item price
+  const getPrice = () =>
+    fishes.map((item) =>
+      item.name === selectedFish ? setPrice(item.price) : null
+    );
+  //handle add to basket
+  const handleAddBtn = () => {
+    setQuantity(quantity + 1);
+    weight === 0
+      ? "Please add quantity"
+      : dispatch(addOrder({ selectedFish, weight, price }));
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -49,6 +107,7 @@ export const Sell = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
+
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
               style={{
@@ -59,7 +118,7 @@ export const Sell = ({ navigation }) => {
                 position: "relative",
               }}
             >
-              <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
+              <TouchableOpacity onPress={() => navigation.navigate("TradeCart")}>
                 <Ionicons
                   name="basket-outline"
                   size={20}
@@ -85,7 +144,7 @@ export const Sell = ({ navigation }) => {
                     fontWeight: "bold",
                   }}
                 >
-                  {quantity}
+                  {cart}
                 </Text>
               </View>
             </View>
@@ -94,78 +153,63 @@ export const Sell = ({ navigation }) => {
         {/* Details container */}
         <View style={{ flex: 1 }}>
           <View style={styles.sell_info}>
+            <View style={{ flexDirection: "row" }}>
+              {/* search box */}
+
+              <TextInput
+                placeholder="Enter phone number"
+                onChangeText={(text) => setQuery(text)}
+                placeholderTextColor={COLORS.secondary}
+                style={styles.sell_input}
+                underlineColorAndroid="transparent"
+              />
+              <Button title="Search" onPress={query ? name : null} />
+            </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.text}>Name:</Text>
-              <Text
-                style={{
-                  fontSize: 25,
-                  color: COLORS.secondary,
-                  textAlign: "center",
-                }}
-              >
-                Fisehrman name
-              </Text>
+              <Text style={styles.titleText}>{fisherman}</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.text}>Fish-Type:</Text>
               <Picker
-                selectedValue={selectedValue}
-                onValueChange={(itemValue) => setSelectedValue(itemValue)}
-                style={{ width: "45%", marginLeft: 10 }}
+                selectedFish={selectedFish}
+                onValueChange={(value) => setSelectedFish(value)}
+                style={styles.pickerContainer}
                 dropdownIconColor={COLORS.primary}
               >
-                {fish.length > 0 &&
-                  fish.map((item, i) => (
-                    <Picker.Item
-                      key={i}
-                      label={item}
-                      value={item.toLowerCase()}
-                      color={COLORS.primary}
-                      style={{ fontSize: 18, textAlign: "center" }}
-                    />
-                  ))}
+                {fish}
               </Picker>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.text}>Source:</Text>
               <Picker
                 sourcetype={sourcetype}
-                onValueChange={(itemValue) => setSource(itemValue)}
-                style={{ width: "45%", marginLeft: 10 }}
+                onValueChange={(value) => setSource(value)}
+                style={styles.pickerContainer}
                 dropdownIconColor={COLORS.primary}
               >
-                {source.length > 0 &&
-                  source.map((item, i) => (
-                    <Picker.Item
-                      key={i}
-                      label={item}
-                      value={item.toLowerCase()}
-                      color={COLORS.primary}
-                      style={{ fontSize: 18, textAlign: "center" }}
-                    />
-                  ))}
+                {m}
               </Picker>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.text}>Location:</Text>
-              <Text>Keta</Text>
+              <Text style={styles.titleText}>{location}</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.text}>Weight:</Text>
+              <Text style={styles.text}>Weight: </Text>
               <TextInput
-                placeholder="enter quantity"
-                name="quantity"
-                onChangeText={(text) => setSellQuantity(text)}
+                placeholder="Enter"
+                name="Weight"
+                onChangeText={(text) => setWeight(text)}
                 placeholderTextColor={COLORS.secondary}
-                style={styles.sell_input}
+                style={styles.textItem}
                 underlineColorAndroid="transparent"
               />
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.text}>Price(/kg):</Text>
-              <Text style={styles.sell_input}>&#x20B5; 20</Text>
+              <Text style={styles.text}>Price(/kg): &#x20B5; </Text>
+              <Text style={styles.textItem}> {price}</Text>
             </View>
-            <Text style={styles.text}>Total Amount:</Text>
             <View
               style={{
                 alignItems: "center",
@@ -175,15 +219,15 @@ export const Sell = ({ navigation }) => {
                 borderRadius: 10,
               }}
             >
-              <TouchableOpacity onPress={() => setQuantity(quantity + 1)}>
+              <TouchableOpacity onPress={handleAddBtn}>
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: 18,
                     color: COLORS.white,
-                    fontWeight: "bold",
+                    fontWeight: "500",
                   }}
                 >
-                  ADD TO BASKET
+                  Add to Basket
                 </Text>
               </TouchableOpacity>
             </View>
@@ -201,6 +245,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
   },
+  titleText: { fontSize: 20, fontWeight: "bold", marginLeft: 8 },
   sell_info: {
     flex: 1,
     justifyContent: "space-evenly",
@@ -214,4 +259,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.primary,
   },
+  textItem: {
+    width: 70,
+    height: 30,
+    borderWidth: 0.5,
+    alignItems: "center",
+    paddingLeft: 3,
+    fontSize: 20,
+  },
+  picker: {
+    fontSize: 15,
+    textAlign: "center",
+  },
+  pickerContainer: { width: "45%", marginLeft: 10, fontSize: 15, height: 40 },
 });

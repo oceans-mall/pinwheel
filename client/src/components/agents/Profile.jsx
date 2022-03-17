@@ -15,14 +15,20 @@ import {
 } from "react-native";
 import COLORS from "../../consts/colors";
 import { Form } from "./Form";
-import { profile, profileFolk } from "../../redux/apiCalls";
+import { profileFolk, addToProfile } from "../../redux/apiCalls";
 
 export const Profile = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const dispatch = useDispatch();
 
   //fetching data from redux
   const getProfile = useSelector((state) => state.profile.folks);
+
+  //search function
+  const search = (data) =>
+    data.filter((item) => item.contact.toString().includes(query));
+
   //fetching data from the api
   useEffect(() => {
     profileFolk(dispatch);
@@ -30,7 +36,7 @@ export const Profile = ({ navigation }) => {
 
   //adding info to database
   const addFisherman = (details) => {
-    profile(dispatch, {
+    addToProfile(dispatch, {
       ...details,
     });
     setModalOpen(false);
@@ -39,18 +45,19 @@ export const Profile = ({ navigation }) => {
   const Card = ({ items }) => {
     return (
       <View style={styles.cardContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Edit", items)}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => navigation.navigate("Edit", items)}
+        >
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.name}>{items.firstname}</Text>
             <Text style={[styles.name, styles.lname]}>{items.lastname}</Text>
           </View>
-          <View>
-            <Text style={styles.details}>Age: {items.age}</Text>
-            <Text style={styles.details}>Location: {items.location}</Text>
-            <Text style={styles.details}>Region: {items.region}</Text>
-            <Text style={styles.details}>Contact: 0{items.contact}</Text>
-          </View>
+          <Text style={styles.details}>Contact: 0{items.contact}</Text>
         </TouchableOpacity>
+        <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+          Location: {items.location}
+        </Text>
       </View>
     );
   };
@@ -65,6 +72,9 @@ export const Profile = ({ navigation }) => {
           backgroundColor: "#fff",
         }}
       >
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={25} />
+        </TouchableOpacity>
         <Text
           style={{
             textAlign: "center",
@@ -77,6 +87,7 @@ export const Profile = ({ navigation }) => {
           REGISTERED FISHER FOLKS
         </Text>
         <TextInput
+          onChangeText={(text) => setQuery(text)}
           style={{
             padding: 7,
             marginVertical: 10,
@@ -85,13 +96,13 @@ export const Profile = ({ navigation }) => {
             borderWidth: 1,
             borderRadius: 5,
           }}
-          placeholder="search"
+          placeholder="enter phone number"
         />
         <FlatList
-          data={getProfile}
+          data={search(getProfile)}
           renderItem={({ item }) => <Card items={item} />}
         />
-        <Modal visible={modalOpen} animationType="fade">
+        <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{ flex: 1 }}>
               <View style={styles.modalContainer}>
@@ -137,38 +148,44 @@ const styles = StyleSheet.create({
     width: 60,
     height: 40,
     backgroundColor: COLORS.primary,
-    zIndex: 3,
     elevation: 8,
     borderRadius: 50,
     marginTop: 10,
   },
   toggleModal: { color: "white", fontWeight: "800" },
   cardContainer: {
-    width: "90%",
-    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
     padding: 10,
     margin: 5,
+    backgroundColor:COLORS.primary,
+    borderRadius: 5,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
+  info: {
+    justifyContent: "center",
+    marginHorizontal: 15,
+    flex: 4,
+  },
   name: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "bold",
     textTransform: "capitalize",
-    color: COLORS.dark,
+    color: COLORS.white
   },
   lname: {
     marginLeft: 3,
   },
   details: {
-    color: COLORS.dark,
-    fontSize: 18,
+    marginTop: 2,
+    fontSize: 15,
+    color: COLORS.white
   },
 });

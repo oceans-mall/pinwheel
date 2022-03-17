@@ -17,10 +17,12 @@ import {
   deleteProfileFailure,
   deleteProfileSuccess,
 } from "./profilesRedux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { publicRequest } from "../requestMethods";
 import { addToCart } from "./cartRedux";
 import { getProducts, getProductsSuccess } from "./productsRedux";
+import { getSource, getSourceFailure, getSourceSuccess } from "./sourceRedux";
+import { fetchdata, fetchdataFailure, fetchdataSuccess } from "./fishRedux";
+import { addOrder } from "./orderRedux";
 
 //get Products
 export const products = async (dispatch) => {
@@ -33,18 +35,40 @@ export const products = async (dispatch) => {
   }
 }
 
-//log user in
-export const login = async (dispatch, user) => {
-  dispatch(loginStart());
+//get Source
+export const Sources = async ( dispatch ) => {
+  dispatch(getSource());
   try {
-    const res = await publicRequest.post("auth/login", user);
-    const value = JSON.stringify(res.data.accessToken);
-    await AsyncStorage.setItem("user", value);
-    dispatch(loginSuccess(res.data));
+    const res = await publicRequest.get("source/")
+    dispatch(getSourceSuccess(res.data))
   } catch (err) {
-    dispatch(loginFailure());
+    dispatch(getSourceFailure())
   }
-};
+}
+
+//get Fish and prices
+export const Fishes = async (dispatch) => {
+  dispatch(fetchdata());
+  try {
+    const res = await publicRequest.get("fish/")
+    dispatch(fetchdataSuccess(res.data))
+  } catch (err) {
+    dispatch(fetchdataFailure())
+  }
+}
+
+//log user in
+// export const login = async (dispatch, user) => {
+//   dispatch(loginStart());
+//   try {
+//     const res = await publicRequest.post("auth/login", user);
+//     const value = JSON.stringify(res.data.accessToken);
+//     await AsyncStorage.setItem("user", value);
+//     dispatch(loginSuccess(res.data));
+//   } catch (err) {
+//     dispatch(loginFailure());
+//   }
+// };
 
 //register user
 export const register = async (dispatch, register) => {
@@ -58,7 +82,7 @@ export const register = async (dispatch, register) => {
 };
 
 //create profile
-export const profile = async (dispatch, profile) => {
+export const addToProfile = async (dispatch, profile) => {
   dispatch(addProfile());
   try {
     const res =await publicRequest.post("profile/fisherman", profile)
@@ -81,7 +105,7 @@ export const profileFolk = async (dispatch, id) => {
 export const updatedProfile = async (dispatch, id, folk) => {
   dispatch(updateProfile());
   try {
-    const res = await publicRequest.put(`profile/${id}`,folk)
+    const res = await publicRequest.put('profile/',folk)
     dispatch(updateProfileSuccess(res.data));
   } catch (err) {
     dispatch(updateProfileFailure());
@@ -91,8 +115,8 @@ export const updatedProfile = async (dispatch, id, folk) => {
 export const deleteProfile = async  (dispatch,id) =>{
   dispatch(deleteProfile());
   try {
-    const res = await publicRequest.delete(`profile/fisherman/${id}`)
-    dispatch(deleteProfileSuccess(res.data))
+    const res = await publicRequest.delete('profile/fisherman/${id}')
+    dispatch(deleteProfileSuccess(id))
   } catch (err) {
     dispatch(deleteProfileFailure())
   }
@@ -103,4 +127,13 @@ export const addCart = async (dispatch, cart) =>{
     const res = await publicRequest.post("cart/", cart)
     dispatch(addToCart(res.data))
   } catch (error) {}
+}
+
+export const addToOrder = async (dispatch, order) => {
+  try {
+    const res = await publicRequest.post("order/", order)
+    dispatch(addOrder(res.data))
+  } catch (error) {
+    
+  }
 }

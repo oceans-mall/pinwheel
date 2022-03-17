@@ -9,6 +9,8 @@ const profileRoute = require("./routes/profile");
 const productRoute = require("./routes/product");
 const sourceRoute = require("./routes/source");
 const cartRoute = require("./routes/cart");
+const fishRoute = require("./routes/fish")
+
 const cors = require("cors");
 
 dotenv.config();
@@ -30,6 +32,7 @@ app.use("/api/product", productRoute);
 app.use("/api/source", sourceRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/cart", cartRoute);
+app.use("/api/fish", fishRoute)
 
 app.listen(process.env.PORT || 4000, () => {
   console.log("Backend server is running!");

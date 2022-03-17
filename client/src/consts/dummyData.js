@@ -36,7 +36,8 @@ import cassava from "../assets/cassava.jpg"
     "Squid",
     "Cassava Fish",
     "Lobsters",
-    "Grouper Fish",
+    "Grouper Whole",
+    "Fillet",
     "Tilapia",
     "Clams",
     "Red Fish",
@@ -51,6 +52,54 @@ import cassava from "../assets/cassava.jpg"
     "Others",
   ];
   
+  export const prices = [
+    {
+      id:1,
+      type: "Prawns",
+      price:60
+    },
+    {
+      id:2,
+      type: "Lobsters",
+      price:70
+    },
+    {
+      id:3,
+      type: "Squid",
+      price:80
+    },
+    {
+      id:4,
+      type: "Shrimps",
+      price:60
+    },
+    {
+      id:5,
+      type: "Fillet",
+      price:60
+    },
+    {
+      id:6,
+      type: "Tilapia",
+      price:30
+    },
+    {
+      id:7,
+      type: "Cassava Fish",
+      price:60
+    },
+    {
+      id:8,
+      type: "Grouper Whole",
+      price:60
+    },
+    {
+      id:9,
+      type: "Octopus",
+      price:60
+    },
+
+  ]
   export const trades =[
     {
       id: 1,
