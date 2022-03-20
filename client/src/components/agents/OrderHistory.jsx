@@ -29,10 +29,6 @@ export const OrderHistory = ({ navigation }) => {
       <ScrollView showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
         {fish.map((fish) => (
           <View style={style.card} key={fish.id}>
-            <Image
-              source={fish.img}
-              style={{ width: 80, height: 80, borderRadius: 50 }}
-            />
             <View>
               <Text>{fish.name}</Text>
               <Text>{fish.price}</Text>

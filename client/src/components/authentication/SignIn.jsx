@@ -166,7 +166,7 @@ export const SignIn = ({ navigation }) => {
         </View>
         <View style={{ padding: 5, flexDirection: "row" }}>
           <Text>Forgot your password?</Text>
-          <TouchableOpacity style={{ marginLeft: 5 }}>
+          <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => navigation.navigate("Reset")}>
             <Text
               style={{ color: COLORS.primary, textDecorationLine: "underline" }}
             >

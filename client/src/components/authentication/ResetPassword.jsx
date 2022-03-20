@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import logo from "../../assets/logo.png";
+import logo from "../../../assets/splash.jpg";
 import COLORS from "../../consts/colors";
 import { DontHaveAcc } from "../general/DontHaveAcc";
 

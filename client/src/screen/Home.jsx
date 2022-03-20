@@ -14,11 +14,22 @@ import {
   TouchableHighlight,
 } from "react-native";
 import { useSelector } from "react-redux";
-import categories from "../consts/categories";
 import COLORS from "../consts/colors";
 import { useDispatch } from "react-redux";
 import { products } from "../redux/apiCalls";
-
+import avatar from "../../assets/useravatar.jpg"
+const categories = [
+  { id: "1", name: "shrimps" },
+  { id: "2", name: "oceansMix" },
+  { id: "3", name: "prawns" },
+  { id: "4", name: "octopus" },
+  { id: "5", name: "red fish" },
+  { id: "6", name: "cassava Fish" },
+  { id: "7", name: "lobsters" },
+  { id: "8", name: "tilapia" },
+  { id: "9", name: "grouper Fish" },
+  { id: "10", name: "squid" },
+];
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
 
@@ -64,22 +75,11 @@ export const Home = ({ navigation }) => {
                 flexDirection: "row",
               }}
             >
-              <View style={style.catBtnImgCon}>
-                <Image
-                  source={category.image}
-                  style={{
-                    height: 30,
-                    width: 30,
-                    borderRadius: 50,
-                    resizeMode: "cover",
-                  }}
-                />
-              </View>
               <Text
                 style={{
                   color:
                     selectedCatIndex == index ? COLORS.white : COLORS.primary,
-                  fontSize: 13,
+                  fontSize: 18,
                   fontWeight: "bold",
                   marginLeft: 10,
                   textTransform: "capitalize",
@@ -169,10 +169,10 @@ export const Home = ({ navigation }) => {
           </Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Image
-          source={require("../assets/useravatar.jpg")}
-          style={{ height: 40, width: 40, borderRadius: 25 }}
-        />
+          <Image
+            source={avatar}
+            style={{ height: 40, width: 40, borderRadius: 25 }}
+          />
         </TouchableOpacity>
       </View>
       <View
@@ -181,7 +181,7 @@ export const Home = ({ navigation }) => {
         <View style={style.inputContainer}>
           <AntDesign name="search1" size={25} />
           <TextInput
-            style={{ flex: 1, fontSize: 18, height:30}}
+            style={{ flex: 1, fontSize: 18, height: 30 }}
             placeholder="Search"
             onChangeText={(val) => setQuery(val)}
           />

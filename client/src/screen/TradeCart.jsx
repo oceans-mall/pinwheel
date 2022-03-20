@@ -10,11 +10,9 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
-import { trades } from "../consts/dummyData";
 import { Trade } from "./Trade";
 
 export const TradeCart = ({ navigation }) => {
-  const [trade, setTrade] = useState(trades);
 const total = useSelector((state) => state.order?.total)
 const orders = useSelector(state => state.order?.product)
 console.log(orders);

@@ -15,6 +15,8 @@ import {
 } from "@react-navigation/drawer";
 import COLORS from "../../consts/colors";
 import { Ionicons } from "@expo/vector-icons";
+import backImage from "../../../assets/back.jpg"
+import userAvatar from "../../../assets/useravatar.jpg"
 
 export const DrawerContent = (props) => {
   // logout user
@@ -22,7 +24,7 @@ export const DrawerContent = (props) => {
     try {
       await AsyncStorage.removeItem("user");
       Alert.alert("logout complete");
-      // navigation.navigate("Service")
+      //navigation.navigate("Services")
     } catch (err) {
       console.log(err);
     }
@@ -33,11 +35,11 @@ export const DrawerContent = (props) => {
         contentContainerStyle={{ backgroundColor: COLORS.primary }}
       >
         <ImageBackground
-          source={require("../../assets/back.jpg")}
+          source={backImage}
           style={{ padding: 10 }}
         >
           <Image
-            source={require("../../assets/useravatar.jpg")}
+            source={userAvatar}
             style={{
               height: 80,
               width: 80,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, SafeAreaView , TouchableOpacity} from "react-native";
 import COLORS from "../../consts/colors";
 import { Chart } from "./LineChart";
@@ -11,7 +11,7 @@ export const Dashboard = ({navigation}) => {
   const [purchase, setPurchase] = useState(0);
 
   //get total registered fishermen
-  const count = useSelector(state => state.profile.folks.length)
+  const count = useSelector(state => state.profile?.folks.length)
   
   return (
     <SafeAreaView style={styles.container}>

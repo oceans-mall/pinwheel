@@ -4,13 +4,14 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
 } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 
 export const Payment = () => {
+  
+  const number = useSelector((state) => state.user.currentUser?.contact )
+
   const total = useSelector((state) => state.order.total);
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -21,44 +22,13 @@ export const Payment = () => {
         </View>
         <View style={style.momo}>
           <Text
-            style={{ color: COLORS.white, fontWeight: "bold", fontSize: 18 }}
+            style={{ color: COLORS.dark, fontWeight: "bold", fontSize: 18 }}
           >
-            Please add your momo number
+           Payment Details
           </Text>
         </View>
         <View style={[style.momo, style.flex]}>
-          <TextInput
-            placeholder="Enter your momo number"
-            style={{
-              width: 200,
-              fontSize: 18,
-              height: 50,
-              backgroundColor: "white",
-              padding: 7,
-              borderRadius: 5,
-            }}
-          />
-          <TouchableOpacity
-            style={{
-              width: 100,
-              height: 50,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: COLORS.primary,
-              borderRadius: 5,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                color: "white",
-                fontWeight: "bold",
-                fontSize: 18,
-              }}
-            >
-              Submit
-            </Text>
-          </TouchableOpacity>
+          <Text style={style.momotxt}>MOMO #: {number}</Text>
         </View>
       </View>
     </SafeAreaView>
@@ -100,7 +70,8 @@ const style = StyleSheet.create({
     elevation: 5,
   },
   flex: {
-    flexDirection: "row",
+    alignItems:'center',
+    justifyContent:'center'
   },
   text: {
     fontSize: 20,
@@ -112,4 +83,13 @@ const style = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.gray,
   },
+  momotxt:{
+    width: 200,
+    fontSize: 18,
+    height: 50,
+    backgroundColor: "white",
+    padding: 7,
+    borderRadius: 5,
+    marginVertical:3
+  }
 });
