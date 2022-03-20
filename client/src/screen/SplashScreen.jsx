@@ -10,7 +10,7 @@ import COLORS from "../consts/colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable"
-import pinwheel from "../../assets/lady.jpg"
+import pinwheel from "../../assets/lady.png"
 
 export const SplashScreen = ({navigation}) => {
   return (

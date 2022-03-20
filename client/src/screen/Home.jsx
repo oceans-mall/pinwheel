@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { useDispatch } from "react-redux";
 import { products } from "../redux/apiCalls";
-import avatar from "../../assets/useravatar.jpg"
+import avatar from "../../assets/useravatar.png"
 const categories = [
   { id: "1", name: "shrimps" },
   { id: "2", name: "oceansMix" },

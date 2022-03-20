@@ -15,8 +15,8 @@ import {
 } from "@react-navigation/drawer";
 import COLORS from "../../consts/colors";
 import { Ionicons } from "@expo/vector-icons";
-import backImage from "../../../assets/back.jpg"
-import userAvatar from "../../../assets/useravatar.jpg"
+import backImage from "../../../assets/back.png"
+import userAvatar from "../../../assets/useravatar.png"
 
 export const DrawerContent = (props) => {
   // logout user
