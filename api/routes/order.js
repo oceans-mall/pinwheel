@@ -34,6 +34,15 @@ router.delete("/:id", async (req, res) => {
         
     }
 })
+//get all orders
+router.get("/", async (req, res) => {
+    try {
+        const orders = await Order.find()
+        res.status(200).json(orders)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
 //get users orders
 router.get("/find/:userId", async (req, res) => {
     try {
@@ -43,3 +52,5 @@ router.get("/find/:userId", async (req, res) => {
         res.status(500).json(error)
     }
 })
+
+module.exports = router;

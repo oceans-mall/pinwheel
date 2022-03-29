@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { FlatButton } from "../general/Buttons";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
 const folksSchema = yup.object({
@@ -13,22 +13,29 @@ const folksSchema = yup.object({
   contact: yup.number().required().min(10),
   location: yup.string().required(),
   region: yup.string().required(),
+  fId: yup.string().required(),
 });
 export const Form = ({ addFisherman }) => {
-  const [user_id, setuserId ] = useState("")
-  const userID = useSelector((state) => state.user?.currentUser);
-  // const {_id} = userID
+  const [user_id, setuserId] = useState("");
+  const [fisherId, setFisherId] = useState("");
 
-  // useEffect(() => {
-  //   setuserId(_id)
-  // }, [])
-  // console.log(user_id);
+  const userID = useSelector((state) => state.user?.currentUser);
+  const {_id} = userID
+  useEffect(() => {
+    setuserId(_id)
+  }, [])
+
+  const genId = () => {
+    const val = Math.floor(1000 + Math.random() * 9000);
+    setFisherId('#'+val);
+  };
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 20 }}>
         <Formik
           initialValues={{
-            userId: {user_id},
+            userId: { user_id },
+            fId: { fisherId },
             firstname: "",
             lastname: "",
             age: "",
@@ -47,12 +54,12 @@ export const Form = ({ addFisherman }) => {
             <View>
               <TextInput
                 placeholder="UserId"
-                // onChangeText={props.handleChange("userId")}
+                onChangeText={props.handleChange("userId")}
                 defaultValue={user_id}
-                // value={props.values.userId}
-                editable= {false}
+                value={props.values.userId}
+                editable={false}
                 style={style.input}
-               // onBlur={props.handleBlur("")}
+                onBlur={props.handleBlur("")}
               />
               <Text style={style.errorText}>
                 {props.touched.userId && props.errors.userId}
@@ -120,7 +127,43 @@ export const Form = ({ addFisherman }) => {
               <Text style={style.errorText}>
                 {props.touched.region && props.errors.region}
               </Text>
-
+              <View style={{ flexDirection: "row" }}>
+                <View style={{flexDirection:'column'}}>
+                  <TextInput
+                    placeholder="ID Number"
+                    onChangeText={props.handleChange("fId")}
+                    defaultValue={fisherId}
+                    editable={false}
+                    style={style.input}
+                    onBlur={props.handleBlur("fId")}
+                  />
+                  <Text style={style.errorText}>
+                    {props.touched.fId && props.errors.fId}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={genId}
+                  style={{
+                    backgroundColor: "green",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 100,
+                    height: 40,
+                    borderRadius: 3,
+                    marginLeft:5
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 16,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Generate ID
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <FlatButton text="submit" onPress={props.handleSubmit} />
             </View>
           )}

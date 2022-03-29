@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { useDispatch } from "react-redux";
 import { products } from "../redux/apiCalls";
-import avatar from "../../assets/useravatar.png"
+import avatar from "../../assets/useravatar.png";
 const categories = [
   { id: "1", name: "shrimps" },
   { id: "2", name: "oceansMix" },
@@ -35,11 +35,11 @@ const cardWidth = width / 2 - 20;
 
 export const Home = ({ navigation }) => {
   const [selectedCatIndex, setselectedCatIndex] = useState(0);
+  const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const username = useSelector((state) => state.user.currentUser?.firstname);
   const product = useSelector((state) => state.product.products);
 
-  const [query, setQuery] = useState("");
   //getting data from api
   useEffect(() => {
     products(dispatch);

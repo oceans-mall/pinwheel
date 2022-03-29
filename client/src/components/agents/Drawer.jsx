@@ -51,7 +51,7 @@ export const Agent = () => {
           ),
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Order History"
         component={OrderHistory}
         options={{
@@ -59,7 +59,7 @@ export const Agent = () => {
             <Ionicons name="heart-outline" size={22} color={color} />
           ),
         }}
-      />
+      /> */}
       <Drawer.Screen
         name="Support"
         component={Support}

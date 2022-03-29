@@ -20,19 +20,23 @@ import { profileFolk, addToProfile } from "../../redux/apiCalls";
 export const Profile = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [profile, setProfile] = useState();
   const dispatch = useDispatch();
-
-  //fetching data from redux
-  const getProfile = useSelector((state) => state.profile.folks);
-
-  //search function
-  const search = (data) =>
-    data.filter((item) => item.contact.toString().includes(query));
 
   //fetching data from the api
   useEffect(() => {
     profileFolk(dispatch);
+    folk()
   }, [dispatch]);
+
+  //fetching data from redux
+  const getProfile = useSelector((state) => state.profile?.folks);
+  const agent_id = useSelector((state) => state.user.currentUser?._id);
+
+
+  //search function
+  // const search = (data) =>
+  //   data.filter((item) => item.contact.toString().includes(query));
 
   //adding info to database
   const addFisherman = (details) => {
@@ -40,6 +44,12 @@ export const Profile = ({ navigation }) => {
       ...details,
     });
     setModalOpen(false);
+  };
+
+  const folk = () => {
+    getProfile.map((item, i) =>
+      item.userId === agent_id ? setProfile([item]) : <Text>No data found</Text>
+    )
   };
 
   const Card = ({ items }) => {
@@ -55,7 +65,7 @@ export const Profile = ({ navigation }) => {
           </View>
           <Text style={styles.details}>Contact: 0{items.contact}</Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
           Location: {items.location}
         </Text>
       </View>
@@ -69,7 +79,7 @@ export const Profile = ({ navigation }) => {
           flex: 4,
           padding: 10,
           paddingTop: 20,
-          backgroundColor: "#fff",
+          backgroundColor: "#f7f5f0",
         }}
       >
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -96,10 +106,10 @@ export const Profile = ({ navigation }) => {
             borderWidth: 1,
             borderRadius: 5,
           }}
-          placeholder="enter phone number"
+          placeholder="Enter fisherman ID"
         />
         <FlatList
-          data={search(getProfile)}
+          data={profile}
           renderItem={({ item }) => <Card items={item} />}
         />
         <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
@@ -155,37 +165,32 @@ const styles = StyleSheet.create({
   toggleModal: { color: "white", fontWeight: "800" },
   cardContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: COLORS.primary,
     padding: 10,
-    margin: 5,
-    backgroundColor:COLORS.primary,
-    borderRadius: 5,
+    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  info: {
-    justifyContent: "center",
-    marginHorizontal: 15,
-    flex: 4,
+    shadowOpacity: 0.2,
+    shadowRadius: 2.0,
+
+    elevation: 2,
   },
   name: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: "bold",
     textTransform: "capitalize",
-    color: COLORS.white
+    color: "white",
   },
   lname: {
     marginLeft: 3,
   },
   details: {
     marginTop: 2,
-    fontSize: 15,
-    color: COLORS.white
+    fontSize: 20,
+    color: "white",
   },
 });

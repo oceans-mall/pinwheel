@@ -18,7 +18,11 @@ export const Details = ({ navigation, route }) => {
   const [quantity, setQty] = useState(0);
 
   const disptach = useDispatch();
-  const cart = useSelector((state) => state.cart?.quantity );
+  const cart = useSelector((state) => state.cart?.quantity);
+
+  useEffect(() => {
+    handleBuyBtn();
+  }, []);
 
   const handlePress = (direction) => {
     if (direction === "l") {
@@ -27,20 +31,17 @@ export const Details = ({ navigation, route }) => {
       setQty(quantity + 1);
     }
   };
-  useEffect(() => {
-    handleBuyBtn();
-  }, []);
 
   //handle buy button method
   const handleBuyBtn = () => {
     if (quantity === 0) {
       Alert.alert("please add quantity");
     } else {
-      disptach(addToCart({...fish,quantity}));
+      disptach(addToCart({ ...fish, quantity }));
     }
   };
   //handle cart?
-   const cartPressed = () => {
+  const cartPressed = () => {
     cart === 0
       ? Alert.alert("sorry your cart is empty")
       : navigation.navigate("Cart");
@@ -132,7 +133,7 @@ export const Details = ({ navigation, route }) => {
             }}
             numberOfLines={3}
           >
-            {fish?.desc || 'Nothing selected'}
+            {fish?.desc || "Nothing selected"}
           </Text>
           <View
             style={{

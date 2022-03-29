@@ -17,9 +17,6 @@ import COLORS from "../../consts/colors";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/apiCalls";
-import { loginFailure, loginStart } from "../../redux/userRedux";
-import { publicRequest } from "../../requestMethods";
-
 export const Signup = ({ navigation }) => {
   const [data, setData] = useState({
     email: "",
@@ -44,10 +41,8 @@ export const Signup = ({ navigation }) => {
       ...others,
     });
     console.log({ ...others });
-    navigation.navigate("Login")
+    navigation.navigate("Login");
   };
-
-
 
   //Activity indicator
   if (isRegistering) {
@@ -64,13 +59,6 @@ export const Signup = ({ navigation }) => {
   }
   //handle inputchage for email
   const textInputChange = (val) => {
-    // if (val.length !== 0) {
-    //   setData({
-    //     ...data,
-    //     check_textInputChange: true,
-    //   });
-    // }
-    // else{
     setData({
       ...data,
       email: val,
@@ -78,13 +66,6 @@ export const Signup = ({ navigation }) => {
     });
   };
   const textInputChangeFname = (fname) => {
-    //   if(fname.length !==0 ){
-    //     setData({
-    //       ...data,
-    //       check_textInputChange: true
-    //     })
-    //   }
-    //  else{
     setData({
       ...data,
       firstname: fname,
@@ -92,13 +73,6 @@ export const Signup = ({ navigation }) => {
     });
   };
   const textInputChangeLname = (lname) => {
-    // if(lname.length !==0 ){
-    //   setData({
-    //     ...data,
-    //     check_textInputChange: true
-    //   })
-    // }
-    // else{
     setData({
       ...data,
       lastname: lname,
@@ -106,13 +80,6 @@ export const Signup = ({ navigation }) => {
     });
   };
   const textInputChangePhone = (mobile) => {
-    //   if(mobile.length !==0 ){
-    //     setData({
-    //       ...data,
-    //       check_textInputChange: true
-    //     })
-    //   }
-    //  else{
     setData({
       ...data,
       phone: mobile,
@@ -121,13 +88,6 @@ export const Signup = ({ navigation }) => {
   };
 
   const handlePasswordChange = (val) => {
-    //   if(val.length !== 0){
-    //     setData({
-    //       ...data,
-    //       check_textInputChange: true
-    //     })
-    //   }
-    //  else{
     setData({
       ...data,
       password: val,
@@ -140,13 +100,6 @@ export const Signup = ({ navigation }) => {
       secureTextEntry: !data.secureTextEntry,
     });
   };
-
-  // const updatePhoneTextEntry = () => {
-  //   setData({
-  //     ...data,
-  //     mobile_secureTextEntry: !data.mobile_secureTextEntry,
-  //   });
-  // };
 
   return (
     <View style={styles.container}>
@@ -235,26 +188,6 @@ export const Signup = ({ navigation }) => {
               )}
             </TouchableOpacity>
           </View>
-          {/* <Text style={[styles.text_footer, { marginTop: 20 }]}>
-          Confirm Password
-        </Text>
-        <View style={styles.action}>
-          <FontAwesome name="lock" color="#05375a" size={20} />
-          <TextInput
-            placeholder="***********"
-            style={styles.textInput}
-            autoCapitalize="none"
-            secureTextEntry={data.confirm_secureTextEntry ? true : false}
-            onChangeText={(val) => handleConfirmPasswordChange(val)}
-          />
-          <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
-            {data.secureTextEntry ? (
-              <Feather name="eye-off" color="green" size={20} />
-            ) : (
-              <Feather name="eye" color="green" size={20} />
-            )}
-          </TouchableOpacity>
-        </View> */}
           <View style={styles.button}>
             <LinearGradient
               colors={[COLORS.primary, "#00d4ff"]}

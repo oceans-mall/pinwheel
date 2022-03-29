@@ -27,7 +27,6 @@ export const Edit = ({ route, navigation }) => {
       firstname,lastname,age,location,region,contact
     }
     updatedProfile(dispatch,{id, folk});
-    console.log(folk);
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>

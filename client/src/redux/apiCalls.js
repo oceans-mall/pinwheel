@@ -1,4 +1,3 @@
-import { loginStart, loginFailure, loginSuccess } from "./userRedux";
 import {
   registerSuccess,
   registerUser,
@@ -22,7 +21,7 @@ import { addToCart } from "./cartRedux";
 import { getProducts, getProductsSuccess } from "./productsRedux";
 import { getSource, getSourceFailure, getSourceSuccess } from "./sourceRedux";
 import { fetchdata, fetchdataFailure, fetchdataSuccess } from "./fishRedux";
-import { addOrder } from "./orderRedux";
+import { addToSummary } from "./orderSummary";
 
 //get Products
 export const products = async (dispatch) => {
@@ -57,19 +56,6 @@ export const Fishes = async (dispatch) => {
   }
 }
 
-//log user in
-// export const login = async (dispatch, user) => {
-//   dispatch(loginStart());
-//   try {
-//     const res = await publicRequest.post("auth/login", user);
-//     const value = JSON.stringify(res.data.accessToken);
-//     await AsyncStorage.setItem("user", value);
-//     dispatch(loginSuccess(res.data));
-//   } catch (err) {
-//     dispatch(loginFailure());
-//   }
-// };
-
 //register user
 export const register = async (dispatch, register) => {
   dispatch(registerUser());
@@ -95,7 +81,7 @@ export const addToProfile = async (dispatch, profile) => {
 export const profileFolk = async (dispatch, id) => {
   dispatch(getProfileStart())
   try {
-     const info = await publicRequest.get(`profile/folk/?${id}`)
+     const info = await publicRequest.get('profile/folk/')
       dispatch(getProfileSuccess(info.data))
   } catch (err) {
     dispatch(getProfileFailure())
@@ -105,7 +91,7 @@ export const profileFolk = async (dispatch, id) => {
 export const updatedProfile = async (dispatch, id, folk) => {
   dispatch(updateProfile());
   try {
-    const res = await publicRequest.put('profile/',folk)
+    const res = await publicRequest.put('profile/?{id}',folk)
     dispatch(updateProfileSuccess(res.data));
   } catch (err) {
     dispatch(updateProfileFailure());
@@ -131,8 +117,8 @@ export const addCart = async (dispatch, cart) =>{
 
 export const addToOrder = async (dispatch, order) => {
   try {
-    const res = await publicRequest.post("order/", order)
-    dispatch(addOrder(res.data))
+    const res = await publicRequest.post("orders/order", order)
+    dispatch(addToSummary(res.data))
   } catch (error) {
     
   }

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Platform,
   StyleSheet,
   TextInput,
   Text,
   TouchableOpacity,
-  View,
-  ActivityIndicator,
+  View
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -17,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, loginFailure } from "../../redux/userRedux";
 import { publicRequest } from "../../requestMethods";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { login } from "../../redux/apiCalls";
 
 export const SignIn = ({ navigation }) => {
   const [data, setData] = useState({
@@ -31,29 +31,21 @@ export const SignIn = ({ navigation }) => {
   const dispatch = useDispatch();
   const { check_textInputChange, secureTextEntry, ...others } = data;
 
-  // const handleSubmit = () => {
-  //   login(dispatch, {
-  //     ...others,
-  //   });
-  // };
 
-  // const handleLogin = async () => {
-  //   dispatch(loginStart());
-  //   try {
-  //     const user = await publicRequest.post("auth/login", others);
-  //     const token = JSON.stringify(user.data.accessToken);
-  //     await AsyncStorage.setItem("token", token);
-  //     navigation.navigate("Agent");
-  //     return user;
-  //   } catch (err) {
-  //     dispatch(loginFailure);
-  //   }
-  // };
+  const handleSubmit = async () => {
+    dispatch(loginStart());
+    try {
+      const user = await publicRequest.post("auth/login", others);
+      dispatch(loginSuccess(user.data))
+      const token = JSON.stringify(user.data.accessToken);
+      await AsyncStorage.setItem("token", token);
+      navigation.navigate("Agent");
+      return user;
+    } catch (err) {
+      dispatch(loginFailure);
+    }
+  };
   
-  setTimeout(() => {
-    setFetchUser(!fetchUser);
-  }, 3000);
-
   const textInputChange = (val) => {
     setData({
       ...data,
@@ -123,7 +115,7 @@ export const SignIn = ({ navigation }) => {
             <TouchableOpacity
               style={{ width: "100%", alignItems: "center" }}
               activeOpacity={0.5}
-              onPress={() => navigation.navigate("Agent")}
+              onPress={handleSubmit}
               disabled={isFetching}
             >
               <Text
@@ -138,9 +130,6 @@ export const SignIn = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </LinearGradient>
-          {/* {fetchUser ? (
-            <ActivityIndicator size="small" color="#00ff00"  />
-          ) : null} */}
           <TouchableOpacity
             style={[
               styles.signIn,

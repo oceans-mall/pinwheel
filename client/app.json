@@ -24,7 +24,7 @@
       "package":"oceansmall.pinwheel",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#00a5f4"
+        "backgroundColor": "#ffff"
       }
     },
     "web": {

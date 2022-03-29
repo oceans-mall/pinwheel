@@ -1,21 +1,70 @@
- import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import React from "react";
 import {
   SafeAreaView,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  ScrollView,
+  FlatList
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../consts/colors";
-import { Trade } from "./Trade";
+import { addToOrder } from "../redux/apiCalls";
+import { deleteOrder } from "../redux/orderRedux";
 
 export const TradeCart = ({ navigation }) => {
-const total = useSelector((state) => state.order?.total)
-const orders = useSelector(state => state.order?.product)
-console.log(orders);
+  const total = useSelector((state) => state.order?.total);
+  const products = useSelector((state) => state.order?.product);
+  const quantity = useSelector((state) => state.order?.quantity);
+  const dispatch = useDispatch();
+
+  const deleteItem = (id, cost) => {
+    dispatch(deleteOrder({ id, cost }));
+  };
+
+  const handleOrder = () => {
+    quantity === 0
+      ? console.log("failed")
+      : addToOrder(dispatch, { products, quantity, total })
+      ? navigation.navigate("Payment")
+      : null;
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.container}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Text
+          numberOfLines={1}
+          style={{
+            fontSize: 17,
+            color: "#828582",
+            fontWeight: "bold",
+            textTransform: "capitalize",
+          }}
+        >
+          {item.name}
+        </Text>
+      </View>
+      <View>
+        <Text style={styles.text}>Price: &#x20B5;{item.price}</Text>
+        <Text style={styles.text}>Quantity: {item.weight}kg</Text>
+      </View>
+      <View style={{ justifyContent: "space-between" }}>
+        <Text style={{ fontWeight: "bold", color: COLORS.primary }}>
+          Cost: &#x20B5;{item.cost}
+        </Text>
+        <Ionicons
+          onPress={() => deleteItem(item.id, item.cost)}
+          name="trash-bin"
+          size={15}
+          color="red"
+          style={{ alignSelf: "flex-end" }}
+        />
+      </View>
+    </View>
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -34,23 +83,15 @@ console.log(orders);
             />
           </TouchableOpacity>
           <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
-            Trade Summary
+            My Basket
           </Text>
           <View></View>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
-        <View style={styles.tradeDisplay}>
-          {orders.length > 0 &&
-            orders.map((order) => (
-              <Trade
-                price={order.price}
-                weight={order.weight}
-                name={order.name}
-                key={order.id}
-              />
-            ))}
-        </View>
-        </ScrollView>
+        <FlatList
+          data={products}
+          renderItem={renderItem}
+          keyExtractor={(item, i) => item.id}
+        />
         <View
           style={{
             flex: 0.05,
@@ -67,7 +108,6 @@ console.log(orders);
         </View>
         <View
           style={{
-            flex: 0.05,
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: COLORS.primary,
@@ -76,8 +116,7 @@ console.log(orders);
             borderRadius: 20,
           }}
         >
-          {/* onPress={() => navigation.navigate('Agent', {screen:"Order History"})} */}
-          <TouchableOpacity onPress={() => navigation.navigate('Payment')}>
+          <TouchableOpacity onPress={handleOrder}>
             <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
               SELL
             </Text>
@@ -90,10 +129,10 @@ console.log(orders);
 
 const styles = StyleSheet.create({
   cartHeader: {
-    flex: 0.1,
+    height: 50,
     justifyContent: "space-between",
     backgroundColor: COLORS.primary,
-    flexDirection:"row",
+    flexDirection: "row",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -105,12 +144,34 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  tradeDisplay: {
-    flex: 1,
-    padding: 5,
-  },
   txt: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "auto",
+    height: 80,
+    marginHorizontal: 5,
+    // marginTop: 5,
+    padding: 10,
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+
+    elevation: 2,
+  },
+  text: {
+    fontSize: 15,
+    padding: 5,
+    fontWeight: "normal",
+    color: "#9ea89e",
+    textTransform: "capitalize",
   },
 });

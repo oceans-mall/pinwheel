@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
-const tradeRoute = require("./routes/trade");
+const orderRoute = require("./routes/order");
 const profileRoute = require("./routes/profile");
 const productRoute = require("./routes/product");
 const sourceRoute = require("./routes/source");
@@ -27,7 +27,7 @@ app.use(cors());
 
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
-app.use("/api/trade", tradeRoute);
+app.use("/api/orders", orderRoute);
 app.use("/api/product", productRoute);
 app.use("/api/source", sourceRoute);
 app.use("/api/profile", profileRoute);
