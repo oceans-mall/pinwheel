@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, loginFailure } from "../../redux/userRedux";
 import { publicRequest } from "../../requestMethods";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { login } from "../../redux/apiCalls";
 
 export const SignIn = ({ navigation }) => {
   const [data, setData] = useState({
@@ -25,7 +24,6 @@ export const SignIn = ({ navigation }) => {
     check_textInputChange: false,
     secureTextEntry: true,
   });
-  const [fetchUser, setFetchUser] = useState();
   //calling state from redux
   const { isFetching, error, success } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -116,7 +114,7 @@ export const SignIn = ({ navigation }) => {
               style={{ width: "100%", alignItems: "center" }}
               activeOpacity={0.5}
               onPress={handleSubmit}
-              disabled={isFetching}
+              // disabled={isFetching}
             >
               <Text
                 style={[
@@ -234,3 +232,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+

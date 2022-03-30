@@ -26,17 +26,16 @@ export const Profile = ({ navigation }) => {
   //fetching data from the api
   useEffect(() => {
     profileFolk(dispatch);
-    folk()
+    folk;
   }, [dispatch]);
 
   //fetching data from redux
   const getProfile = useSelector((state) => state.profile?.folks);
   const agent_id = useSelector((state) => state.user.currentUser?._id);
 
-
   //search function
-  // const search = (data) =>
-  //   data.filter((item) => item.contact.toString().includes(query));
+  const search = (data) =>
+    data.filter((item) => item.fisherID.toString().includes(query));
 
   //adding info to database
   const addFisherman = (details) => {
@@ -46,11 +45,16 @@ export const Profile = ({ navigation }) => {
     setModalOpen(false);
   };
 
-  const folk = () => {
-    getProfile.map((item, i) =>
-      item.userId === agent_id ? setProfile([item]) : <Text>No data found</Text>
+  const folk = getProfile.map((item, i) =>
+    item.userId === agent_id ? (
+      <FlatList
+        data={search([item])}
+        renderItem={({ item }) => <Card items={item} />}
+      />
+    ) : (
+      <Text></Text>
     )
-  };
+  );
 
   const Card = ({ items }) => {
     return (
@@ -63,7 +67,8 @@ export const Profile = ({ navigation }) => {
             <Text style={styles.name}>{items.firstname}</Text>
             <Text style={[styles.name, styles.lname]}>{items.lastname}</Text>
           </View>
-          <Text style={styles.details}>Contact: 0{items.contact}</Text>
+          <Text style={styles.details}>Contact : 0{items.contact}</Text>
+          <Text style={styles.details}>ID : {items.fisherID}</Text>
         </TouchableOpacity>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
           Location: {items.location}
@@ -108,10 +113,7 @@ export const Profile = ({ navigation }) => {
           }}
           placeholder="Enter fisherman ID"
         />
-        <FlatList
-          data={profile}
-          renderItem={({ item }) => <Card items={item} />}
-        />
+        {folk}
         <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{ flex: 1 }}>

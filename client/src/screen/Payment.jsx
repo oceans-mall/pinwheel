@@ -6,7 +6,7 @@ import COLORS from "../consts/colors";
 export const Payment = () => {
   const number = useSelector((state) => state.user.currentUser?.contact);
   const total = useSelector((state) => state.order.total);
-  const orders = useSelector((state) => state.ordersummary.orders);
+  const orders = useSelector((state) => state.ordersummary?.orders);
 
   const details = orders.products.map((item) => (
     <View style={style.summary} key={item.id}>

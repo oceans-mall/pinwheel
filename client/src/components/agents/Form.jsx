@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { FlatButton } from "../general/Buttons";
@@ -13,29 +13,26 @@ const folksSchema = yup.object({
   contact: yup.number().required().min(10),
   location: yup.string().required(),
   region: yup.string().required(),
-  fId: yup.string().required(),
+  fisherID: yup.string().required(),
 });
 export const Form = ({ addFisherman }) => {
-  const [user_id, setuserId] = useState("");
   const [fisherId, setFisherId] = useState("");
 
-  const userID = useSelector((state) => state.user?.currentUser);
-  const {_id} = userID
-  useEffect(() => {
-    setuserId(_id)
-  }, [])
+  const userID = useSelector((state) => state.user.currentUser?._id);
+ 
 
   const genId = () => {
     const val = Math.floor(1000 + Math.random() * 9000);
-    setFisherId('#'+val);
+    setFisherId('#'+val.toString());
   };
+  console.log(fisherId);
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 20 }}>
         <Formik
           initialValues={{
-            userId: { user_id },
-            fId: { fisherId },
+            userId: userID ,
+            fisherID: fisherId ,
             firstname: "",
             lastname: "",
             age: "",
@@ -55,7 +52,7 @@ export const Form = ({ addFisherman }) => {
               <TextInput
                 placeholder="UserId"
                 onChangeText={props.handleChange("userId")}
-                defaultValue={user_id}
+                defaultValue={userID}
                 value={props.values.userId}
                 editable={false}
                 style={style.input}
@@ -131,14 +128,14 @@ export const Form = ({ addFisherman }) => {
                 <View style={{flexDirection:'column'}}>
                   <TextInput
                     placeholder="ID Number"
-                    onChangeText={props.handleChange("fId")}
+                    onChangeText={props.handleChange("fisherID")}
                     defaultValue={fisherId}
                     editable={false}
                     style={style.input}
-                    onBlur={props.handleBlur("fId")}
+                    onBlur={props.handleBlur("fisherID")}
                   />
                   <Text style={style.errorText}>
-                    {props.touched.fId && props.errors.fId}
+                    {props.touched.fisherID && props.errors.fisherID}
                   </Text>
                 </View>
                 <TouchableOpacity
