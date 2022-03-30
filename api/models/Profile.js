@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const ProfileSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true },
-    fId: { type: String, required: true },
+    fisherID: { type: String, required: true },
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
     region: { type: String, required: true },
