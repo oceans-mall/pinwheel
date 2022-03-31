@@ -91,7 +91,7 @@ export const profileFolk = async (dispatch, id) => {
 export const updatedProfile = async (dispatch, id, folk) => {
   dispatch(updateProfile());
   try {
-    const res = await publicRequest.put('profile/?{id}',folk)
+    const res = await publicRequest.put('profile/'+ id, {folk})
     dispatch(updateProfileSuccess(res.data));
   } catch (err) {
     dispatch(updateProfileFailure());
@@ -101,7 +101,7 @@ export const updatedProfile = async (dispatch, id, folk) => {
 export const deleteProfile = async  (dispatch,id) =>{
   dispatch(deleteProfile());
   try {
-    const res = await publicRequest.delete('profile/fisherman/${id}')
+    const res = await publicRequest.delete('profile/fisherman/'+ id)
     dispatch(deleteProfileSuccess(id))
   } catch (err) {
     dispatch(deleteProfileFailure())
