@@ -22,12 +22,19 @@ import { getProducts, getProductsSuccess } from "./productsRedux";
 import { getSource, getSourceFailure, getSourceSuccess } from "./sourceRedux";
 import { fetchdata, fetchdataFailure, fetchdataSuccess } from "./fishRedux";
 import { addToSummary } from "./orderSummary";
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  baseURL: 'http://153.92.210.61/api/'
+ });
+
 
 //get Products
 export const products = async (dispatch) => {
   dispatch(getProducts());
   try {
-    const res = await publicRequest.get("product/");
+    const res = await axiosInstance.get("product/");
     dispatch(getProductsSuccess(res.data))
   } catch (err) {
     dispatch(getProfileFailure())
@@ -38,7 +45,7 @@ export const products = async (dispatch) => {
 export const Sources = async ( dispatch ) => {
   dispatch(getSource());
   try {
-    const res = await publicRequest.get("source/")
+    const res = await axiosInstance.get("source/")
     dispatch(getSourceSuccess(res.data))
   } catch (err) {
     dispatch(getSourceFailure())
@@ -49,7 +56,7 @@ export const Sources = async ( dispatch ) => {
 export const Fishes = async (dispatch) => {
   dispatch(fetchdata());
   try {
-    const res = await publicRequest.get("fish/")
+    const res = await axiosInstance.get("fish/")
     dispatch(fetchdataSuccess(res.data))
   } catch (err) {
     dispatch(fetchdataFailure())
@@ -60,7 +67,7 @@ export const Fishes = async (dispatch) => {
 export const register = async (dispatch, register) => {
   dispatch(registerUser());
   try {
-    const res = await publicRequest.post("auth/register", register);
+    const res = await axiosInstance.post("auth/register", register);
     dispatch(registerSuccess(res.data));
   } catch (err) {
     dispatch(registerFailure());
@@ -71,7 +78,7 @@ export const register = async (dispatch, register) => {
 export const addToProfile = async (dispatch, profile) => {
   dispatch(addProfile());
   try {
-    const res =await publicRequest.post("profile/fisherman", profile)
+    const res =await axiosInstance.post("profile/fisherman", profile)
       dispatch(addProfileSuccess(res.data));
   } catch (err) {
     dispatch(addProfileFailure());
@@ -81,7 +88,12 @@ export const addToProfile = async (dispatch, profile) => {
 export const profileFolk = async (dispatch, id) => {
   dispatch(getProfileStart())
   try {
-     const info = await publicRequest.get('profile/folk/')
+     const info = await axiosInstance.get('profile/folk/',{
+       headers:{
+         token:
+         "Bearer "+JSON.parse(await AsyncStorage.getItem("token"))
+       }
+     })
       dispatch(getProfileSuccess(info.data))
   } catch (err) {
     dispatch(getProfileFailure())
@@ -91,7 +103,7 @@ export const profileFolk = async (dispatch, id) => {
 export const updatedProfile = async (dispatch, id, folk) => {
   dispatch(updateProfile());
   try {
-    const res = await publicRequest.put('profile/'+ id, {folk})
+    const res = await axiosInstance.put('profile/'+id, {folk})
     dispatch(updateProfileSuccess(res.data));
   } catch (err) {
     dispatch(updateProfileFailure());
@@ -101,7 +113,7 @@ export const updatedProfile = async (dispatch, id, folk) => {
 export const deleteProfile = async  (dispatch,id) =>{
   dispatch(deleteProfile());
   try {
-    const res = await publicRequest.delete('profile/fisherman/'+ id)
+    const res = await axiosInstance.delete('profile/fisherman/'+ id)
     dispatch(deleteProfileSuccess(id))
   } catch (err) {
     dispatch(deleteProfileFailure())
@@ -110,14 +122,14 @@ export const deleteProfile = async  (dispatch,id) =>{
 //cart
 export const addCart = async (dispatch, cart) =>{
   try {
-    const res = await publicRequest.post("cart/", cart)
+    const res = await axiosInstance.post("cart/", cart)
     dispatch(addToCart(res.data))
   } catch (error) {}
 }
 
 export const addToOrder = async (dispatch, order) => {
   try {
-    const res = await publicRequest.post("orders/order", order)
+    const res = await axiosInstance.post("orders/order", order)
     dispatch(addToSummary(res.data))
   } catch (error) {
     

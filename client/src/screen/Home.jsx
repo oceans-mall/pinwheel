@@ -1,13 +1,10 @@
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   View,
   Text,
   Image,
-  TextInput,
-  ScrollView,
   TouchableOpacity,
   FlatList,
   Dimensions,
@@ -18,24 +15,11 @@ import COLORS from "../consts/colors";
 import { useDispatch } from "react-redux";
 import { products } from "../redux/apiCalls";
 import avatar from "../../assets/useravatar.png";
-const categories = [
-  { id: "1", name: "shrimps" },
-  { id: "2", name: "oceansMix" },
-  { id: "3", name: "prawns" },
-  { id: "4", name: "octopus" },
-  { id: "5", name: "red fish" },
-  { id: "6", name: "cassava Fish" },
-  { id: "7", name: "lobsters" },
-  { id: "8", name: "tilapia" },
-  { id: "9", name: "grouper Fish" },
-  { id: "10", name: "squid" },
-];
+
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
 
 export const Home = ({ navigation }) => {
-  const [selectedCatIndex, setselectedCatIndex] = useState(0);
-  const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const username = useSelector((state) => state.user.currentUser?.firstname);
   const product = useSelector((state) => state.product.products);
@@ -45,54 +29,6 @@ export const Home = ({ navigation }) => {
     products(dispatch);
   }, [dispatch]);
 
-  //search function
-  const search = (data) =>
-    data.filter((item) => item.name.toLowerCase().includes(query));
-
-  const ListCat = () => {
-    return (
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={style.catListContainer}
-      >
-        {categories.map((category, index) => (
-          <TouchableOpacity
-            key={index}
-            activeOpacity={0.8}
-            onPress={() => setselectedCatIndex(index)}
-          >
-            <View
-              style={{
-                backgroundColor:
-                  selectedCatIndex == index ? COLORS.primary : COLORS.light,
-                height: 45,
-                width: 120,
-                marginRight: 7,
-                borderRadius: 30,
-                alignItems: "center",
-                paddingHorizontal: 5,
-                flexDirection: "row",
-              }}
-            >
-              <Text
-                style={{
-                  color:
-                    selectedCatIndex == index ? COLORS.white : COLORS.primary,
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  marginLeft: 10,
-                  textTransform: "capitalize",
-                }}
-              >
-                {category.name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    );
-  };
   const CardList = ({ items }) => {
     return (
       <TouchableHighlight
@@ -133,14 +69,9 @@ export const Home = ({ navigation }) => {
             <Text style={{ fontSize: 18, fontWeight: "bold" }}>
               &#x20B5; {items.price}
             </Text>
-            <View style={style.addToCartBtn}>
-              <Ionicons name="add" size={20} color={COLORS.white} />
-            </View>
-          </View>
-          <View>
+
             <Text
               style={{
-                margin: 10,
                 textAlign: "left",
                 fontWeight: "bold",
                 fontSize: 15,
@@ -159,12 +90,12 @@ export const Home = ({ navigation }) => {
       <View style={style.header}>
         <View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: 25 }}>Hello,</Text>
-            <Text style={{ fontSize: 25, fontWeight: "bold", marginLeft: 10 }}>
+            <Text style={{ fontSize: 18 }}>Hello,</Text>
+            <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 10 }}>
               {username}
             </Text>
           </View>
-          <Text style={{ marginTop: 5, fontSize: 20, color: "gray" }}>
+          <Text style={{ marginTop: 5, fontSize: 18, color: "gray" }}>
             What do you want today
           </Text>
         </View>
@@ -175,28 +106,10 @@ export const Home = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
-      <View
-        style={{ marginTop: 40, flexDirection: "row", paddingHorizontal: 20 }}
-      >
-        <View style={style.inputContainer}>
-          <AntDesign name="search1" size={25} />
-          <TextInput
-            style={{ flex: 1, fontSize: 18, height: 30 }}
-            placeholder="Search"
-            onChangeText={(val) => setQuery(val)}
-          />
-        </View>
-        <View style={style.sortBtn}>
-          <AntDesign name="filter" size={28} color={COLORS.white} />
-        </View>
-      </View>
-      <View>
-        <ListCat />
-      </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={search(product)}
+        data={product}
         renderItem={(item) => <CardList items={item.item} />}
       />
     </SafeAreaView>
@@ -219,20 +132,6 @@ const style = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
-  sortBtn: {
-    width: 50,
-    height: 50,
-    marginLeft: 10,
-    backgroundColor: COLORS.primary,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  catListContainer: {
-    paddingVertical: 30,
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
   catBtn: {
     height: 45,
     width: 120,
@@ -251,7 +150,7 @@ const style = StyleSheet.create({
     borderRadius: 30,
   },
   card: {
-    height: 220,
+    height: 250,
     width: cardWidth,
     marginHorizontal: 10,
     marginBottom: 10,

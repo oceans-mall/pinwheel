@@ -4,12 +4,11 @@ import { useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 
 export const Payment = () => {
-  const number = useSelector((state) => state.user.currentUser?.contact);
-  const total = useSelector((state) => state.order.total);
+  const number = useSelector((state) => state.user.currentUser?.phone);
   const orders = useSelector((state) => state.ordersummary?.orders);
 
   const details = orders.products.map((item) => (
-    <View style={style.summary} key={item.id}>
+    <View style={style.summary} key={item._id}>
       <Text numberOfLines={1} style={style.text}>
         {item.name}
       </Text>
@@ -18,13 +17,14 @@ export const Payment = () => {
       <Text style={style.pending}>{orders.status}</Text>
     </View>
   ));
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container}>
         <View style={style.paymentTotal}>
           <Text style={style.text}>Amount Receivable</Text>
-          <Text style={[style.text, style.amount]}>&#x20B5; {total}</Text>
+          <Text style={[style.text, style.amount]}>
+            &#x20B5; {orders.total}
+          </Text>
           <Text style={{ fontSize: 20 }}>MOMO #: {number}</Text>
         </View>
         <View style={{ flex: 1, margin: 10 }}>

@@ -3,8 +3,8 @@ const Profile = require("../models/Profile");
 const { verifyTokenAgentAndAdmin, verifyTokenAndAdmin } = require("./verifyToken");
 
 //create profile
-
-router.post("/fisherman",verifyTokenAgentAndAdmin, async (req, res) => {
+//verifyTokenAgentAndAdmin
+router.post("/fisherman", async (req, res) => {
   const { userId,firstname, lastname, location, age, region, contact } = req.body;
   const newProfile = new Profile({
     userId,
@@ -24,7 +24,8 @@ router.post("/fisherman",verifyTokenAgentAndAdmin, async (req, res) => {
 });
 
 //update profile 
-router.put("/:id",verifyTokenAgentAndAdmin, async (req, res) => {
+//verifyTokenAgentAndAdmin
+router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await Profile.findByIdAndUpdate(
       req.params.id,
@@ -41,7 +42,8 @@ router.put("/:id",verifyTokenAgentAndAdmin, async (req, res) => {
   }
 });
 //delete Profile
-router.delete("/fisherman",VerifyTokenAndAdmin, async (req, res) => {
+//VerifyTokenAndAdmin
+router.delete("/fisherman", async (req, res) => {
   try {
     await Profile.findByIdAndDelete(req.body.id)
     res.status(200).json("profile deleted")
@@ -50,7 +52,8 @@ router.delete("/fisherman",VerifyTokenAndAdmin, async (req, res) => {
   }
 })
 //get a fisherfolks
-router.get("/find/:id",verifyTokenAgentAndAdmin, async (req, res) => {
+//verifyTokenAgentAndAdmin
+router.get("/find/:id", async (req, res) => {
   try {
     const folk = await Profile.findById(req.params.id);
     const { password, ...others } = folk._doc;
@@ -61,8 +64,8 @@ router.get("/find/:id",verifyTokenAgentAndAdmin, async (req, res) => {
 });
 
 //get all fisher folks
-
-router.get("/folk",verifyTokenAgentAndAdmin, async (req, res) => {
+//verifyTokenAgentAndAdmin
+router.get("/folk", async (req, res) => {
   const query = req.query.new;
   try {
     const fisherman = query

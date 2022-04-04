@@ -6,7 +6,7 @@ import profileReducer from "./profilesRedux";
 import sourceReducer from "./sourceRedux";
 import cartReducer from "./cartRedux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import reduxReset from "redux-reset" 
 import { persistStore, persistReducer } from "redux-persist";
 import productsReducer from "./productsRedux";
 import fishReducer from "./fishRedux";
@@ -37,6 +37,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
+  reset:reduxReset()
 });
 
 export let persistor = persistStore(store);

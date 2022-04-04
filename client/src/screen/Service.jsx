@@ -1,4 +1,4 @@
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
   View,
@@ -10,6 +10,45 @@ import {
 import COLORS from "../consts/colors";
 import * as Animatable from "react-native-animatable";
 
+const menu = [
+  {
+    id: 1,
+    name: "AGENTS",
+    icon: "card-outline",
+    nav: "Login",
+  },
+  {
+    id: 2,
+    name: "SHOP",
+    icon: "card-outline",
+    nav: "",
+  },
+  {
+    id: 3,
+    name: "MARKET INFO",
+    icon: "dotchart",
+    nav: "",
+  },
+  {
+    id: 4,
+    name: "DISTRIBUTORS",
+    icon: "people-outline",
+    nav: "",
+  },
+  {
+    id: 5,
+    name: "WEATHER",
+    icon: "rainy-outline",
+    nav: "",
+  },
+  {
+    id: 6,
+    name: "CONTACT US",
+    icon: "call-outline",
+    nav: "Contact",
+  },
+];
+
 export const Service = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.secondary }}>
@@ -17,62 +56,23 @@ export const Service = ({ navigation }) => {
         <View style={styles.s_wrapper}>
           <Text style={[styles.s_txt, styles.titleTxt]}>PINWHEEL</Text>
           <View style={styles.services}>
-            <View style={styles.item}>
-              <TouchableOpacity
-                style={{ alignItems: "center" }}
-                onPress={() => navigation.navigate("Login")}
-              >
-                <Text style={styles.txt}>AGENTS</Text>
-                <Ionicons
-                  name="card-outline"
-                  size={50}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.item}>
-              <TouchableOpacity onPress={() => navigation.navigate("Shop")}>
-                <Text style={styles.txt}>SHOP</Text>
-                <Ionicons
-                  name="cart-outline"
-                  size={50}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.txt}>MARKET INFO</Text>
-              <AntDesign name="dotchart" size={50} color={COLORS.primary} />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.txt}>DISTRIBUTORS</Text>
-              <Ionicons
-                name="people-outline"
-                size={50}
-                color={COLORS.primary}
-              />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.txt}>WEATHER REPORT</Text>
-              <Ionicons name="rainy-outline" size={50} color={COLORS.primary} />
-            </View>
-            <View style={styles.item}>
-              <TouchableOpacity onPress={() => navigation.navigate("Contact")}>
-                <Text style={styles.txt}>CONTACT US</Text>
-                <Ionicons
-                  name="call-outline"
-                  size={50}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
-            </View>
+            {menu.map((item) => (
+              <View style={styles.item} key={item.id}>
+                <TouchableOpacity
+                  style={{ alignItems: "center" }}
+                  onPress={() => navigation.navigate(item.nav)}
+                >
+                  <Text style={styles.txt}>{item.name}</Text>
+                  <Ionicons name={item.icon} size={50} color={COLORS.primary} />
+                </TouchableOpacity>
+              </View>
+            ))}
           </View>
         </View>
       </Animatable.View>
     </SafeAreaView>
   );
-};
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   txt: {
-    fontSize: 15,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "normal",
   },
   item: {
     justifyContent: "center",

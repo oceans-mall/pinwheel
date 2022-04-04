@@ -17,7 +17,11 @@ import COLORS from "../../consts/colors";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/apiCalls";
+
+
+
 export const Signup = ({ navigation }) => {
+
   const [data, setData] = useState({
     email: "",
     password: "",

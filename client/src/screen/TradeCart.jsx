@@ -6,17 +6,19 @@ import {
   Text,
   View,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { addToOrder } from "../redux/apiCalls";
-import { deleteOrder } from "../redux/orderRedux";
-
+import { clearOrder, deleteOrder } from "../redux/orderRedux";
 export const TradeCart = ({ navigation }) => {
   const total = useSelector((state) => state.order?.total);
   const products = useSelector((state) => state.order?.product);
   const quantity = useSelector((state) => state.order?.quantity);
+  const userId = useSelector((state) => state.order?.userId);
+  const fishermanId = useSelector((state) => state.order?.fishermanId);
+
   const dispatch = useDispatch();
 
   const deleteItem = (id, cost) => {
@@ -26,11 +28,13 @@ export const TradeCart = ({ navigation }) => {
   const handleOrder = () => {
     quantity === 0
       ? console.log("failed")
-      : addToOrder(dispatch, { products, quantity, total })
-      ? navigation.navigate("Payment")
+      : addToOrder(dispatch, { products, quantity, total, userId, fishermanId })
+      ? setTimeout(() => {
+          dispatch(clearOrder());
+          navigation.navigate("Payment");
+        }, 3000)
       : null;
   };
-
   const renderItem = ({ item }) => (
     <View style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -64,7 +68,6 @@ export const TradeCart = ({ navigation }) => {
       </View>
     </View>
   );
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -154,7 +157,6 @@ const styles = StyleSheet.create({
     width: "auto",
     height: 80,
     marginHorizontal: 5,
-    // marginTop: 5,
     padding: 10,
     backgroundColor: "white",
     shadowColor: "#000",

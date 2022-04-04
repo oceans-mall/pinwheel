@@ -1,23 +1,31 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, SafeAreaView , TouchableOpacity} from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import COLORS from "../../consts/colors";
 import { Chart } from "./LineChart";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
-
-export const Dashboard = ({navigation}) => {
+export const Dashboard = ({ navigation }) => {
   const [tradeTotal, settradeTotal] = useState(0);
   const [purchase, setPurchase] = useState(0);
-
   //get total registered fishermen
-  const count = useSelector(state => state.profile?.folks.length)
-  
+  const count = useSelector((state) => state.profile?.folks.length);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Ionicons name="menu" size={25} color={'white'} style={{marginLeft:3}} />
+          <Ionicons
+            name="menu"
+            size={25}
+            color={"white"}
+            style={{ marginLeft: 3 }}
+          />
         </TouchableOpacity>
       </View>
       <View animation="zoomIn" style={{ flex: 1 }}>
@@ -34,7 +42,7 @@ export const Dashboard = ({navigation}) => {
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Trade Total</Text>
             <Text style={styles.tradeAmount}>&#x20B5;</Text>
-          <Text style={styles.tradeAmount}>{tradeTotal}</Text>
+            <Text style={styles.tradeAmount}>{tradeTotal}</Text>
           </View>
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Registered Fishermen</Text>
@@ -47,7 +55,6 @@ export const Dashboard = ({navigation}) => {
           </View>
         </View>
         <Chart />
-        {/* <RecentTrade /> */}
       </View>
     </SafeAreaView>
   );
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
     elevation: 7,
   },
   tradeTitle: {
-    textAlign:'center',
+    textAlign: "center",
     color: COLORS.gray,
     fontSize: 16,
     fontWeight: "600",

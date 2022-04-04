@@ -15,7 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../consts/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { Fishes, Sources, } from "../../redux/apiCalls";
+import { Fishes, Sources } from "../../redux/apiCalls";
 import { addOrder } from "../../redux/orderRedux";
 
 export const Sell = ({ navigation }) => {
@@ -25,17 +25,17 @@ export const Sell = ({ navigation }) => {
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
   const [fisherman, setFisherman] = useState("");
+  const [fisherID, setFisherID] = useState("");
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [fish_id, setId] = useState("");
   const dispatch = useDispatch();
-
   const folk = useSelector((state) => state.profile?.folks);
   const sources = useSelector((state) => state.source?.sources);
   const fishes = useSelector((state) => state.fish?.fish);
   const cart = useSelector((state) => state.order.quantity);
+  const agent = useSelector((state) => state.user.currentUser?._id);
 
-  // //24578942
   useEffect(() => {
     Sources(dispatch);
     Fishes(dispatch);
@@ -44,10 +44,12 @@ export const Sell = ({ navigation }) => {
 
   const name = () => {
     const person = folk.filter((item) =>
-      item.contact.toString().includes(query)
+      item.fisherID.toString().includes(query)
     );
     person.forEach((element) => {
-      setFisherman(element.firstname) || setLocation(element.location);
+      setFisherman(element.firstname) ||
+        setLocation(element.location) ||
+        setFisherID(element.fisherID);
     });
   };
 
@@ -87,10 +89,12 @@ export const Sell = ({ navigation }) => {
       ? "Please add quantity"
       : dispatch(
           addOrder({
+            fisherID,
+            agent,
             products: {
               id: fish_id,
               name: selectedfish,
-              price:price,
+              price: price,
               cost: price * weight,
               weight: weight,
             },

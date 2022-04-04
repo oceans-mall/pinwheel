@@ -17,14 +17,20 @@ import COLORS from "../../consts/colors";
 import { Ionicons } from "@expo/vector-icons";
 import backImage from "../../../assets/back.png"
 import userAvatar from "../../../assets/useravatar.png"
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 export const DrawerContent = (props) => {
+  const username = useSelector((state) => state.user.currentUser?.firstname);
+  const { push } = useNavigation()
   // logout user
   const logout = async () => {
     try {
-      await AsyncStorage.removeItem("user");
-      Alert.alert("logout complete");
-      //navigation.navigate("Services")
+      await AsyncStorage.clear();
+      Alert.alert("logging out...");
+      setTimeout(() => {
+        push("Services")
+      },2000)
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +53,7 @@ export const DrawerContent = (props) => {
               marginBottom: 10,
             }}
           />
-          <Text style={{ color: "#fff", fontSize: 18 }}>Danny</Text>
+          <Text style={{ color: "#fff", fontSize: 18 }}>{username}</Text>
         </ImageBackground>
         <View style={{ backgroundColor: "#fff", paddingTop: 10 }}>
           <DrawerItemList {...props} />

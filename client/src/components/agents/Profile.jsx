@@ -12,6 +12,7 @@ import {
   Keyboard,
   View,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
 import COLORS from "../../consts/colors";
 import { Form } from "./Form";
@@ -20,7 +21,6 @@ import { profileFolk, addToProfile } from "../../redux/apiCalls";
 export const Profile = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [profile, setProfile] = useState();
   const dispatch = useDispatch();
 
   //fetching data from the api
@@ -30,7 +30,7 @@ export const Profile = ({ navigation }) => {
   }, [dispatch]);
 
   //fetching data from redux
-  const getProfile = useSelector((state) => state.profile?.folks);
+  const getProfile = useSelector((state) => state.profile);
   const agent_id = useSelector((state) => state.user.currentUser?._id);
 
   //search function
@@ -45,7 +45,7 @@ export const Profile = ({ navigation }) => {
     setModalOpen(false);
   };
 
-  const folk = getProfile.map((item, i) =>
+  const folk = getProfile.folks.map((item, i) =>
     item.userId === agent_id ? (
       <FlatList
         data={search([item])}
@@ -113,7 +113,11 @@ export const Profile = ({ navigation }) => {
           }}
           placeholder="Enter fisherman ID"
         />
-        {folk}
+        {getProfile.isLoading ? (
+          <ActivityIndicator size="large" color={COLORS.primary} />
+        ) : (
+          folk
+        )}
         <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={{ flex: 1 }}>

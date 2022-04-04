@@ -5,7 +5,8 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
-  View
+  View,
+  ActivityIndicator
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -14,8 +15,12 @@ import * as Animatable from "react-native-animatable";
 import COLORS from "../../consts/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, loginFailure } from "../../redux/userRedux";
-import { publicRequest } from "../../requestMethods";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+
+const instance = axios.create({
+  baseURL: 'http://153.92.210.61/api/'
+});
 
 export const SignIn = ({ navigation }) => {
   const [data, setData] = useState({
@@ -29,11 +34,10 @@ export const SignIn = ({ navigation }) => {
   const dispatch = useDispatch();
   const { check_textInputChange, secureTextEntry, ...others } = data;
 
-
   const handleSubmit = async () => {
     dispatch(loginStart());
     try {
-      const user = await publicRequest.post("auth/login", others);
+      const user = await instance.post("auth/login", others);
       dispatch(loginSuccess(user.data))
       const token = JSON.stringify(user.data.accessToken);
       await AsyncStorage.setItem("token", token);
@@ -114,7 +118,7 @@ export const SignIn = ({ navigation }) => {
               style={{ width: "100%", alignItems: "center" }}
               activeOpacity={0.5}
               onPress={handleSubmit}
-              // disabled={isFetching}
+              disabled={isFetching}
             >
               <Text
                 style={[
@@ -128,13 +132,14 @@ export const SignIn = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </LinearGradient>
+          <ActivityIndicator size="large" color="red" animating={isFetching ? true : false}/>
           <TouchableOpacity
             style={[
               styles.signIn,
               {
                 borderColor: COLORS.primary,
                 borderWidth: 1,
-                marginTop: 15,
+                marginTop: 10,
               },
             ]}
             onPress={() => navigation.navigate("Register")}
