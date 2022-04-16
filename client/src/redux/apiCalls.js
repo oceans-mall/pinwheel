@@ -21,7 +21,7 @@ import { addToCart } from "./cartRedux";
 import { getProducts, getProductsSuccess } from "./productsRedux";
 import { getSource, getSourceFailure, getSourceSuccess } from "./sourceRedux";
 import { fetchdata, fetchdataFailure, fetchdataSuccess } from "./fishRedux";
-import { addToSummary } from "./orderSummary";
+import { addToHistory, addToSummary } from "./orderSummary";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios";
 
@@ -29,6 +29,9 @@ const axiosInstance = axios.create({
   baseURL: 'http://153.92.210.61/api/'
  });
 
+ const userRequest = async () => {
+   axio
+ }
 
 //get Products
 export const products = async (dispatch) => {
@@ -85,7 +88,7 @@ export const addToProfile = async (dispatch, profile) => {
   }
 };
 //get profile
-export const profileFolk = async (dispatch, id) => {
+export const profileFolk = async (dispatch) => {
   dispatch(getProfileStart())
   try {
      const info = await axiosInstance.get('profile/folk/',{
@@ -103,7 +106,7 @@ export const profileFolk = async (dispatch, id) => {
 export const updatedProfile = async (dispatch, id, folk) => {
   dispatch(updateProfile());
   try {
-    const res = await axiosInstance.put('profile/'+id, {folk})
+    const res = await axiosInstance.put('profile/61f17435d2887a9f367cac3d', folk)
     dispatch(updateProfileSuccess(res.data));
   } catch (err) {
     dispatch(updateProfileFailure());
@@ -113,8 +116,13 @@ export const updatedProfile = async (dispatch, id, folk) => {
 export const deleteProfile = async  (dispatch,id) =>{
   dispatch(deleteProfile());
   try {
-    const res = await axiosInstance.delete('profile/fisherman/'+ id)
-    dispatch(deleteProfileSuccess(id))
+    const res = await axiosInstance.delete(`profile/fisherman/${id}`,{
+      headers:{
+        token:
+        "Bearer "+JSON.parse(await AsyncStorage.getItem("token"))
+      }
+    })
+    dispatch(deleteProfileSuccess(res.data))
   } catch (err) {
     dispatch(deleteProfileFailure())
   }

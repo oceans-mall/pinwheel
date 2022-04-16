@@ -1,7 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet } from "react-native";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { SafeAreaView, View, Text, StyleSheet,TextInput, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { updatedProfile } from "../redux/apiCalls";
@@ -26,7 +25,8 @@ export const Edit = ({ route, navigation }) => {
     const folk = {
       firstname,lastname,age,location,region,contact
     }
-    updatedProfile(dispatch,{id, folk});
+    console.log(id,folk);
+    updatedProfile(dispatch, { id, folk })
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>

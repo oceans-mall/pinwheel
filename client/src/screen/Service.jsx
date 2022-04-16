@@ -21,7 +21,7 @@ const menu = [
     id: 2,
     name: "SHOP",
     icon: "card-outline",
-    nav: "",
+    nav: "Shop",
   },
   {
     id: 3,

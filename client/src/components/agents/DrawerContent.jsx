@@ -53,7 +53,7 @@ export const DrawerContent = (props) => {
               marginBottom: 10,
             }}
           />
-          <Text style={{ color: "#fff", fontSize: 18 }}>{username}</Text>
+          <Text style={{ color: "#fff", fontSize: 18 }}>Welcome {username}</Text>
         </ImageBackground>
         <View style={{ backgroundColor: "#fff", paddingTop: 10 }}>
           <DrawerItemList {...props} />

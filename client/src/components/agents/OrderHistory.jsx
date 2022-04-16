@@ -7,12 +7,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Image,
 } from "react-native";
+import { useSelector } from "react-redux";
 import COLORS from "../../consts/colors";
-import fish from "../../consts/fish";
+import { format } from "timeago.js";
 
 export const OrderHistory = ({ navigation }) => {
+  const getOrderHistory = useSelector(
+    (state) => state.ordersummary?.orderHistory
+  );
+  console.log(getOrderHistory);
   return (
     <SafeAreaView style={style.conctainer}>
       <View style={style.topSection}>
@@ -27,18 +31,25 @@ export const OrderHistory = ({ navigation }) => {
         <View></View>
       </View>
       <ScrollView showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
-        {fish.map((fish) => (
-          <View style={style.card} key={fish.id}>
-            <View>
-              <Text>{fish.name}</Text>
-              <Text>{fish.price}</Text>
+        {getOrderHistory ? (
+          getOrderHistory.map((order) => (
+            <View style={style.card} key={order._id}>
+              <View>
+                <Text style={style.cardTxt}>ORDER ID: {order._id}</Text>
+                <Text style={style.cardTxt}>
+                  TOTAL COST &#x20B5;: {order.total}
+                </Text>
+                <Text style={style.cardTxt}>
+                  DATE: {format(order.createdAt)}
+                </Text>
+              </View>
             </View>
-            <View>
-              <Text>{fish.date}</Text>
-              <Text>REORDER</Text>
-            </View>
+          ))
+        ) : (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Text>Sorry Order History is empty</Text>
           </View>
-        ))}
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -54,14 +65,13 @@ const style = StyleSheet.create({
     padding: 10,
   },
   card: {
-    height: 100,
+    height: 120,
     backgroundColor: COLORS.white,
     borderRadius: 5,
-    marginVertical: 10,
+    marginVertical: 2,
     marginHorizontal: 10,
     padding: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -71,5 +81,9 @@ const style = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 15,
+  },
+  cardTxt: {
+    margin: 3,
+    fontSize: 16,
   },
 });

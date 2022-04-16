@@ -6,10 +6,12 @@ import { Sell } from "./Sell";
 import { Profile } from "./Profile";
 import COLORS from "../../consts/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { OrderHistory } from "./OrderHistory";
 
 const Drawer = createDrawerNavigator();
 
 export const Agent = () => {
+  
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerContent {...props} />}
@@ -45,6 +47,15 @@ export const Agent = () => {
         options={{
           drawerIcon: ({ color }) => (
             <Ionicons name="person-outline" size={22} color={color} />
+          ),
+        }}
+      />
+       <Drawer.Screen
+        name="History"
+        component={OrderHistory}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Ionicons name="archive" size={22} color={color} />
           ),
         }}
       />

@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,17 +7,22 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../consts/colors";
 import { addToOrder } from "../redux/apiCalls";
 import { clearOrder, deleteOrder } from "../redux/orderRedux";
+
 export const TradeCart = ({ navigation }) => {
   const total = useSelector((state) => state.order?.total);
   const products = useSelector((state) => state.order?.product);
   const quantity = useSelector((state) => state.order?.quantity);
   const userId = useSelector((state) => state.order?.userId);
   const fishermanId = useSelector((state) => state.order?.fishermanId);
+
+  const [isOpen, setIndicator] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -26,14 +31,17 @@ export const TradeCart = ({ navigation }) => {
   };
 
   const handleOrder = () => {
-    quantity === 0
-      ? console.log("failed")
-      : addToOrder(dispatch, { products, quantity, total, userId, fishermanId })
-      ? setTimeout(() => {
-          dispatch(clearOrder());
-          navigation.navigate("Payment");
-        }, 3000)
-      : null;
+    if (total === 0) {
+      Alert.alert("sorry please add items");
+    } else {
+      addToOrder(dispatch, { products, quantity, total, userId, fishermanId });
+      setIndicator(true);
+      setTimeout(() => {
+        dispatch(clearOrder());
+        setIndicator(false);
+        navigation.navigate("Payment");
+      }, 2500);
+    }
   };
   const renderItem = ({ item }) => (
     <View style={styles.container}>
@@ -123,6 +131,12 @@ export const TradeCart = ({ navigation }) => {
             <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
               SELL
             </Text>
+            <ActivityIndicator
+              size="small"
+              color="red"
+              animating={isOpen}
+              style={{ alignSelf: "left" }}
+            />
           </TouchableOpacity>
         </View>
       </View>

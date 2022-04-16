@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  Modal,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -19,7 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: 'http://153.92.210.61/api/'
+  baseURL: "http://153.92.210.61/api/",
 });
 
 export const SignIn = ({ navigation }) => {
@@ -29,16 +30,21 @@ export const SignIn = ({ navigation }) => {
     check_textInputChange: false,
     secureTextEntry: true,
   });
+  const [isOpen, setIndicator] = useState(false);
+
   //calling state from redux
-  const { isFetching, error, success } = useSelector((state) => state.user);
+  const {error, success } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { check_textInputChange, secureTextEntry, ...others } = data;
-
   const handleSubmit = async () => {
     dispatch(loginStart());
+    setIndicator(true);
+    setTimeout(() => {
+      setIndicator(false);
+    }, 3000);
     try {
       const user = await instance.post("auth/login", others);
-      dispatch(loginSuccess(user.data))
+      dispatch(loginSuccess(user.data));
       const token = JSON.stringify(user.data.accessToken);
       await AsyncStorage.setItem("token", token);
       navigation.navigate("Agent");
@@ -47,7 +53,7 @@ export const SignIn = ({ navigation }) => {
       dispatch(loginFailure);
     }
   };
-  
+
   const textInputChange = (val) => {
     setData({
       ...data,
@@ -118,7 +124,7 @@ export const SignIn = ({ navigation }) => {
               style={{ width: "100%", alignItems: "center" }}
               activeOpacity={0.5}
               onPress={handleSubmit}
-              disabled={isFetching}
+              disabled={isOpen}
             >
               <Text
                 style={[
@@ -132,7 +138,11 @@ export const SignIn = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </LinearGradient>
-          <ActivityIndicator size="large" color="red" animating={isFetching ? true : false}/>
+          <ActivityIndicator
+            size="small"
+            color="red"
+            animating={isOpen}
+          />
           <TouchableOpacity
             style={[
               styles.signIn,
@@ -158,7 +168,10 @@ export const SignIn = ({ navigation }) => {
         </View>
         <View style={{ padding: 5, flexDirection: "row" }}>
           <Text>Forgot your password?</Text>
-          <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => navigation.navigate("Reset")}>
+          <TouchableOpacity
+            style={{ marginLeft: 5 }}
+            onPress={() => navigation.navigate("Reset")}
+          >
             <Text
               style={{ color: COLORS.primary, textDecorationLine: "underline" }}
             >
@@ -237,4 +250,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-

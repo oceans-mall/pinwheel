@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Platform,
   StyleSheet,
@@ -8,6 +8,8 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
+  Modal,
+  Pressable,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -18,10 +20,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/apiCalls";
 
-
-
 export const Signup = ({ navigation }) => {
-
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -31,9 +30,9 @@ export const Signup = ({ navigation }) => {
     check_textInputChange: false,
     secureTextEntry: true,
   });
-  const { isRegistering, error, success } = useSelector(
-    (state) => state.register
-  );
+  const [isOpen, setIndicator] = useState(false);
+  const { error, success } = useSelector((state) => state.register);
+  const [modalopen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -44,23 +43,13 @@ export const Signup = ({ navigation }) => {
     register(dispatch, {
       ...others,
     });
-    console.log({ ...others });
-    navigation.navigate("Login");
+    setIndicator(true);
+    setTimeout(() => {
+      setIndicator(false);
+      navigation.navigate("Login");
+    }, 3000);
   };
 
-  //Activity indicator
-  if (isRegistering) {
-    return (
-      <ActivityIndicator
-        size="large"
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      />
-    );
-  }
   //handle inputchage for email
   const textInputChange = (val) => {
     setData({
@@ -199,7 +188,6 @@ export const Signup = ({ navigation }) => {
             >
               <TouchableOpacity
                 style={{ width: "100%", alignItems: "center" }}
-                // disabled={isRegistering}
                 onPress={handleSubmit}
               >
                 <Text
@@ -214,9 +202,7 @@ export const Signup = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             </LinearGradient>
-            <Text style={{ color: error ? "red" : "green" }}>
-              {error ? `process failed` : success ? `successful` : null}
-            </Text>
+            <ActivityIndicator size="small" color="red" animating={isOpen} />
             <TouchableOpacity
               style={[
                 styles.signIn,
@@ -266,6 +252,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00000099",
+  },
+  modal: {
+    width: 200,
+    height: 100,
+    backgroundColor: "#ffff",
+    borderRadius: 10,
+  },
+  modal_title: {
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00ffff",
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
+  modal_body: {
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modal_btn: {
+    backgroundColor: "#00ffff",
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   header: {
     flex: 1,

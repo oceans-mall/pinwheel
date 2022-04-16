@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,20 +13,42 @@ import { useSelector } from "react-redux";
 
 export const Dashboard = ({ navigation }) => {
   const [tradeTotal, settradeTotal] = useState(0);
-  const [purchase, setPurchase] = useState(0);
+  const [count, setCount] = useState(0);
   //get total registered fishermen
-  const count = useSelector((state) => state.profile?.folks.length);
+  const getProfile = useSelector((state) => state.profile);
+  const agent_id = useSelector((state) => state.user.currentUser?._id);
+
+  useEffect(() => {
+    folk();
+  }, [getProfile]);
+  const folk = () =>
+    getProfile.folks.map((item) =>
+      item.userId === agent_id ? setCount([item].length) : null
+    );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Ionicons
-            name="menu"
-            size={25}
-            color={"white"}
-            style={{ marginLeft: 3 }}
-          />
+          <Ionicons name="menu" size={25} color={"white"} />
         </TouchableOpacity>
+        <View style={{ position: "relative" }}>
+          <TouchableOpacity onPress={() => navigation.navigate("History")}>
+            <Ionicons name="notifications" size={25} color={"white"} />
+          </TouchableOpacity>
+          <Text
+            style={{
+              position: "absolute",
+              fontSize: 18,
+              top: -12,
+              left: 10,
+              color: "red",
+              fontWeight: "bold",
+            }}
+          >
+            5
+          </Text>
+        </View>
       </View>
       <View animation="zoomIn" style={{ flex: 1 }}>
         <View
@@ -35,23 +57,16 @@ export const Dashboard = ({ navigation }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            //padding: 5,
             margin: 5,
           }}
         >
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Trade Total</Text>
-            <Text style={styles.tradeAmount}>&#x20B5;</Text>
-            <Text style={styles.tradeAmount}>{tradeTotal}</Text>
+            <Text style={styles.tradeAmount}>&#x20B5; {tradeTotal}</Text>
           </View>
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Registered Fishermen</Text>
             <Text style={styles.tradeAmount}>{count}</Text>
-          </View>
-          <View style={styles.trade}>
-            <Text style={styles.tradeTitle}>Purchase</Text>
-            <Text style={styles.tradeAmount}> &#x20B5;</Text>
-            <Text style={styles.tradeAmount}>{purchase}</Text>
           </View>
         </View>
         <Chart />
@@ -65,8 +80,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   trade: {
-    height: "80%",
-    width: "30%",
+    width: 150,
+    height: 150,
     borderRadius: 10,
     borderColor: "gold",
     margin: 5,
@@ -95,8 +110,11 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 60,
-    paddingTop: 15,
+    padding: 5,
     backgroundColor: COLORS.primary,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
     textAlign: "center",

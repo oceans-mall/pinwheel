@@ -1,11 +1,14 @@
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 import COLORS from "../consts/colors";
 
-export const Contact = () => {
+export const Contact = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <TouchableOpacity style={{ padding: 10 }} onPress={() => navigation.goBack()}>
+        <Ionicons name="arrow-back" size={25} />
+      </TouchableOpacity>
       <View
         style={{
           flex: 1,
@@ -20,7 +23,7 @@ export const Contact = () => {
             fontSize: 25,
             fontWeight: "bold",
             textDecorationLine: "underline",
-            color:'gray',
+            color: "gray",
             marginBottom: 15,
           }}
         >
@@ -86,9 +89,9 @@ const style = StyleSheet.create({
   contactTxt: {
     marginLeft: 10,
     fontSize: 20,
-    fontWeight:'normal',
-    fontStyle:'italic',
-    color:'white',
-    textAlign:'center'
+    fontWeight: "normal",
+    fontStyle: "italic",
+    color: "white",
+    textAlign: "center",
   },
 });

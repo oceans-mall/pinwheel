@@ -19,7 +19,6 @@ import { Fishes, Sources } from "../../redux/apiCalls";
 import { addOrder } from "../../redux/orderRedux";
 
 export const Sell = ({ navigation }) => {
-  const [quantity, setQuantity] = useState(0);
   const [sourcetype, setSource] = useState("--source--");
   const [selectedfish, setSelectedFish] = useState("--select--");
   const [weight, setWeight] = useState("");
@@ -84,7 +83,6 @@ export const Sell = ({ navigation }) => {
     );
   //handle add to basket
   const handleAddBtn = () => {
-    setQuantity(quantity + 1);
     weight === 0
       ? "Please add quantity"
       : dispatch(
@@ -101,7 +99,7 @@ export const Sell = ({ navigation }) => {
             weight,
             price,
           })
-        );
+        )
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -190,7 +188,7 @@ export const Sell = ({ navigation }) => {
           </View>
           {/* Weight */}
           <View style={styles.content}>
-            <Text style={styles.text}>Weight: </Text>
+            <Text style={styles.text}>Weight(kg): </Text>
             <TextInput
               placeholder="Enter"
               name="Weight"
@@ -265,13 +263,16 @@ const styles = StyleSheet.create({
   picker: {
     fontSize: 15,
     textAlign: "center",
+    borderWidth: 2,
+    height:100
   },
   pickerContainer: {
-    width: "45%",
+    width: 120,
     marginLeft: 10,
     fontSize: 15,
-    height: 40,
-    borderWidth: 0.5,
+    height: 50,
+    borderWidth: 2,
+
   },
   bottomContaner: {
     flex: 1,
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
   touch: {
     height: 50,
     width: 200,
-    alignItem: "center",
+    alignItems: "center",
     justifyContent: "center",
     backgroundColor: COLORS.primary,
   },

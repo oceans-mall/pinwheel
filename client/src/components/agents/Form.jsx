@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { FlatButton } from "../general/Buttons";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
 const folksSchema = yup.object({
@@ -19,20 +26,20 @@ export const Form = ({ addFisherman }) => {
   const [fisherId, setFisherId] = useState("");
 
   const userID = useSelector((state) => state.user.currentUser?._id);
- 
 
   const genId = () => {
     const val = Math.floor(1000 + Math.random() * 9000);
-    setFisherId('#'+val.toString());
+    setFisherId("#" + val.toString());
   };
+
   console.log(fisherId);
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 20 }}>
         <Formik
           initialValues={{
-            userId: userID ,
-            fisherID: fisherId ,
+            userId: userID,
+            fisherID: fisherId,
             firstname: "",
             lastname: "",
             age: "",
@@ -125,7 +132,7 @@ export const Form = ({ addFisherman }) => {
                 {props.touched.region && props.errors.region}
               </Text>
               <View style={{ flexDirection: "row" }}>
-                <View style={{flexDirection:'column'}}>
+                <View style={{ flexDirection: "column" }}>
                   <TextInput
                     placeholder="ID Number"
                     onChangeText={props.handleChange("fisherID")}
@@ -145,9 +152,9 @@ export const Form = ({ addFisherman }) => {
                     justifyContent: "center",
                     alignItems: "center",
                     width: 100,
-                    height: 40,
+                    height: 50,
                     borderRadius: 3,
-                    marginLeft:5
+                    marginLeft: 5,
                   }}
                 >
                   <Text
