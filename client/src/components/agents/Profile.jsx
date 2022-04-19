@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Keyboard,
   View,
-  TouchableWithoutFeedback,
   ActivityIndicator,
 } from "react-native";
 import COLORS from "../../consts/colors";
@@ -38,7 +37,7 @@ export const Profile = ({ navigation }) => {
     data.filter((item) => item.fisherID.toString().includes(query));
 
   //adding info to database
-  const addFisherman = (details) => {
+  const addToFisherman = (details) => {
     addToProfile(dispatch, {
       ...details,
     });
@@ -119,7 +118,7 @@ export const Profile = ({ navigation }) => {
           folk
         )}
         <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <TouchableOpacity onPress={Keyboard.dismiss}>
             <View style={{ flex: 1 }}>
               <View style={styles.modalContainer}>
                 <Ionicons
@@ -129,18 +128,18 @@ export const Profile = ({ navigation }) => {
                   style={styles.toggleModal}
                 />
               </View>
-              <Form addFisherman={addFisherman} />
+              <Form addFisherman={addToFisherman} />
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </Modal>
-        <View style={styles.modalContainer}>
-          <Ionicons
-            onPress={() => setModalOpen(true)}
-            name="add-outline"
-            size={24}
-            style={styles.toggleModal}
-          />
-        </View>
+      </View>
+      <View style={styles.modalContainer}>
+        <Ionicons
+          onPress={() => setModalOpen(true)}
+          name="add-outline"
+          size={24}
+          style={styles.toggleModal}
+        />
       </View>
     </SafeAreaView>
   );
@@ -182,7 +181,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 2.0,
-
     elevation: 2,
   },
   name: {

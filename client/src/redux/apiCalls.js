@@ -106,7 +106,7 @@ export const profileFolk = async (dispatch) => {
 export const updatedProfile = async (dispatch, id, folk) => {
   dispatch(updateProfile());
   try {
-    const res = await axiosInstance.put('profile/61f17435d2887a9f367cac3d', folk)
+    const res = await axiosInstance.put(`profile/${id}`,folk)
     dispatch(updateProfileSuccess(res.data));
   } catch (err) {
     dispatch(updateProfileFailure());

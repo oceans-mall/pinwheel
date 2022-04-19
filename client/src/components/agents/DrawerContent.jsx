@@ -18,19 +18,22 @@ import { Ionicons } from "@expo/vector-icons";
 import backImage from "../../../assets/back.png"
 import userAvatar from "../../../assets/useravatar.png"
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../redux/userRedux";
 
 export const DrawerContent = (props) => {
   const username = useSelector((state) => state.user.currentUser?.firstname);
   const { push } = useNavigation()
+  const dispatch = useDispatch();
   // logout user
   const logout = async () => {
     try {
-      await AsyncStorage.clear();
-      Alert.alert("logging out...");
+      await AsyncStorage.removeItem("token");
+      Alert.alert("Warning!", "logging out...");
       setTimeout(() => {
         push("Services")
       },2000)
+      dispatch(logoutUser())
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +58,7 @@ export const DrawerContent = (props) => {
           />
           <Text style={{ color: "#fff", fontSize: 18 }}>Welcome {username}</Text>
         </ImageBackground>
-        <View style={{ backgroundColor: "#fff", paddingTop: 10 }}>
+        <View style={{ backgroundColor: "#fff", paddingTop: 10,}}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>

@@ -99,7 +99,7 @@ export const Sell = ({ navigation }) => {
             weight,
             price,
           })
-        )
+        );
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -243,10 +243,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
   },
-  titleText: { fontSize: 20, fontWeight: "bold", marginLeft: 8 },
+  titleText: { 
+    fontSize: 20, 
+    fontWeight: "bold", 
+    marginLeft: 8 
+  },
   search: {
-    width: 250,
-    borderWidth: 0.2,
+    width: 200,
+    borderWidth: 1,
     borderColor: COLORS.primary,
     marginLeft: 10,
     padding: 5,
@@ -264,7 +268,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     borderWidth: 2,
-    height:100
+    height: 100,
   },
   pickerContainer: {
     width: 120,
@@ -272,7 +276,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     height: 50,
     borderWidth: 2,
-
   },
   bottomContaner: {
     flex: 1,

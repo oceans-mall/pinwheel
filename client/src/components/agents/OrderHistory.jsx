@@ -12,26 +12,26 @@ import { useSelector } from "react-redux";
 import COLORS from "../../consts/colors";
 import { format } from "timeago.js";
 
-export const OrderHistory = ({ navigation }) => {
+export const OrderHistory = () => {
   const getOrderHistory = useSelector(
     (state) => state.ordersummary?.orderHistory
   );
-  console.log(getOrderHistory);
   return (
     <SafeAreaView style={style.conctainer}>
-      <View style={style.topSection}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back-outline" size={25} />
-        </TouchableOpacity>
-        <Text
-          style={{ fontSize: 18, fontWeight: "bold", color: COLORS.primary }}
-        >
-          Order History
-        </Text>
-        <View></View>
-      </View>
-      <ScrollView showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
-        {getOrderHistory ? (
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        style={{ flex: 1, backgroundColor: "#000000999" }}
+      >
+        {getOrderHistory.length === 0 ? (
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "white",
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>Your transaction is empty</Text>
+          </View>
+        ) : (
           getOrderHistory.map((order) => (
             <View style={style.card} key={order._id}>
               <View>
@@ -45,10 +45,6 @@ export const OrderHistory = ({ navigation }) => {
               </View>
             </View>
           ))
-        ) : (
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text>Sorry Order History is empty</Text>
-          </View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -58,17 +54,11 @@ const style = StyleSheet.create({
   conctainer: {
     flex: 1,
   },
-  topSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 10,
-  },
   card: {
     height: 120,
     backgroundColor: COLORS.white,
     borderRadius: 5,
-    marginVertical: 2,
+    marginVertical: 5,
     marginHorizontal: 10,
     padding: 10,
     flexDirection: "row",

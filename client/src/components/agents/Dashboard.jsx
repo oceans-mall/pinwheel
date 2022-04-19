@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 export const Dashboard = ({ navigation }) => {
   const [tradeTotal, settradeTotal] = useState(0);
   const [count, setCount] = useState(0);
+  const [notify, setNotify] = useState(0);
   //get total registered fishermen
   const getProfile = useSelector((state) => state.profile);
   const agent_id = useSelector((state) => state.user.currentUser?._id);
@@ -33,7 +34,7 @@ export const Dashboard = ({ navigation }) => {
           <Ionicons name="menu" size={25} color={"white"} />
         </TouchableOpacity>
         <View style={{ position: "relative" }}>
-          <TouchableOpacity onPress={() => navigation.navigate("History")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
             <Ionicons name="notifications" size={25} color={"white"} />
           </TouchableOpacity>
           <Text
@@ -46,7 +47,7 @@ export const Dashboard = ({ navigation }) => {
               fontWeight: "bold",
             }}
           >
-            5
+            {notify}
           </Text>
         </View>
       </View>

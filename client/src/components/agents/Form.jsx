@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,23 +15,18 @@ import { useSelector } from "react-redux";
 const folksSchema = yup.object({
   firstname: yup.string().required(),
   lastname: yup.string().required(),
-  age: yup.number().required().min(2),
-  contact: yup.number().required().min(10),
+  age: yup.number().required().max(2),
+  contact: yup.number().required().max(10),
   location: yup.string().required(),
   region: yup.string().required(),
-  fisherID: yup.string().required(),
 });
 export const Form = ({ addFisherman }) => {
   const [fisherId, setFisherId] = useState("");
-
-  const userID = useSelector((state) => state.user.currentUser?._id);
-
+  const userID = useSelector((state) => state.user.currentUser._id);
   const genId = () => {
     const val = Math.floor(1000 + Math.random() * 9000);
     setFisherId("#" + val.toString());
   };
-
-  console.log(fisherId);
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 20 }}>
@@ -51,7 +45,6 @@ export const Form = ({ addFisherman }) => {
           onSubmit={(values, actions) => {
             addFisherman = { values };
             actions.resetForm();
-            console.log({ values });
           }}
         >
           {(props) => (
@@ -65,9 +58,6 @@ export const Form = ({ addFisherman }) => {
                 style={style.input}
                 onBlur={props.handleBlur("")}
               />
-              <Text style={style.errorText}>
-                {props.touched.userId && props.errors.userId}
-              </Text>
               <TextInput
                 placeholder="Firstname"
                 onChangeText={props.handleChange("firstname")}
@@ -100,7 +90,7 @@ export const Form = ({ addFisherman }) => {
                 {props.touched.age && props.errors.age}
               </Text>
               <TextInput
-                placeholder="+233 111 111 000"
+                placeholder="0244 111 111"
                 onChangeText={props.handleChange("contact")}
                 value={props.values.contact}
                 style={style.input}

@@ -39,8 +39,8 @@ export const TradeCart = ({ navigation }) => {
       setTimeout(() => {
         dispatch(clearOrder());
         setIndicator(false);
-        navigation.navigate("Payment");
-      }, 2500);
+        navigation.navigate("Orders");
+      }, 3000);
     }
   };
   const renderItem = ({ item }) => (

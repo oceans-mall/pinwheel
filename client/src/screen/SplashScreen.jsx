@@ -28,7 +28,7 @@ export const SplashScreen = ({navigation}) => {
         <Text style={styles.title}>Get fresh seafoods from Ghana's finest fisher folks</Text>
         <Text style={styles.text}>Sign in with account</Text>
         <View style={styles.button}>
-          <TouchableOpacity onPress={() => navigation.navigate("Services")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <LinearGradient
               colors={[COLORS.primary, "#00d4ff"]}
               style={styles.signIn}
