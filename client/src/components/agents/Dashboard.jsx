@@ -13,20 +13,21 @@ import { useSelector } from "react-redux";
 
 export const Dashboard = ({ navigation }) => {
   const [tradeTotal, settradeTotal] = useState(0);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState([]);
   const [notify, setNotify] = useState(0);
   //get total registered fishermen
-  const getProfile = useSelector((state) => state.profile);
+  const getProfile = useSelector((state) => state.profile?.folks);
   const agent_id = useSelector((state) => state.user.currentUser?._id);
 
   useEffect(() => {
-    folk();
-  }, [getProfile]);
-  const folk = () =>
-    getProfile.folks.map((item) =>
-      item.userId === agent_id ? setCount([item].length) : null
-    );
+    folk()
+  }, []);
 
+  const folk = () =>
+    getProfile?.map((item) =>
+      item.userId === agent_id ? setCount(count.push(item)) : null
+    );
+console.log(count);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -34,7 +35,9 @@ export const Dashboard = ({ navigation }) => {
           <Ionicons name="menu" size={25} color={"white"} />
         </TouchableOpacity>
         <View style={{ position: "relative" }}>
-          <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Notifications")}
+          >
             <Ionicons name="notifications" size={25} color={"white"} />
           </TouchableOpacity>
           <Text
@@ -70,8 +73,8 @@ export const Dashboard = ({ navigation }) => {
             <Text style={styles.tradeAmount}>{count}</Text>
           </View>
         </View>
-        <Chart />
-      </View>
+        <Chart /> 
+        </View>
     </SafeAreaView>
   );
 };
@@ -116,11 +119,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  title: {
-    textAlign: "center",
-    color: COLORS.white,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
+  }
 });

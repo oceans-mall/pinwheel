@@ -43,7 +43,7 @@ const profilesSlice = createSlice({
       state.isProfiling = false;
       state.folks[
         state.folks.findIndex((item) => item._id === action.payload.id)
-      ] = action.payload.folk;
+      ] = action.payload;
       state.error = false
     },
     updateProfileFailure: (state) => {

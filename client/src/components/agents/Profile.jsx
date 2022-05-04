@@ -12,67 +12,62 @@ import {
   Keyboard,
   View,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import COLORS from "../../consts/colors";
-import { Form } from "./Form";
-import { profileFolk, addToProfile } from "../../redux/apiCalls";
+import { profileFolk } from "../../redux/apiCalls";
+import { New } from "./New";
+import { Indicator } from "../general/Modal";
 
 export const Profile = ({ navigation }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const dispatch = useDispatch();
 
-  //fetching data from the api
+  const dispatch = useDispatch();
   useEffect(() => {
     profileFolk(dispatch);
-    folk;
-  }, [dispatch]);
+  }, []);
 
   //fetching data from redux
-  const getProfile = useSelector((state) => state.profile);
+  const getProfile = useSelector((state) => state.profile?.folks);
   const agent_id = useSelector((state) => state.user.currentUser?._id);
 
   //search function
   const search = (data) =>
-    data.filter((item) => item.fisherID.toString().includes(query));
+    data.filter((item) => item.fisherId.toString().includes(query));
 
-  //adding info to database
-  const addToFisherman = (details) => {
-    addToProfile(dispatch, {
-      ...details,
-    });
-    setModalOpen(false);
-  };
-
-  const folk = getProfile.folks.map((item, i) =>
+  const folk = getProfile.map((item, i) =>
     item.userId === agent_id ? (
       <FlatList
         data={search([item])}
         renderItem={({ item }) => <Card items={item} />}
+        keyExtractor={(item) => item._id}
+        key={i}
       />
-    ) : (
-      <Text></Text>
-    )
+    ) : null
   );
 
   const Card = ({ items }) => {
     return (
-      <View style={styles.cardContainer}>
-        <TouchableOpacity
-          style={{ flex: 1 }}
-          onPress={() => navigation.navigate("Edit", items)}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.name}>{items.firstname}</Text>
-            <Text style={[styles.name, styles.lname]}>{items.lastname}</Text>
-          </View>
-          <Text style={styles.details}>Contact : 0{items.contact}</Text>
-          <Text style={styles.details}>ID : {items.fisherID}</Text>
-        </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Location: {items.location}
-        </Text>
-      </View>
+      <TouchableOpacity
+        style={styles.cardContainer}
+        onPress={() => navigation.navigate("Edit", items)}
+      >
+        <View style={{flexDirection:'column'}}>
+        <View style={{flexDirection:'row'}} >
+          <Text style={styles.details}>ID#: {items.fisherId}</Text>
+          <Text style={styles.name}>
+            Name: {items.firstname + " " + items.lastname}
+          </Text>
+        </View>
+        <View style={{flexDirection:'row'}}>
+          <Text style={styles.details}>Phone: {items.contact}</Text>
+          <Text style={{ fontSize: 16,color:"#422b1a", fontWeight: "bold",marginHorizontal:20 }}>
+            Location: {items.location}
+          </Text>
+        </View>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -80,15 +75,9 @@ export const Profile = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <View
         style={{
-          flex: 4,
           padding: 10,
-          paddingTop: 20,
-          backgroundColor: "#f7f5f0",
         }}
       >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={25} />
-        </TouchableOpacity>
         <Text
           style={{
             textAlign: "center",
@@ -112,27 +101,29 @@ export const Profile = ({ navigation }) => {
           }}
           placeholder="Enter fisherman ID"
         />
+      </View>
+      <ScrollView>
         {getProfile.isLoading ? (
-          <ActivityIndicator size="large" color={COLORS.primary} />
+         <Indicator />
         ) : (
           folk
         )}
-        <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
-          <TouchableOpacity onPress={Keyboard.dismiss}>
-            <View style={{ flex: 1 }}>
-              <View style={styles.modalContainer}>
-                <Ionicons
-                  onPress={() => setModalOpen(false)}
-                  name="close"
-                  size={24}
-                  style={styles.toggleModal}
-                />
-              </View>
-              <Form addFisherman={addToFisherman} />
+      </ScrollView>
+      <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
+        <TouchableOpacity onPress={Keyboard.dismiss}>
+          <View style={{ marginTop: 5 }}>
+            <View style={styles.modalContainer}>
+              <Ionicons
+                onPress={() => setModalOpen(false)}
+                name="close"
+                size={24}
+                style={styles.toggleModal}
+              />
             </View>
-          </TouchableOpacity>
-        </Modal>
-      </View>
+          </View>
+        </TouchableOpacity>
+        <New />
+      </Modal>
       <View style={styles.modalContainer}>
         <Ionicons
           onPress={() => setModalOpen(true)}
@@ -146,34 +137,26 @@ export const Profile = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  head: {
-    height: 40,
-    backgroundColor: "#f1f8ff",
-  },
-  text: {
-    textAlign: "center",
-    margin: 3,
-  },
-  border: { borderWidth: 2, borderColor: "#c8e1ff" },
   modalContainer: {
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    width: 60,
+    width: 40,
     height: 40,
     backgroundColor: COLORS.primary,
-    elevation: 8,
+    elevation: 5,
     borderRadius: 50,
-    marginTop: 10,
+    marginBottom: 5,
   },
-  toggleModal: { color: "white", fontWeight: "800" },
   cardContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: COLORS.primary,
+    flexDirection: "column",
+    backgroundColor: "#bfbfa8",
+    borderRadius: 5,
     padding: 10,
-    alignItems: "center",
+    marginHorizontal: 10,
+    marginVertical: 5,
+    alignItems: "flex-start",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -184,17 +167,22 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   name: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     textTransform: "capitalize",
     color: "white",
+    marginHorizontal:10
   },
   lname: {
     marginLeft: 3,
   },
   details: {
     marginTop: 2,
-    fontSize: 20,
+    fontSize: 16,
     color: "white",
+  },
+  toggleModal: {
+    color: "white",
+    fontWeight: "800",
   },
 });

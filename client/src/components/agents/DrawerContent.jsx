@@ -31,7 +31,7 @@ export const DrawerContent = (props) => {
       await AsyncStorage.removeItem("token");
       Alert.alert("Warning!", "logging out...");
       setTimeout(() => {
-        push("Services")
+        push("Login")
       },2000)
       dispatch(logoutUser())
     } catch (err) {

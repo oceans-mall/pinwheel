@@ -9,67 +9,59 @@ import {
   Button,
   Alert,
   ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
+  Picker,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../consts/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { Fishes, Sources } from "../../redux/apiCalls";
 import { addOrder } from "../../redux/orderRedux";
+import { Indicator } from "../general/Modal";
 
 export const Sell = ({ navigation }) => {
-  const [sourcetype, setSource] = useState("--source--");
-  const [selectedfish, setSelectedFish] = useState("--select--");
+  const [sourcetype, setSource] = useState();
+  const [selectedValue, setSelectedValue] = useState();
   const [weight, setWeight] = useState("");
   const [price, setPrice] = useState("");
   const [fisherman, setFisherman] = useState("");
-  const [fisherID, setFisherID] = useState("");
+  const [fisherId, setFisherID] = useState("");
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [fish_id, setId] = useState("");
-  const dispatch = useDispatch();
   const folk = useSelector((state) => state.profile?.folks);
   const sources = useSelector((state) => state.source?.sources);
   const fishes = useSelector((state) => state.fish?.fish);
   const cart = useSelector((state) => state.order.quantity);
   const agent = useSelector((state) => state.user.currentUser?._id);
+  const [indicator, setIndicator] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     Sources(dispatch);
     Fishes(dispatch);
     getPrice();
-  }, [dispatch, selectedfish]);
+  }, [dispatch, selectedValue]);
 
   const name = () => {
     const person = folk.filter((item) =>
-      item.fisherID.toString().includes(query)
+      item.fisherId.toString().includes(query)
     );
     person.forEach((element) => {
       setFisherman(element.firstname) ||
         setLocation(element.location) ||
-        setFisherID(element.fisherID);
+        setFisherID(element.fisherId);
     });
   };
-
-  const fish = fishes.map((fish) => (
-    <Picker.Item
-      key={fish.id}
-      label={fish.name}
-      value={fish.name.toLowerCase()}
-      color={COLORS.primary}
-      style={styles.picker}
-    />
-  ));
 
   const m = sources.map((el) =>
     el.source.map((item, i) => (
       <Picker.Item
-        key={i}
+        key={item._id}
         label={item}
         value={item.toLowerCase()}
         color={COLORS.primary}
-        style={styles.picker}
       />
     ))
   );
@@ -77,7 +69,7 @@ export const Sell = ({ navigation }) => {
   //get selected item price
   const getPrice = () =>
     fishes.map((item) =>
-      item.name === selectedfish
+      item.name === selectedValue
         ? setPrice(item.price) || setId(item._id)
         : null
     );
@@ -87,11 +79,11 @@ export const Sell = ({ navigation }) => {
       ? "Please add quantity"
       : dispatch(
           addOrder({
-            fisherID,
+            fisherId,
             agent,
             products: {
               id: fish_id,
-              name: selectedfish,
+              name: selectedValue,
               price: price,
               cost: price * weight,
               weight: weight,
@@ -101,8 +93,21 @@ export const Sell = ({ navigation }) => {
           })
         );
   };
+
+  const handleDone = () => {
+    if (cart === 0) {
+      Alert.alert("Cart is empty");
+    } else {
+      setIndicator(true);
+      setTimeout(() => {
+        setIndicator(false);
+        navigation.navigate("Cart");
+      }, 3000);
+    }
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Indicator show={indicator} />
       <View
         style={{
           backgroundColor: COLORS.secondary,
@@ -117,7 +122,7 @@ export const Sell = ({ navigation }) => {
           <Ionicons name="arrow-back-outline" size={20} color={COLORS.white} />
         </TouchableOpacity>
         <View style={{ position: "relative" }}>
-          <TouchableOpacity onPress={() => navigation.navigate("TradeCart")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
             <Ionicons name="basket-outline" size={20} color={COLORS.white} />
           </TouchableOpacity>
           <View style={styles.cart}>
@@ -157,25 +162,32 @@ export const Sell = ({ navigation }) => {
             <Text style={styles.text}>Name:</Text>
             <Text style={styles.titleText}>{fisherman}</Text>
           </View>
-          {/* fish picker */}
           <View style={styles.content}>
             <Text style={styles.text}>Fish-Type:</Text>
             <Picker
-              selectedfish={selectedfish}
-              onValueChange={(value) => setSelectedFish(value)}
-              style={styles.pickerContainer}
-              dropdownIconColor={COLORS.primary}
+              selectedValue={selectedValue}
+              style={{ height: 50, width: 150, marginLeft: 10 }}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedValue(itemValue)
+              }
             >
-              {fish}
+              {fishes.map((item) => (
+                <Picker.Item
+                  key={item._id}
+                  label={item.name}
+                  value={item.name}
+                  color={COLORS.primary}
+                />
+              ))}
             </Picker>
           </View>
           {/* source picker */}
           <View style={styles.content}>
             <Text style={styles.text}>Source:</Text>
             <Picker
-              sourcetype={sourcetype}
+              selectedValue={sourcetype}
               onValueChange={(value) => setSource(value)}
-              style={styles.pickerContainer}
+              style={{ width: 120, height: 50 }}
               dropdownIconColor={COLORS.primary}
             >
               {m}
@@ -222,11 +234,7 @@ export const Sell = ({ navigation }) => {
         <View style={styles.bottomContaner}>
           <TouchableOpacity
             style={[styles.touch, styles.doneColor]}
-            onPress={() =>
-              cart !== 0
-                ? navigation.navigate("TradeCart")
-                : Alert.alert("Cart is empty")
-            }
+            onPress={handleDone}
           >
             <Text style={styles.txt}>DONE</Text>
           </TouchableOpacity>
@@ -243,10 +251,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
   },
-  titleText: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    marginLeft: 8 
+  titleText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: 8,
   },
   search: {
     width: 200,
@@ -263,19 +271,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 3,
     fontSize: 20,
-  },
-  picker: {
-    fontSize: 15,
-    textAlign: "center",
-    borderWidth: 2,
-    height: 100,
-  },
-  pickerContainer: {
-    width: 120,
-    marginLeft: 10,
-    fontSize: 15,
-    height: 50,
-    borderWidth: 2,
   },
   bottomContaner: {
     flex: 1,
@@ -309,5 +304,11 @@ const styles = StyleSheet.create({
     width: 15,
     alignItems: "center",
   },
-  content: { flexDirection: "row", marginVertical: 15 },
+  content: {
+    flex: 1,
+    flexDirection: "row",
+    marginVertical: 10,
+    alignItems: "center",
+    height: 60,
+  },
 });

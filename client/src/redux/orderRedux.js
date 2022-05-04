@@ -15,7 +15,7 @@ const orderSlice = createSlice({
       state.product.push(action.payload.products);
       state.total += action.payload.price * action.payload.weight;
       state.userId = action.payload.agent;
-      state.fishermanId = action.payload.fisherID;
+      state.fishermanId = action.payload.fisherId;
     },
     deleteOrder: (state, action) => {
       state.product.splice(

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Platform,
   StyleSheet,
@@ -9,7 +9,6 @@ import {
   ScrollView,
   ActivityIndicator,
   Modal,
-  Pressable,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -212,7 +211,7 @@ export const Signup = ({ navigation }) => {
                   marginTop: 15,
                 },
               ]}
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate("Login")}
             >
               <Text
                 style={[

@@ -5,15 +5,10 @@ import COLORS from "../../consts/colors";
 
 export const Chart = () => {
   const linedata = {
-    labels: [
-      "Week 1",
-      "Week 2",
-      "Week 3",
-      "Week 4",
-    ],
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
       {
-        data: [600,500,200,1000],
+        data: [600, 500, 200, 1000,0],
         strokeWidth: 3,
       },
     ],

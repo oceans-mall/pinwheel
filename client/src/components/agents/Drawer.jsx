@@ -10,6 +10,7 @@ import { OrderHistory } from "./OrderHistory";
 import { Notifications } from "./Notifications";
 import { Orders } from "./Orders";
 import { Settings } from "./Settings";
+import { Cart } from "./Cart";
 
 const Drawer = createDrawerNavigator();
 
@@ -50,6 +51,30 @@ export const Agent = () => {
           drawerIcon: ({ color }) => (
             <Ionicons name="person-outline" size={22} color={color} />
           ),
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: COLORS.primary,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+       <Drawer.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Ionicons name="basket-outline" size={22} color={color} />
+          ),
+          drawerLabel: "Cart",
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: COLORS.primary,
+          },
+          headerTintColor: "#fff",
         }}
       />
       <Drawer.Screen
@@ -57,9 +82,9 @@ export const Agent = () => {
         component={Orders}
         options={{
           drawerIcon: ({ color }) => (
-            <Ionicons name="cart-outline" size={22} color={color} />
+            <Ionicons name="stats-chart-outline" size={22} color={color} />
           ),
-          drawerLabel: "Orders",
+          drawerLabel: "Order Status",
           headerShown: true,
           headerTitleAlign: "center",
           headerStyle: {
@@ -100,14 +125,14 @@ export const Agent = () => {
           headerTintColor: "#fff",
         }}
       />
-        <Drawer.Screen
+      <Drawer.Screen
         name="Settings"
         component={Settings}
         options={{
           drawerIcon: ({ color }) => (
             <Ionicons name="settings-outline" size={22} color={color} />
           ),
-          drawerLabel:"Account Details",
+          drawerLabel: "Account Details",
           headerShown: true,
           headerTitleAlign: "center",
           headerTitleAlign: "center",

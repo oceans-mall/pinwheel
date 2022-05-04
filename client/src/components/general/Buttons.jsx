@@ -14,10 +14,11 @@ export const FlatButton = ({ text, onPress = () =>{}}) => {
 const style = StyleSheet.create({
   btn: {
     height:60,
+    width:60,
     borderRadius: 8,
     paddingVertical: 14,
     paddingHorizontal: 10,
-    backgroundColor: COLORS.primary, // "#f01d71"
+    backgroundColor: COLORS.primary
   },
   btnText: {
     color: "white",

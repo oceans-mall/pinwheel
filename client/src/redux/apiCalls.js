@@ -16,22 +16,17 @@ import {
   deleteProfileFailure,
   deleteProfileSuccess,
 } from "./profilesRedux";
-import { publicRequest } from "../requestMethods";
 import { addToCart } from "./cartRedux";
 import { getProducts, getProductsSuccess } from "./productsRedux";
 import { getSource, getSourceFailure, getSourceSuccess } from "./sourceRedux";
 import { fetchdata, fetchdataFailure, fetchdataSuccess } from "./fishRedux";
-import { addToHistory, addToSummary } from "./orderSummary";
+import { addToSummary } from "./orderSummary";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: 'http://153.92.210.61/api/'
  });
-
- const userRequest = async () => {
-   axio
- }
 
 //get Products
 export const products = async (dispatch) => {
@@ -77,16 +72,6 @@ export const register = async (dispatch, register) => {
   }
 };
 
-//create profile
-export const addToProfile = async (dispatch, profile) => {
-  dispatch(addProfile());
-  try {
-    const res =await axiosInstance.post("profile/fisherman", profile)
-      dispatch(addProfileSuccess(res.data));
-  } catch (err) {
-    dispatch(addProfileFailure());
-  }
-};
 //get profile
 export const profileFolk = async (dispatch) => {
   dispatch(getProfileStart())
@@ -102,16 +87,7 @@ export const profileFolk = async (dispatch) => {
     dispatch(getProfileFailure())
   }
 };
-//edit profile
-export const updatedProfile = async (dispatch, id, folk) => {
-  dispatch(updateProfile());
-  try {
-    const res = await axiosInstance.put(`profile/${id}`,folk)
-    dispatch(updateProfileSuccess(res.data));
-  } catch (err) {
-    dispatch(updateProfileFailure());
-  }
-};
+
 //delete profile
 export const deleteProfile = async  (dispatch,id) =>{
   dispatch(deleteProfile());
@@ -139,6 +115,7 @@ export const addToOrder = async (dispatch, order) => {
   try {
     const res = await axiosInstance.post("orders/order", order)
     dispatch(addToSummary(res.data))
+    console.log(res.data);
   } catch (error) {
     
   }

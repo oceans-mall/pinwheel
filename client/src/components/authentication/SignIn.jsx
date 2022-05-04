@@ -36,6 +36,8 @@ export const SignIn = ({ navigation }) => {
   const {error, success } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { check_textInputChange, secureTextEntry, ...others } = data;
+
+  
   const handleSubmit = async () => {
     dispatch(loginStart());
     setIndicator(true);

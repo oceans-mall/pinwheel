@@ -13,7 +13,6 @@ import { Edit } from "./src/screen/Edit";
 import { Payment } from "./src/screen/Payment";
 import { BottomNavigation } from "./src/components/navigation/BottomNavigation";
 import { Contact } from "./src/screen/Contact";
-import { TradeCart } from "./src/screen/TradeCart";
 import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
@@ -29,7 +28,6 @@ export default function StackNavigation() {
         {agent && (
           <Stack.Group>
             <Stack.Screen name="Agent" component={Agent} />
-            <Stack.Screen name="TradeCart" component={TradeCart} />
             <Stack.Screen name="Edit" component={Edit} />
             <Stack.Screen name="Payment" component={Payment} />
           </Stack.Group>
