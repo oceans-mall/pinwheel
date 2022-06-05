@@ -8,6 +8,7 @@ import {
   View,
   ActivityIndicator,
   Modal,
+  ToastAndroid,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -53,6 +54,11 @@ export const SignIn = ({ navigation }) => {
       return user;
     } catch (err) {
       dispatch(loginFailure);
+      error && ToastAndroid.show(
+        "Warning USER DETAILS incorrect please try again!",
+        ToastAndroid.LONG,
+        ToastAndroid.TOP
+      );
     }
   };
 

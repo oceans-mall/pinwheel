@@ -12,6 +12,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Picker,
+  Modal,
+  Pressable,
 } from "react-native";
 import COLORS from "../../consts/colors";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +37,10 @@ export const Sell = ({ navigation }) => {
   const cart = useSelector((state) => state.order.quantity);
   const agent = useSelector((state) => state.user.currentUser?._id);
   const [indicator, setIndicator] = useState(false);
+  const [fontLoaded, setfontLoaded] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const total = useSelector((state) => state.order?.total);
 
   const dispatch = useDispatch();
 
@@ -92,8 +98,13 @@ export const Sell = ({ navigation }) => {
             price,
           })
         );
+    clearInput();
+    setModal(true);
   };
-
+  //clear input after submition
+  const clearInput = () => {
+    return setPrice(""), setSelectedValue(""), setSource(""), setWeight("");
+  };
   const handleDone = () => {
     if (cart === 0) {
       Alert.alert("Cart is empty");
@@ -107,6 +118,45 @@ export const Sell = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Modal
+        transparent
+        visible={modal}
+        onRequestClose={() => setModal(false)}
+        animationType="slide"
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <View style={styles.modal_header}>
+              <Text>SUMMARY</Text>
+            </View>
+            <View style={styles.modal_body}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 20,
+                  fontFamily: "BarlowCondensed",
+                  fontWeight: "noral",
+                }}
+              >
+                {" "}
+                Total Amount: &#x20B5; {total}
+              </Text>
+            </View>
+            <Pressable
+              style={{
+                alignItems: "center",
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                backgroundColor: "#00ffff",
+              }}
+              onPress={() => setModal(false)}
+              android_ripple={{ color: "#fff" }}
+            >
+              <Text style={{ fontSize: 16 }}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <Indicator show={indicator} />
       <View
         style={{
@@ -150,7 +200,7 @@ export const Sell = ({ navigation }) => {
           />
           <Button title="Search" onPress={query ? name : null} />
         </View>
-        <View style={{ flexDirection: "column" }}>
+        <View style={{ flexDirection: "column", marginTop:20 }}>
           {/* name container */}
           <View
             style={{
@@ -202,9 +252,9 @@ export const Sell = ({ navigation }) => {
           <View style={styles.content}>
             <Text style={styles.text}>Weight(kg): </Text>
             <TextInput
-              placeholder="Enter"
               name="Weight"
               onChangeText={(text) => setWeight(text)}
+              value={weight}
               placeholderTextColor={COLORS.secondary}
               style={styles.textItem}
               underlineColorAndroid="transparent"
@@ -228,7 +278,7 @@ export const Sell = ({ navigation }) => {
       >
         <View style={styles.bottomContaner}>
           <TouchableOpacity style={styles.touch} onPress={handleAddBtn}>
-            <Text style={styles.txt}>ADD</Text>
+            <Text style={[styles.txt, styles.add]}>ADD ITEM</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.bottomContaner}>
@@ -236,7 +286,7 @@ export const Sell = ({ navigation }) => {
             style={[styles.touch, styles.doneColor]}
             onPress={handleDone}
           >
-            <Text style={styles.txt}>DONE</Text>
+            <Text style={styles.txt}>MY BASKET({cart})</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -249,12 +299,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: 20,
+    fontFamily: "BarlowCondensed",
+    fontSize: 18,
   },
   titleText: {
     fontSize: 20,
     fontWeight: "bold",
     marginLeft: 8,
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.primary,
   },
   search: {
     width: 200,
@@ -263,11 +316,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 5,
     fontSize: 18,
+    borderRadius:3,
+    padding:6
   },
   textItem: {
-    width: 70,
+    width: 80,
     height: 30,
-    borderWidth: 0.5,
+    borderBottomWidth: 1,
     alignItems: "center",
     paddingLeft: 3,
     fontSize: 20,
@@ -279,10 +334,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   doneColor: {
-    backgroundColor: "green",
+    backgroundColor: "black",
+  },
+  add: {
+    color: "white",
   },
   txt: {
-    color: "white",
+    color: "orange",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
@@ -310,5 +368,32 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     alignItems: "center",
     height: 60,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00000099",
+  },
+  modal: {
+    width: 200,
+    height: 200,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+  },
+  modal_header: {
+    height: 50,
+    fontWeight: "bold",
+    fontSize:18,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00ffff",
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  modal_body: {
+    height: 130,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

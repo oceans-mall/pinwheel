@@ -11,7 +11,7 @@ import { Notifications } from "./Notifications";
 import { Orders } from "./Orders";
 import { Settings } from "./Settings";
 import { Cart } from "./Cart";
-
+import TestTable from "./Table";
 const Drawer = createDrawerNavigator();
 
 export const Agent = () => {
@@ -67,14 +67,14 @@ export const Agent = () => {
           drawerIcon: ({ color }) => (
             <Ionicons name="basket-outline" size={22} color={color} />
           ),
-          drawerLabel: "Cart",
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTitleAlign: "center",
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTintColor: "#fff",
+          // drawerLabel: "Cart",
+          // headerShown: true,
+          // headerTitleAlign: "center",
+          // headerTitleAlign: "center",
+          // headerStyle: {
+          //   backgroundColor: COLORS.primary,
+          // },
+          // headerTintColor: "#fff",
         }}
       />
       <Drawer.Screen
@@ -128,6 +128,23 @@ export const Agent = () => {
       <Drawer.Screen
         name="Settings"
         component={Settings}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Ionicons name="settings-outline" size={22} color={color} />
+          ),
+          drawerLabel: "Account Details",
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: COLORS.primary,
+          },
+          headerTintColor: "#fff",
+        }}
+      />
+       <Drawer.Screen
+        name="Table"
+        component={TestTable}
         options={{
           drawerIcon: ({ color }) => (
             <Ionicons name="settings-outline" size={22} color={color} />

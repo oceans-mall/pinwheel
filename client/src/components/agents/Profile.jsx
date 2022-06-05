@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flexDirection: "column",
-    backgroundColor: "#bfbfa8",
+    backgroundColor: COLORS.primary,
     borderRadius: 5,
     padding: 10,
     marginHorizontal: 10,

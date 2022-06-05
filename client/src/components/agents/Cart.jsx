@@ -77,6 +77,21 @@ export const Cart = ({ navigation }) => {
   );
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          backgroundColor: COLORS.secondary,
+          height: 50,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: 5,
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.navigate("Sell")}>
+          <Ionicons name="arrow-back-outline" size={20} color={COLORS.white} />
+        </TouchableOpacity>
+      </View>
+      {/* ..... */}
       <Indicator show={isOpen} />
       <View style={{ flex: 1 }}>
         <FlatList
@@ -98,7 +113,9 @@ export const Cart = ({ navigation }) => {
             <Text style={styles.txt}> &#x20B5;{total} </Text>
           </TouchableOpacity>
         </View>
-        <View
+
+        <TouchableOpacity
+          onPress={handleOrder}
           style={{
             justifyContent: "center",
             alignItems: "center",
@@ -108,12 +125,10 @@ export const Cart = ({ navigation }) => {
             borderRadius: 20,
           }}
         >
-          <TouchableOpacity onPress={handleOrder}>
-            <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-              SELL
-            </Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
+            SELL
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

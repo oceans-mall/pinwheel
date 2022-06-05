@@ -72,9 +72,9 @@ export const New = () => {
       setFisherId(null),
       setLocation("");
     setRegion("");
-    setTimeout(() => {
-      navigation.navigate("Profile")
-    },2000)
+    // setTimeout(() => {
+    //   navigation.navigate("Profile")
+    // },2000)
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>

@@ -9,6 +9,8 @@ import {
   ScrollView,
   ActivityIndicator,
   Modal,
+  Alert,
+  ToastAndroid,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -45,8 +47,22 @@ export const Signup = ({ navigation }) => {
     setIndicator(true);
     setTimeout(() => {
       setIndicator(false);
+      if(success) {
+        ToastAndroid.show(
+          "REGISTRATION successful please wait whiles we activate your account!",
+          ToastAndroid.LONG,
+          ToastAndroid.TOP
+        );
+      } else
+        error &&
+          ToastAndroid.show(
+            "REGISTRATION FAILED please try again!",
+            ToastAndroid.LONG,
+            ToastAndroid.TOP
+          );
+
       navigation.navigate("Login");
-    }, 3000);
+    }, 4000);
   };
 
   //handle inputchage for email
