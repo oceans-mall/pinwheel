@@ -9,7 +9,6 @@ import {
   Timeline,
   TrendingUp,
   PersonOutline,
-  AttachMoney,
   BarChart,
   Storefront,
 } from "@material-ui/icons";
@@ -41,10 +40,16 @@ export const Sidebar = () => {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">QUICK MENU</h3>
           <ul className="sidebarList">
-            <Link to="/users" className='link'>
+          <Link to="/users" className='link'>
               <li className="sidebarListItem">
                 <PersonOutline className="sidebarIcon" />
                 Users
+              </li>
+            </Link>
+            <Link to="/profile" className='link'>
+              <li className="sidebarListItem">
+                <PersonOutline className="sidebarIcon" />
+                Fishermen
               </li>
             </Link>
             <Link to="/products"className='link'>
@@ -54,7 +59,7 @@ export const Sidebar = () => {
             </li>
             </Link>
             <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
+              <span className="sidebarIcon">&#x20B5;</span>
               Transactions
             </li>
             <li className="sidebarListItem">

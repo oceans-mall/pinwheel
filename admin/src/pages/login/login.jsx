@@ -3,14 +3,13 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/apiCalls";
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const dispatch = useDispatch((state) => state.user);
 
   const handleClick = (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    login(dispatch, { email, password });
   };
 
   return (
@@ -26,14 +25,14 @@ export const Login = () => {
       <input
         style={{ padding: 10, marginBottom: 20 }}
         type="text"
-        placeholder="username"
-        autoComplete= "current-username"
+        placeholder="Email"
+        autoComplete="current-email"
         onChange={(e) => setUsername(e.target.value)}
       />
       <input
         style={{ padding: 10, marginBottom: 20 }}
         type="password"
-        autoComplete= "current-password"
+        autoComplete="current-password"
         placeholder="**********"
         onChange={(e) => setPassword(e.target.value)}
       />

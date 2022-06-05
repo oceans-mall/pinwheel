@@ -8,7 +8,7 @@ export const Topbar = () => {
         <div className="topbar">
             <div className="topbarWrapper">
                 <div className="topLeft">
-                    <span className="logo">LEXORG ADMIN</span>
+                    <span className="logo">OCEANS-MALL</span>
                 </div>
                 <div className="topRight">
                     <div className="topbarIconContainer">

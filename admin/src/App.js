@@ -10,16 +10,20 @@ import { ProductsList } from "./pages/productList/ProductsList";
 import { Product } from "./pages/products/Product";
 import { NewProduct } from "./pages/newProduct/newProduct";
 import Login from "./pages/login/login";
+import { Profile } from "./pages/profile/Profile";
 
-const admin = true
 function App() {
+  const admin = JSON.parse(
+    JSON.parse(localStorage.getItem("persist:root")).user
+  )?.currentUser?.isAdmin;
+
   return (
     <Router>
+      <Route path="/login">
+        <Login />
+      </Route>
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        { admin  &&
+        {admin ? (
           <>
             <Topbar />
             <div className="container">
@@ -36,6 +40,9 @@ function App() {
               <Route path="/newUser">
                 <NewUser />
               </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
               <Route path="/products">
                 <ProductsList />
               </Route>
@@ -47,7 +54,11 @@ function App() {
               </Route>
             </div>
           </>
-          }
+        ) : (
+          <Route path="/login">
+            <Login />
+          </Route>
+        )}
       </Switch>
     </Router>
   );

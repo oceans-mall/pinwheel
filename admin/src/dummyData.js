@@ -54,11 +54,12 @@ export const userData = [
 export const userRows = [
   {
     id: 1,
-    username: "Nofell", 
+    username: "Nofell Djan", 
     avatar: user,
-    email: "hello@danny.com",
-    status: "active",
-    transaction: "$120.60",
+    phone: "0245178464",
+    age: 60,
+    location: "Mankesim",
+    region:"Greater Accra"
   },
   {
     id: 2,
