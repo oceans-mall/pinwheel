@@ -34,6 +34,6 @@ app.use("/api/profile", profileRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/fish", fishRoute)
 
-app.listen(process.env.PORT || 4000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("Backend server is running!");
 });

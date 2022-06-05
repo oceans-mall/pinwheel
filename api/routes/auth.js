@@ -31,7 +31,7 @@ router.post("/register", async (req, res) => {
 //LOGIN
 router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({ email:req.body.email });
+    const user = await User.findOne({ email: req.body.email });
     !user && res.status(401).json("Wrong email!");
 
     const hashedPassword = CryptoJS.AES.decrypt(
@@ -51,11 +51,10 @@ router.post("/login", async (req, res) => {
       process.env.JWT_SEC,
       { expiresIn: "10d" }
     );
-      console.log(user._doc);
-    const { password,...others } = user._doc;
+    console.log(user._doc);
+    const { password, ...others } = user._doc;
     res.status(200).json({ ...others, accessToken });
-  } 
-  catch (err) {
+  } catch (err) {
     res.status(500).json(err);
   }
 });

@@ -10,8 +10,7 @@ const orderSchema = new mongoose.Schema(
           type: String,
         },
         weight: {
-          type: Number,
-          default: 1,
+          type: String,
         },
         cost: {
           type: Number,

@@ -28,7 +28,7 @@ router.post("/fisherman", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await Profile.findByIdAndUpdate(
-      req.params.id,
+      req.params._id,
       {
         $set: req.body,
       },
