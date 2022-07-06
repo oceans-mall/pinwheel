@@ -34,11 +34,10 @@ export const SignIn = ({ navigation }) => {
   const [isOpen, setIndicator] = useState(false);
 
   //calling state from redux
-  const {error, success } = useSelector((state) => state.user);
+  const { error, success } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { check_textInputChange, secureTextEntry, ...others } = data;
 
-  
   const handleSubmit = async () => {
     dispatch(loginStart());
     setIndicator(true);
@@ -50,14 +49,21 @@ export const SignIn = ({ navigation }) => {
       dispatch(loginSuccess(user.data));
       const token = JSON.stringify(user.data.accessToken);
       await AsyncStorage.setItem("token", token);
+      ToastAndroid.showWithGravity(
+        "Welcome back",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
       navigation.navigate("Agent");
       return user;
     } catch (err) {
+     
       dispatch(loginFailure);
-      error && ToastAndroid.show(
-        "Warning USER DETAILS incorrect please try again!",
-        ToastAndroid.LONG,
-        ToastAndroid.TOP
+      err &&
+      ToastAndroid.showWithGravity(
+        "Login failed please check your credentials",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
       );
     }
   };
@@ -146,11 +152,7 @@ export const SignIn = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </LinearGradient>
-          <ActivityIndicator
-            size="small"
-            color="red"
-            animating={isOpen}
-          />
+          <ActivityIndicator size="small" color="red" animating={isOpen} />
           <TouchableOpacity
             style={[
               styles.signIn,

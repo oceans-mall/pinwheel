@@ -37,20 +37,20 @@ export const Home = ({ navigation }) => {
         onPress={() => navigation.navigate("Details", items)}
       >
         <View style={style.card}>
-          <View style={{ alignItems: "center", top: -40 }}>
+          <View style={{ alignItems: "center", top: -15 }}>
             <Image
-              source={items.img}
-              style={{ height: 120, width: 120, borderRadius: 20 }}
+              source={{uri:'https://media.istockphoto.com/photos/cajun-shrimp-picture-id610264540?k=20&m=610264540&s=612x612&w=0&h=t8itrUvoPswsVV7FiHdVKTNuMjA8m3hGPa7b1rXZXls='}}
+              style={{ height: 150, width: 130, borderRadius: 20 }}
             />
           </View>
           <View style={{ marginHorizontal: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            <Text style={{ fontSize: 16, fontFamily: "Bitter" }}>
               {items.name}
             </Text>
             <Text
               style={{
                 fontSize: 10,
-                fontWeight: "bold",
+                fontFamily: "Bitter",
                 marginTop: 2,
                 color: "gray",
               }}
@@ -66,15 +66,15 @@ export const Home = ({ navigation }) => {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            <Text style={{ fontSize: 15, fontFamily: "Bitter" }}>
               &#x20B5; {items.price}
             </Text>
 
             <Text
               style={{
                 textAlign: "left",
-                fontWeight: "bold",
-                fontSize: 15,
+                fontFamily: "Bitter",
+                fontSize: 12,
                 color: items.inStock ? "green" : "red",
               }}
             >
@@ -86,16 +86,25 @@ export const Home = ({ navigation }) => {
     );
   };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1,}}>
       <View style={style.header}>
         <View>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontSize: 18 }}>Hello,</Text>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginLeft: 10 }}>
+            <Text
+              style={{ fontSize: 18, fontFamily: "Bitter", marginLeft: 10 }}
+            >
               {username}
             </Text>
           </View>
-          <Text style={{ marginTop: 5, fontSize: 18, color: "gray" }}>
+          <Text
+            style={{
+              marginTop: 5,
+              fontSize: 14,
+              fontFamily: "Bitter",
+              color: "gray",
+            }}
+          >
             What do you want today
           </Text>
         </View>

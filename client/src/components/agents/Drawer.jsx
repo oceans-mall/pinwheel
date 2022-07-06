@@ -6,7 +6,6 @@ import { Sell } from "./Sell";
 import { Profile } from "./Profile";
 import COLORS from "../../consts/colors";
 import { Ionicons } from "@expo/vector-icons";
-import { OrderHistory } from "./OrderHistory";
 import { Notifications } from "./Notifications";
 import { Orders } from "./Orders";
 import { Settings } from "./Settings";
@@ -23,7 +22,7 @@ export const Agent = () => {
         drawerActiveTintColor: "#fff",
         drawerInactiveTintColor: "#333",
         headerShown: false,
-        drawerLabelStyle: { marginLeft: -25, fontSize: 16, fontWeight: "600" },
+        drawerLabelStyle: { marginLeft: -25, fontSize: 15, fontWeight: "600", fontFamily: "Bitter"},
       }}
     >
       <Drawer.Screen
@@ -60,21 +59,13 @@ export const Agent = () => {
           headerTintColor: "#fff",
         }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="Cart"
         component={Cart}
         options={{
           drawerIcon: ({ color }) => (
             <Ionicons name="basket-outline" size={22} color={color} />
           ),
-          // drawerLabel: "Cart",
-          // headerShown: true,
-          // headerTitleAlign: "center",
-          // headerTitleAlign: "center",
-          // headerStyle: {
-          //   backgroundColor: COLORS.primary,
-          // },
-          // headerTintColor: "#fff",
         }}
       />
       <Drawer.Screen
@@ -94,14 +85,15 @@ export const Agent = () => {
         }}
       />
       <Drawer.Screen
-        name="History"
-        component={OrderHistory}
+        name="Order History"
+        component={TestTable}
         options={{
           drawerIcon: ({ color }) => (
-            <Ionicons name="archive" size={22} color={color} />
+            <Ionicons name="archive-outline" size={22} color={color} />
           ),
-          drawerLabel: "Order History",
+          drawerLabel: "History",
           headerShown: true,
+          headerTitleAlign: "center",
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: COLORS.primary,
@@ -128,23 +120,6 @@ export const Agent = () => {
       <Drawer.Screen
         name="Settings"
         component={Settings}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="settings-outline" size={22} color={color} />
-          ),
-          drawerLabel: "Account Details",
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTitleAlign: "center",
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTintColor: "#fff",
-        }}
-      />
-       <Drawer.Screen
-        name="Table"
-        component={TestTable}
         options={{
           drawerIcon: ({ color }) => (
             <Ionicons name="settings-outline" size={22} color={color} />

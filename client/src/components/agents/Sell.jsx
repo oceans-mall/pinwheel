@@ -11,10 +11,11 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
-  Picker,
   Modal,
   Pressable,
+  ToastAndroid,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import COLORS from "../../consts/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { Fishes, Sources } from "../../redux/apiCalls";
@@ -99,7 +100,12 @@ export const Sell = ({ navigation }) => {
           })
         );
     clearInput();
-    setModal(true);
+    // setModal(true);
+    ToastAndroid.showWithGravity(
+      "Item added successfully",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
   };
   //clear input after submition
   const clearInput = () => {
@@ -133,9 +139,9 @@ export const Sell = ({ navigation }) => {
               <Text
                 style={{
                   textAlign: "center",
-                  fontSize: 20,
+                  fontSize: 15,
                   fontFamily: "BarlowCondensed",
-                  fontWeight: "noral",
+                  fontWeight: "normal",
                 }}
               >
                 {" "}
@@ -165,7 +171,7 @@ export const Sell = ({ navigation }) => {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: 5,
+          padding: 10,
         }}
       >
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -198,9 +204,16 @@ export const Sell = ({ navigation }) => {
             style={styles.search}
             underlineColorAndroid="transparent"
           />
-          <Button title="Search" onPress={query ? name : null} />
+          {/* <Button title="Search"  /> */}
+          <TouchableOpacity
+            onPress={query ? name : null}
+            on
+            style={styles.searchBtn}
+          >
+            <Text style={{ color: "#fff" }}>SEARCH</Text>
+          </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: "column", marginTop:20 }}>
+        <View style={{ flexDirection: "column", marginTop: 20 }}>
           {/* name container */}
           <View
             style={{
@@ -265,12 +278,17 @@ export const Sell = ({ navigation }) => {
             <Text style={styles.text}>Price(/kg): &#x20B5; </Text>
             <Text style={styles.textItem}> {price}</Text>
           </View>
+          <View style={styles.content}>
+            <Text style={[styles.text, styles.sumtotal]}>
+              Total Amount : &#x20B5; {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}{" "}
+            </Text>
+          </View>
         </View>
       </ScrollView>
       {/* Bottom */}
       <View
         style={{
-          height: 50,
+          height: 30,
           flexDirection: "row",
           justifyContent: "space-evenly",
           alignItems: "center",
@@ -299,7 +317,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontFamily: "BarlowCondensed",
+    fontFamily: "Bitter",
     fontSize: 18,
   },
   titleText: {
@@ -310,14 +328,25 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS.primary,
   },
   search: {
-    width: 200,
+    width: 220,
+    height: 40,
     borderWidth: 1,
     borderColor: COLORS.primary,
     marginLeft: 10,
     padding: 5,
-    fontSize: 18,
-    borderRadius:3,
-    padding:6
+    fontSize: 15,
+    textAlign: "center",
+    borderRadius: 3,
+    padding: 6,
+  },
+  searchBtn: {
+    width: 100,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.primary,
+    borderRadius: 2,
+    marginLeft: 2,
   },
   textItem: {
     width: 80,
@@ -343,7 +372,7 @@ const styles = StyleSheet.create({
     color: "orange",
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 12,
   },
   touch: {
     height: 50,
@@ -365,7 +394,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: "row",
-    marginVertical: 10,
+    marginVertical: 5,
     alignItems: "center",
     height: 60,
   },
@@ -384,7 +413,7 @@ const styles = StyleSheet.create({
   modal_header: {
     height: 50,
     fontWeight: "bold",
-    fontSize:18,
+    fontSize: 18,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#00ffff",
@@ -395,5 +424,9 @@ const styles = StyleSheet.create({
     height: 130,
     justifyContent: "center",
     alignItems: "center",
+  },
+  sumtotal: {
+    borderBottomWidth: 2,
+    // fontFamily:'Bitter'
   },
 });

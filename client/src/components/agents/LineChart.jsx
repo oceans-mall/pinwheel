@@ -18,24 +18,24 @@ export const Chart = () => {
       <Text
         style={{
           textAlign: "center",
-          fontSize: 15,
-          fontWeight: "600",
+          fontSize: 16,
+          fontFamily:'Bitter',
           color: COLORS.primary,
         }}
       >
-        TRADE SUMMARY
+        TRADE SUMMARY (GH&#x20B5;)
       </Text>
       <LineChart
         data={linedata}
         width={Dimensions.get("window").width}
         height={230}
         margin={10}
-        yAxisLabel={"$"}
+        yAxisLabel={""}
         chartConfig={{
           backgroundColor: COLORS.primary,
           backgroundGradientFrom: COLORS.primary,
           backgroundGradientTo: COLORS.gray,
-          fontSize: 15,
+          fontSize: 12,
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         }}
         bezier

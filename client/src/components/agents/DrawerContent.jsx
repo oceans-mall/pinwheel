@@ -15,15 +15,15 @@ import {
 } from "@react-navigation/drawer";
 import COLORS from "../../consts/colors";
 import { Ionicons } from "@expo/vector-icons";
-import backImage from "../../../assets/back.png"
-import userAvatar from "../../../assets/useravatar.png"
+import backImage from "../../../assets/back.png";
+import userAvatar from "../../../assets/useravatar.png";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/userRedux";
 
 export const DrawerContent = (props) => {
   const username = useSelector((state) => state.user.currentUser?.firstname);
-  const { push } = useNavigation()
+  const { push } = useNavigation();
   const dispatch = useDispatch();
   // logout user
   const logout = async () => {
@@ -31,9 +31,9 @@ export const DrawerContent = (props) => {
       await AsyncStorage.removeItem("token");
       Alert.alert("Warning!", "logging out...");
       setTimeout(() => {
-        push("Login")
-      },2000)
-      dispatch(logoutUser())
+        push("Login");
+      }, 2000);
+      dispatch(logoutUser());
     } catch (err) {
       console.log(err);
     }
@@ -43,10 +43,7 @@ export const DrawerContent = (props) => {
       <DrawerContentScrollView
         contentContainerStyle={{ backgroundColor: COLORS.primary }}
       >
-        <ImageBackground
-          source={backImage}
-          style={{ padding: 10 }}
-        >
+        <ImageBackground source={backImage} style={{ padding: 10 }}>
           <Image
             source={userAvatar}
             style={{
@@ -56,19 +53,22 @@ export const DrawerContent = (props) => {
               marginBottom: 10,
             }}
           />
-          <Text style={{ color: "#fff", fontSize: 18 }}>Welcome {username}</Text>
+          <Text style={{ color: "#fff", fontSize: 18, fontFamily: "Bitter" }}>
+            Welcome {username}
+          </Text>
         </ImageBackground>
-        <View style={{ backgroundColor: "#fff", paddingTop: 10,}}>
+        <View style={{ backgroundColor: "#fff", paddingTop: 10 }}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
       <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: "#ccc" }}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <TouchableOpacity
+          style={{ flexDirection: "row", alignItems: "center" }}
+          onPress={() => logout()}
+        >
           <Ionicons name="exit-outline" size={22} />
-          <TouchableOpacity onPress={() => logout()}>
-            <Text style={{ fontSize: 16, marginLeft: 5 }}>Sign Out</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={{ fontSize: 16, marginLeft: 5 }}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

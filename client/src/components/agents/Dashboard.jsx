@@ -12,22 +12,28 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
 export const Dashboard = ({ navigation }) => {
-  const [tradeTotal, settradeTotal] = useState(0);
   const [count, setCount] = useState([]);
   const [notify, setNotify] = useState(0);
   //get total registered fishermen
   const getProfile = useSelector((state) => state.profile?.folks);
   const agent_id = useSelector((state) => state.user.currentUser?._id);
 
+  const orderhistory = useSelector((state) => state.ordersummary?.orderHistory);
+  console.log("order history",orderhistory);
+
+  let sum = orderhistory?.reduce((acc,{total}) =>acc + total,0)
+  console.log(sum);
+  
   useEffect(() => {
-    folk()
+    folk();
+    sum
   }, []);
 
   const folk = () =>
     getProfile?.map((item) =>
       item.userId === agent_id ? setCount(count.push(item)) : null
     );
-console.log(count);
+  console.log(count);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -38,16 +44,15 @@ console.log(count);
           <TouchableOpacity
             onPress={() => navigation.navigate("Notifications")}
           >
-            <Ionicons name="notifications" size={25} color={"white"} />
+            <Ionicons name="notifications" size={20} color={"white"} />
           </TouchableOpacity>
           <Text
             style={{
               position: "absolute",
-              fontSize: 18,
+              fontSize: 17,
               top: -12,
               left: 10,
               color: "red",
-              fontWeight: "bold",
             }}
           >
             {notify}
@@ -61,20 +66,20 @@ console.log(count);
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            margin: 5,
+            margin: 10,
           }}
         >
           <View style={styles.trade}>
-            <Text style={styles.tradeTitle}>Trade Total</Text>
-            <Text style={styles.tradeAmount}>&#x20B5; {tradeTotal}</Text>
+            <Text style={styles.tradeTitle}>Total Trade</Text>
+            <Text style={styles.tradeAmount}>&#x20B5; {sum?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}</Text>
           </View>
           <View style={styles.trade}>
             <Text style={styles.tradeTitle}>Registered Fishermen</Text>
             <Text style={styles.tradeAmount}>{count}</Text>
           </View>
         </View>
-        <Chart /> 
-        </View>
+        <Chart />
+      </View>
     </SafeAreaView>
   );
 };
@@ -87,7 +92,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 10,
-    borderColor: "gold",
     margin: 5,
     alignItems: "center",
     justifyContent: "center",
@@ -106,11 +110,13 @@ const styles = StyleSheet.create({
     color: COLORS.gray,
     fontSize: 16,
     fontWeight: "600",
+    fontFamily: "Bitter",
   },
   tradeAmount: {
     color: COLORS.primary,
     marginTop: 5,
-    fontSize: 20,
+    fontSize: 18,
+    fontFamily: "Bitter",
   },
   header: {
     height: 60,
@@ -119,5 +125,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  }
+  },
 });

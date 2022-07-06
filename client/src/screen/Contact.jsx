@@ -1,27 +1,39 @@
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import COLORS from "../consts/colors";
 
 export const Contact = ({ navigation }) => {
+  const openUrl = () => {
+    Linking.openURL("https://theoceansmall.com/")
+  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TouchableOpacity style={{ padding: 10 }} onPress={() => navigation.goBack()}>
+      <TouchableOpacity
+        style={{ padding: 10 }}
+        onPress={() => navigation.goBack()}
+      >
         <Ionicons name="arrow-back" size={25} />
       </TouchableOpacity>
       <View
         style={{
           flex: 1,
           alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "white",
+          // justifyContent: "center",
           margin: 5,
         }}
       >
         <Text
           style={{
-            fontSize: 25,
-            fontWeight: "bold",
+            fontSize: 20,
+            fontFamily: "Bitter",
             textDecorationLine: "underline",
             color: "gray",
             marginBottom: 15,
@@ -54,15 +66,14 @@ export const Contact = ({ navigation }) => {
             <Text style={style.contactTxt}>oceansmall_seafood</Text>
           </View>
 
-          <View style={style.contact}>
+          <TouchableOpacity onPress={openUrl} style={style.contact}>
             <AntDesign name="weibo-circle" color="blue" size={30} />
             <Text style={style.contactTxt}>www.theoceansmall.com</Text>
-          </View>
-          <View style={style.contact}>
+          </TouchableOpacity>
+          <TouchableOpacity style={style.contact}>
             <Ionicons name="location-outline" size={30} color="green" />
-            <Text style={style.contactTxt}>Lapaz &</Text>
-            <Text style={style.contactTxt}>Tse Addo</Text>
-          </View>
+            <Text style={style.contactTxt}>Lapaz & Agbogba Haatso</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -72,26 +83,14 @@ export const Contact = ({ navigation }) => {
 const style = StyleSheet.create({
   contact: {
     flexDirection: "row",
-    backgroundColor: COLORS.primary,
     padding: 15,
-    margin: 15,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+    margin: 10,
   },
   contactTxt: {
     marginLeft: 10,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "normal",
-    fontStyle: "italic",
-    color: "white",
+    fontFamily:"Bitter",
     textAlign: "center",
   },
 });

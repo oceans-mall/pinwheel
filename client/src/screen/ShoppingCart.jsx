@@ -34,18 +34,18 @@ export const ShoppingCart = ({ navigation }) => {
         <View
           style={{ height: 100, marginLeft: 10, paddingVertical: 20, flex: 1 }}
         >
-          <Text style={{ fontWeight: "bold", fontSize: 16 }}>{items.name}</Text>
+          <Text style={{  fontFamily:"Bitter", fontSize: 16 }}>{items.name}</Text>
           <Text
-            style={{ fontWeight: "bold", fontSize: 10, color: COLORS.gray }}
+            style={{  fontFamily:"Bitter",fontSize: 10, color: COLORS.gray }}
           >
             {items.mix}
           </Text>
-          <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+          <Text style={{ fontFamily:"Bitter", fontSize: 17 }}>
             &#x20B5;{items.price}
           </Text>
         </View>
         <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+          <Text style={{ fontFamily:"Bitter", fontSize: 18 }}>
             {items.quantity}kg
           </Text>
           <View style={style.actionBtn}>
@@ -72,10 +72,10 @@ export const ShoppingCart = ({ navigation }) => {
                 margin: 15,
               }}
             >
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 18, fontFamily:"Bitter", }}>
                 Total Cost
               </Text>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 18,  fontFamily:"Bitter", }}>
                 &#x20B5; {total}
               </Text>
             </View>
@@ -144,7 +144,7 @@ const style = StyleSheet.create({
   },
   btnText: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily:"Bitter",
     textTransform: "uppercase",
     fontSize: 18,
     textAlign: "center",

@@ -63,7 +63,7 @@ export const Service = ({ navigation }) => {
                   onPress={() => navigation.navigate(item.nav)}
                 >
                   <Text style={styles.txt}>{item.name}</Text>
-                  <Ionicons name={item.icon} size={50} color={COLORS.primary} />
+                  <Ionicons name={item.icon} size={30} color={COLORS.primary} />
                 </TouchableOpacity>
               </View>
             ))}
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   s_txt: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily:"Bitter",
     textAlign: "center",
     padding: 10,
   },
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   txt: {
     fontSize: 16,
     fontWeight: "normal",
+    fontFamily:"Bitter"
   },
   item: {
     justifyContent: "center",

@@ -7,7 +7,7 @@ export const Payment = () => {
   const number = useSelector((state) => state.user.currentUser?.phone);
   const orders = useSelector((state) => state.ordersummary?.orders);
 
-  const details = orders.products.map((item) => (
+  const details = orders?.products.map((item) => (
     <View style={style.summary} key={item._id}>
       <Text numberOfLines={1} style={style.text}>
         {item.name}

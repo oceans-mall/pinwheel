@@ -7,6 +7,7 @@ const profilesSlice = createSlice({
     isLoading: false,
     isProfiling: false,
     error: false,
+    success: false
   },
   reducers: {
     //create profile
@@ -16,6 +17,7 @@ const profilesSlice = createSlice({
     addProfileSuccess: (state, action) => {
       state.isProfiling = false, 
        state.folks.push(action.payload);
+       state.success = true;
     },
     addProfileFailure: (state, action) => {
       state.isProfiling = false;

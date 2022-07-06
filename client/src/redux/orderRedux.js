@@ -17,6 +17,9 @@ const orderSlice = createSlice({
       state.userId = action.payload.agent;
       state.fishermanId = action.payload.fisherId;
     },
+    getOrdersSuccess:(state, action) => {
+      state.product = action.payload
+    },
     deleteOrder: (state, action) => {
       state.product.splice(
         state.product.findIndex((item) => item.id === action.payload.id),

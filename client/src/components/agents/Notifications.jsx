@@ -13,7 +13,7 @@ export const Notifications = () => {
       >
         <View style={{ marginHorizontal: 10 }}>
           <Text
-            style={{ fontSize: 20, fontWeight: "600", fontStyle: "italic" }}
+            style={{ fontSize: 15,fontFamily:'Bitter' }}
           >
             There are no notifications at this moment
           </Text>

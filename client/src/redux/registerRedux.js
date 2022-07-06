@@ -16,10 +16,12 @@ const registerSlice = createSlice({
       state.isRegistering = false;
       state.newUser = action.payload;
       state.success = true;
+      state.error = false;
     },
     registerFailure: (state, action) => {
       state.isRegistering = false;
       state.error = true;
+      state.success = false;
     },
   },
 });

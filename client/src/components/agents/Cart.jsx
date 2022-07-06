@@ -45,15 +45,7 @@ export const Cart = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <View style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Text
-          numberOfLines={1}
-          style={{
-            fontSize: 17,
-            color: "#828582",
-            fontWeight: "bold",
-            textTransform: "capitalize",
-          }}
-        >
+        <Text numberOfLines={1} style={styles.name}>
           {item.name}
         </Text>
       </View>
@@ -62,7 +54,7 @@ export const Cart = ({ navigation }) => {
         <Text style={styles.text}>weight: {item.weight}kg</Text>
       </View>
       <View style={{ justifyContent: "space-between" }}>
-        <Text style={{ fontWeight: "bold", color: COLORS.primary }}>
+        <Text style={{ fontFamily: "Bitter", color: COLORS.primary }}>
           Cost: &#x20B5;{item.cost}
         </Text>
         <Ionicons
@@ -77,20 +69,19 @@ export const Cart = ({ navigation }) => {
   );
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View
+      <TouchableOpacity
         style={{
           backgroundColor: COLORS.secondary,
           height: 50,
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: 5,
+          padding: 15,
         }}
+        onPress={() => navigation.navigate("Sell")}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("Sell")}>
-          <Ionicons name="arrow-back-outline" size={20} color={COLORS.white} />
-        </TouchableOpacity>
-      </View>
+        <Ionicons name="arrow-back-outline" size={20} color={COLORS.white} />
+      </TouchableOpacity>
       {/* ..... */}
       <Indicator show={isOpen} />
       <View style={{ flex: 1 }}>
@@ -99,15 +90,7 @@ export const Cart = ({ navigation }) => {
           renderItem={renderItem}
           keyExtractor={(item, i) => item.id}
         />
-        <View
-          style={{
-            flex: 0.05,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            margin: 10,
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.total}>
           <Text style={styles.txt}>Total Amount:</Text>
           <TouchableOpacity>
             <Text style={styles.txt}> &#x20B5;{total} </Text>
@@ -125,9 +108,7 @@ export const Cart = ({ navigation }) => {
             borderRadius: 20,
           }}
         >
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-            SELL
-          </Text>
+          <Text style={styles.btn}>SELL</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -136,8 +117,8 @@ export const Cart = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   txt: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 15,
+    fontFamily: "Bitter",
   },
   container: {
     flexDirection: "row",
@@ -163,5 +144,25 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "#9ea89e",
     textTransform: "capitalize",
+    fontFamily: "Bitter",
+  },
+  btn: {
+    fontSize: 20,
+    color: "white",
+    fontFamily: "Bitter",
+  },
+  total: {
+    flex: 0.05,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: 10,
+    alignItems: "center",
+    fontFamily: "Bitter",
+  },
+  name: {
+    fontSize: 17,
+    color: "#828582",
+    textTransform: "capitalize",
+    fontFamily: "Bitter",
   },
 });

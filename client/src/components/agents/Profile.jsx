@@ -53,19 +53,26 @@ export const Profile = ({ navigation }) => {
         style={styles.cardContainer}
         onPress={() => navigation.navigate("Edit", items)}
       >
-        <View style={{flexDirection:'column'}}>
-        <View style={{flexDirection:'row'}} >
-          <Text style={styles.details}>ID#: {items.fisherId}</Text>
-          <Text style={styles.name}>
-            Name: {items.firstname + " " + items.lastname}
-          </Text>
-        </View>
-        <View style={{flexDirection:'row'}}>
-          <Text style={styles.details}>Phone: {items.contact}</Text>
-          <Text style={{ fontSize: 16,color:"#422b1a", fontWeight: "bold",marginHorizontal:20 }}>
-            Location: {items.location}
-          </Text>
-        </View>
+        <View style={{ flexDirection: "column" }}>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={[styles.details,styles.id]}>ID#: {items.fisherId}</Text>
+            <Text style={styles.name}>
+              Name: {items.firstname + " " + items.lastname}
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.details}>Phone: {items.contact}</Text>
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#422b1a",
+                marginHorizontal: 20,
+                fontFamily: "Bitter",
+              }}
+            >
+              Location: {items.location}
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -78,60 +85,50 @@ export const Profile = ({ navigation }) => {
           padding: 10,
         }}
       >
-        <Text
-          style={{
-            textAlign: "center",
-            color: COLORS.primary,
-            fontSize: 15,
-            margin: 5,
-            fontWeight: "600",
-          }}
-        >
-          REGISTERED FISHER FOLKS
-        </Text>
         <TextInput
           onChangeText={(text) => setQuery(text)}
           style={{
-            padding: 7,
+            padding: 10,
             marginVertical: 10,
-            fontSize: 18,
+            fontSize: 15,
             borderColor: COLORS.primary,
-            borderWidth: 1,
+            borderWidth: 0.5,
             borderRadius: 5,
           }}
           placeholder="Enter fisherman ID"
         />
+        <Text
+          style={{
+            textAlign: "center",
+            color: COLORS.primary,
+            fontSize: 16,
+            margin: 5,
+            fontFamily: "Bitter",
+            borderBottomWidth: 0.3,
+            padding: 5,
+          }}
+        >
+          REGISTERED FISHER FOLKS
+        </Text>
       </View>
-      <ScrollView>
-        {getProfile.isLoading ? (
-         <Indicator />
-        ) : (
-          folk
-        )}
-      </ScrollView>
+      <ScrollView>{getProfile.isLoading ? <Indicator /> : folk}</ScrollView>
       <Modal visible={modalOpen} hardwareAccelerated animationType="fade">
-        <TouchableOpacity onPress={Keyboard.dismiss}>
-          <View style={{ marginTop: 5 }}>
-            <View style={styles.modalContainer}>
-              <Ionicons
-                onPress={() => setModalOpen(false)}
-                name="close"
-                size={24}
-                style={styles.toggleModal}
-              />
-            </View>
-          </View>
-        </TouchableOpacity>
-        <New />
+        <View style={{ flex: 1, margin: 10 }}>
+          <TouchableOpacity
+            onPress={() => setModalOpen(false)}
+            style={styles.modalContainer}
+          >
+            <Ionicons name="close" size={30} style={styles.toggleModal} />
+          </TouchableOpacity>
+          <New />
+        </View>
       </Modal>
-      <View style={styles.modalContainer}>
-        <Ionicons
-          onPress={() => setModalOpen(true)}
-          name="add-outline"
-          size={24}
-          style={styles.toggleModal}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => setModalOpen(true)}
+        style={styles.modalContainer}
+      >
+        <Ionicons name="add-outline" size={30} style={styles.toggleModal} />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -142,47 +139,43 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    width: 40,
-    height: 40,
-    backgroundColor: COLORS.primary,
+    width: 50,
+    height: 50,
     elevation: 5,
     borderRadius: 50,
     marginBottom: 5,
   },
   cardContainer: {
     flexDirection: "column",
-    backgroundColor: COLORS.primary,
     borderRadius: 5,
     padding: 10,
+    borderBottomWidth: 0.5,
     marginHorizontal: 10,
     marginVertical: 5,
     alignItems: "flex-start",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 2.0,
-    elevation: 2,
   },
   name: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 13,
     textTransform: "capitalize",
-    color: "white",
-    marginHorizontal:10
+    marginHorizontal: 10,
+    fontFamily: "Bitter",
   },
   lname: {
     marginLeft: 3,
   },
   details: {
     marginTop: 2,
-    fontSize: 16,
-    color: "white",
+    fontSize: 14,
+    fontFamily: "Bitter",
+  },
+  id:{
+    color: "purple",
+    fontWeight: "600"
   },
   toggleModal: {
     color: "white",
     fontWeight: "800",
+    backgroundColor: COLORS.primary,
+    borderRadius: 50,
   },
 });

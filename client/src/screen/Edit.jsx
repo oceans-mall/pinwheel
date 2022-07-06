@@ -87,7 +87,7 @@ export const Edit = ({ route, navigation }) => {
         <AntDesign name="arrowleft" size={20} color="white" />
       </TouchableOpacity>
       <View style={styles.formContainer}>
-        <Text style={{ fontSize: 20, margin: 10, color: COLORS.primary }}>
+        <Text style={{ fontSize: 20, margin: 10, color: COLORS.primary,fontFamily:'Bitter' }}>
           UPDATE RECORDS
         </Text>
         <TextInput
@@ -150,9 +150,9 @@ export const Edit = ({ route, navigation }) => {
               textAlign: "center",
               color: "white",
               fontSize: 18,
-              fontWeight: "bold",
               justifyContent: "center",
               alignItems: "center",
+              fontFamily: "Bitter"
             }}
           >
             Update
@@ -187,5 +187,6 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     fontSize: 18,
+    fontFamily: "Bitter"
   },
 });

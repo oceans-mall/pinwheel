@@ -47,22 +47,25 @@ export const Signup = ({ navigation }) => {
     setIndicator(true);
     setTimeout(() => {
       setIndicator(false);
+      setIndicator(false);
       if(success) {
-        ToastAndroid.show(
-          "REGISTRATION successful please wait whiles we activate your account!",
-          ToastAndroid.LONG,
-          ToastAndroid.TOP
-        );
-      } else
-        error &&
-          ToastAndroid.show(
-            "REGISTRATION FAILED please try again!",
+        return(
+          ToastAndroid.showWithGravity(
+            "Successful please wait whiles we activate your account",
             ToastAndroid.LONG,
-            ToastAndroid.TOP
-          );
-
-      navigation.navigate("Login");
-    }, 4000);
+            ToastAndroid.CENTER
+          ),
+          navigation.navigate("Login")
+        )
+      }
+      else{
+        ToastAndroid.showWithGravity(
+          "Registration failed please check your details",
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER
+        )
+      } 
+    }, 3000);
   };
 
   //handle inputchage for email
@@ -241,10 +244,13 @@ export const Signup = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{ marginTop: 5 }}>
-            <Text>
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ paddingBottom: 10 }}>
               By signing up with us you agree to our
-              <TouchableOpacity>
+              <TouchableOpacity
+                style={{ padding: 10 }}
+                onPress={() => navigation.navigate("Privacy")}
+              >
                 <Text
                   style={{
                     color: COLORS.primary,

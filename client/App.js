@@ -9,8 +9,10 @@ import AppLoading from "expo-app-loading";
 const fetchFont = () => {
   return Font.loadAsync({
     BarlowCondensed: require("./assets/fonts/BarlowCondensed-Light.ttf"),
+    Bitter: require("./assets/fonts/Bitter-Light.ttf"),
   });
 };
+
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   if (!fontLoaded) {

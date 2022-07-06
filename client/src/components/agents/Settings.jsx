@@ -4,41 +4,25 @@ import { useSelector } from "react-redux";
 import COLORS from "../../consts/colors";
 
 export const Settings = () => {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.user?.currentUser);
+  console.log(user);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#f8f9fa" }}>
       <View style={style.container}>
-        <View
-          style={{
-            flex: 2,
-            justifyContent: "center",
-            alignItems: "center",
-            borderBottomWidth: 1,
-            borderBottomColor: COLORS.primary,
-          }}
-        >
-          <View
-            style={{
-              width: 100,
-              height: 100,
-              backgroundColor: COLORS.primary,
-              borderRadius: 50,
-            }}
-          ></View>
-          <View style={{ marginVertical: 5 }}>
-            <Text style={style.txt}>
-              Name: {user.firstname + " " + user.lastname}
-            </Text>
-            <Text style={style.txt}>Email: {user.email}</Text>
-          </View>
-        </View>
-        <View style={{ flex: 3, padding: 10 }}>
-          <Text style={style.detailTxt}>Phone Number: {user.phone}</Text>
-          <Text style={style.detailTxt}>Momo Number: {user.phone}</Text>
-          <Text style={style.detailTxt}>
-            Account Status: {user.isAgent ? <Text>Agent</Text> : null}
+        <Text style={style.txt}>Account Details</Text>
+        <View style={style.details}>
+          <Text style={style.txt}>
+            Name : {user.firstname + " " + user.lastname}
           </Text>
-          <Text style={style.detailTxt}>Location: </Text>
+          <Text style={style.txt}>Email : {user.email}</Text>
+        </View>
+        <Text style={style.txt}>Contact Details</Text>
+        <View style={style.details}>
+          <Text style={style.txt}>Phone : {user.phone}</Text>
+          <Text style={style.txt}>
+            Date Joined # : {user.createdAt.split("T")[0]}
+          </Text>
+          <Text style={style.txt}>Status: {user.isAgent && "Agent"}</Text>
         </View>
       </View>
     </SafeAreaView>
@@ -48,9 +32,20 @@ export const Settings = () => {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20,
-    backgroundColor: "#fff",
-    borderRadius: 5,
+    margin: 10,
+    padding: 10,
+  },
+  txt: {
+    fontSize: 15,
+    fontStyle: "normal",
+    margin: 3,
+    fontFamily: "Bitter",
+  },
+  details: {
+    flexDirection: "column",
+    padding: 20,
+    borderRadius: 3,
+    borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -60,15 +55,5 @@ const style = StyleSheet.create({
     shadowRadius: 2.0,
 
     elevation: 5,
-  },
-  txt: {
-    fontSize: 20,
-    fontStyle: "italic",
-    margin: 3,
-  },
-  detailTxt: {
-    fontSize: 20,
-    marginBottom: 10,
-    fontWeight: "600",
   },
 });

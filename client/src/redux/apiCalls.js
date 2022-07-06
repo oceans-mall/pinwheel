@@ -21,45 +21,45 @@ import { getProducts, getProductsSuccess } from "./productsRedux";
 import { getSource, getSourceFailure, getSourceSuccess } from "./sourceRedux";
 import { fetchdata, fetchdataFailure, fetchdataSuccess } from "./fishRedux";
 import { addToSummary } from "./orderSummary";
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://153.92.210.61/api/'
- });
+  baseURL: "http://153.92.210.61/api/",
+});
 
 //get Products
 export const products = async (dispatch) => {
   dispatch(getProducts());
   try {
     const res = await axiosInstance.get("product/");
-    dispatch(getProductsSuccess(res.data))
+    dispatch(getProductsSuccess(res.data));
   } catch (err) {
-    dispatch(getProfileFailure())
+    dispatch(getProfileFailure());
   }
-}
+};
 
 //get Source
-export const Sources = async ( dispatch ) => {
+export const Sources = async (dispatch) => {
   dispatch(getSource());
   try {
-    const res = await axiosInstance.get("source/")
-    dispatch(getSourceSuccess(res.data))
+    const res = await axiosInstance.get("source/");
+    dispatch(getSourceSuccess(res.data));
   } catch (err) {
-    dispatch(getSourceFailure())
+    dispatch(getSourceFailure());
   }
-}
+};
 
 //get Fish and prices
 export const Fishes = async (dispatch) => {
   dispatch(fetchdata());
   try {
-    const res = await axiosInstance.get("fish/")
-    dispatch(fetchdataSuccess(res.data))
+    const res = await axiosInstance.get("fish/");
+    dispatch(fetchdataSuccess(res.data));
   } catch (err) {
-    dispatch(fetchdataFailure())
+    dispatch(fetchdataFailure());
   }
-}
+};
 
 //register user
 export const register = async (dispatch, register) => {
@@ -69,54 +69,57 @@ export const register = async (dispatch, register) => {
     dispatch(registerSuccess(res.data));
   } catch (err) {
     dispatch(registerFailure());
+    console.log(err);
   }
 };
 
 //get profile
 export const profileFolk = async (dispatch) => {
-  dispatch(getProfileStart())
+  dispatch(getProfileStart());
   try {
-     const info = await axiosInstance.get('profile/folk/',{
-       headers:{
-         token:
-         "Bearer "+JSON.parse(await AsyncStorage.getItem("token"))
-       }
-     })
-      dispatch(getProfileSuccess(info.data))
+    const info = await axiosInstance.get("profile/folk/", {
+      headers: {
+        token: "Bearer " + JSON.parse(await AsyncStorage.getItem("token")),
+      },
+    });
+    dispatch(getProfileSuccess(info.data));
   } catch (err) {
-    dispatch(getProfileFailure())
+    dispatch(getProfileFailure());
   }
 };
 
 //delete profile
-export const deleteProfile = async  (dispatch,id) =>{
+export const deleteProfile = async (dispatch, id) => {
   dispatch(deleteProfile());
   try {
-    const res = await axiosInstance.delete(`profile/fisherman/${id}`,{
-      headers:{
-        token:
-        "Bearer "+JSON.parse(await AsyncStorage.getItem("token"))
-      }
-    })
-    dispatch(deleteProfileSuccess(res.data))
+    const res = await axiosInstance.delete(`profile/fisherman/${id}`, {
+      headers: {
+        token: "Bearer " + JSON.parse(await AsyncStorage.getItem("token")),
+      },
+    });
+    dispatch(deleteProfileSuccess(res.data));
   } catch (err) {
-    dispatch(deleteProfileFailure())
+    dispatch(deleteProfileFailure());
   }
-}
+};
 //cart
-export const addCart = async (dispatch, cart) =>{
+export const addCart = async (dispatch, cart) => {
   try {
-    const res = await axiosInstance.post("cart/", cart)
-    dispatch(addToCart(res.data))
+    const res = await axiosInstance.post("cart/", cart);
+    dispatch(addToCart(res.data));
   } catch (error) {}
-}
+};
 
 export const addToOrder = async (dispatch, order) => {
   try {
-    const res = await axiosInstance.post("orders/order", order)
-    dispatch(addToSummary(res.data))
+    const res = await axiosInstance.post("orders/order", order);
+    dispatch(addToSummary(res.data));
     console.log(res.data);
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
+export const getOrders = async (dispatch, id) => {
+  try {
+    const res = await axiosInstance.get(`orders/find/${id}`);
+    dispatch(get);
+  } catch (err) {}
+};

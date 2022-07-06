@@ -14,6 +14,9 @@ import { Payment } from "./src/screen/Payment";
 import { BottomNavigation } from "./src/components/navigation/BottomNavigation";
 import { Contact } from "./src/screen/Contact";
 import { useSelector } from "react-redux";
+import { Modal } from "./src/screen/Modal";
+import { PrivacyPolicy } from "./src/screen/PrivacyPolicy";
+import { Home } from "./src/screen/Home";
 
 const Stack = createStackNavigator();
 
@@ -29,17 +32,20 @@ export default function StackNavigation() {
           <Stack.Group>
             <Stack.Screen name="Agent" component={Agent} />
             <Stack.Screen name="Edit" component={Edit} />
+            <Stack.Screen name="Modal" component={Modal} />
             <Stack.Screen name="Payment" component={Payment} />
           </Stack.Group>
         )}
         <Stack.Group>
           <Stack.Screen name="Welcome" component={SplashScreen} />
+          <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Services" component={Service} />
           <Stack.Screen name="Login" component={SignIn} />
           <Stack.Screen name="Reset" component={ResetPassword} />
           <Stack.Screen name="Register" component={Signup} />
           <Stack.Screen name="Shop" component={BottomNavigation} />
           <Stack.Screen name="Contact" component={Contact} />
+          <Stack.Screen name="Privacy" component={PrivacyPolicy} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

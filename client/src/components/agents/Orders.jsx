@@ -1,32 +1,43 @@
 import React from "react";
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useSelector } from "react-redux";
 import COLORS from "../../consts/colors";
 import DataTable from "react-native-datatable-component";
 
-export const Orders = ({navigation}) => {
+export const Orders = ({ navigation }) => {
   const number = useSelector((state) => state.user.currentUser?.phone);
-  const user = useSelector((state) => state.user.currentUser._id);
+  const user = useSelector((state) => state.user.currentUser?._id);
   const orders = useSelector((state) => state.ordersummary?.orders);
   const order = orders.product;
+
   const { firstname, lastname } = useSelector(
-    (state) => state.user.currentUser
+    (state) => state.user?.currentUser
   );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.paymentTotal}>
         <Text style={style.text}>Amount Receivable</Text>
-        <Text style={[style.text, style.amount]}>&#x20B5; {orders.total}</Text>
+        <Text style={[style.text, style.amount]}>
+          &#x20B5;{" "}
+          {orders.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        </Text>
       </View>
       <View style={{ flex: 2, margin: 10 }}>
         <Text
           style={{
             padding: 5,
             marginBottom: 5,
-            fontWeight: "bold",
             fontSize: 15,
             color: COLORS.primary,
+            fontFamily: "Bitter",
+            textDecorationLine: "underline",
           }}
         >
           ORDER SUMMARY
@@ -46,7 +57,7 @@ export const Orders = ({navigation}) => {
         >
           <DataTable
             data={order}
-            colNames={["name", "weight", "cost", "status"]}
+            colNames={["name", "weight", "cost"]}
             backgroundColor={"rgba(23,2,4,0.01)"}
             noOfPages={10}
           />
@@ -60,14 +71,15 @@ export const Orders = ({navigation}) => {
           </Text>
           <Text style={style.txt}>MOMO #: {number}</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("Sell")}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Sell")}
           style={{
             position: "absolute",
-            top: 110,
-            left: 320,
+            top: 100,
+            left: 300,
             padding: 10,
             backgroundColor: COLORS.primary,
-            borderRadius: 100,
+            borderRadius: 20,
           }}
         >
           <Text style={{ color: "white", fontWeight: "bold" }}>+</Text>
@@ -98,11 +110,10 @@ const style = StyleSheet.create({
   },
 
   text: {
-    fontSize: 20,
+    fontSize: 16,
     color: COLORS.primary,
-    fontWeight: "bold",
     textTransform: "capitalize",
-    textAlign: "left",
+    fontFamily: "Bitter",
   },
   paymentDetails: {
     position: "relative",
@@ -122,13 +133,13 @@ const style = StyleSheet.create({
   paymentHeader: {
     textAlign: "center",
     padding: 5,
-    fontSize: 20,
-    fontFamily: "BarlowCondensed",
+    fontSize: 18,
+    fontFamily: "Bitter",
     borderBottomWidth: 0.5,
   },
   txt: {
-    fontSize: 20,
-    fontFamily: "BarlowCondensed",
+    fontSize: 16,
+    fontFamily: "Bitter",
     padding: 10,
     letterSpacing: 1.5,
   },

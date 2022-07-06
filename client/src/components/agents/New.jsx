@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ToastAndroid,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../../consts/colors";
@@ -72,85 +73,85 @@ export const New = () => {
       setFisherId(null),
       setLocation("");
     setRegion("");
-    // setTimeout(() => {
-    //   navigation.navigate("Profile")
-    // },2000)
+    ToastAndroid.showWithGravity(
+      "Profile added successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.CENTER
+    );
   };
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
-        <View style={styles.formContainer}>
-          <View>
-            <Text style={styles.txt}>First Name</Text>
-            <TextInput
-              style={styles.inputItems}
-              multiline={false}
-              value={firstname}
-              onChangeText={(fname) => setFirstname(fname)}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>Last Name</Text>
-            <TextInput
-              style={styles.inputItems}
-              multiline={false}
-              value={lastname}
-              onChangeText={(lname) => setLastname(lname)}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>Age</Text>
-            <TextInput
-              style={styles.inputItems}
-              multiline={false}
-              value={age}
-              onChangeText={(age) => setAge(age)}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>Contact</Text>
-            <TextInput
-              style={styles.inputItems}
-              multiline={false}
-              value={contact}
-              onChangeText={(cont) => setContact(cont)}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>Location</Text>
-            <TextInput
-              style={styles.inputItems}
-              multiline={false}
-              value={location}
-              onChangeText={(loc) => setLocation(loc)}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>Region</Text>
-            <TextInput
-              style={styles.inputItems}
-              multiline={false}
-              value={region}
-              onChangeText={(reg) => setRegion(reg)}
-            />
-          </View>
-          <View>
-            <Text style={styles.txt}>ID</Text>
-            <TextInput
-              defaultValue={fisherId}
-              editable={false}
-              style={styles.inputItems}
-              multiline={false}
-              onFocus={() => genId()}
-              onChangeText={(id) => setFisherId(id)}
-            />
-          </View>
-          <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
-            <Text style={styles.update}>SUBMIT</Text>
-          </TouchableOpacity>
+    <ScrollView>
+      <View style={styles.formContainer}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.txt}>First Name :</Text>
+          <TextInput
+            style={styles.inputItems}
+            multiline={false}
+            value={firstname}
+            onChangeText={(fname) => setFirstname(fname)}
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <View style={styles.inputContainer}>
+          <Text style={styles.txt}>Last Name :</Text>
+          <TextInput
+            style={styles.inputItems}
+            multiline={false}
+            value={lastname}
+            onChangeText={(lname) => setLastname(lname)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.txt}>Age :</Text>
+          <TextInput
+            style={styles.inputItems}
+            multiline={false}
+            value={age}
+            onChangeText={(age) => setAge(age)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.txt}>Contact :</Text>
+          <TextInput
+            style={styles.inputItems}
+            multiline={false}
+            value={contact}
+            onChangeText={(cont) => setContact(cont)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.txt}>Location :</Text>
+          <TextInput
+            style={styles.inputItems}
+            multiline={false}
+            value={location}
+            onChangeText={(loc) => setLocation(loc)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.txt}>Region :</Text>
+          <TextInput
+            style={styles.inputItems}
+            multiline={false}
+            value={region}
+            onChangeText={(reg) => setRegion(reg)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.txt}>ID :</Text>
+          <TextInput
+            defaultValue={fisherId}
+            editable={false}
+            style={styles.inputItems}
+            multiline={false}
+            onFocus={() => genId()}
+            onChangeText={(id) => setFisherId(id)}
+          />
+        </View>
+        <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
+          <Text style={styles.update}>SUBMIT</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -158,17 +159,17 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "flex-start",
-    margin: 10,
+    alignItems: "center",
   },
   inputItems: {
     width: 300,
-    height: 45,
-    borderWidth: 0.5,
+    height: 30,
+    borderBottomWidth: 0.5,
     borderColor: COLORS.primary,
     margin: 5,
     padding: 5,
     fontSize: 18,
+    fontFamily: "Bitter",
   },
   submit: {
     width: 150,
@@ -179,13 +180,17 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   txt: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: "Bitter",
+    marginTop: 5,
+  },
+  inputContainer:{
+    marginTop:10
   },
   update: {
     textAlign: "center",
     color: "white",
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "Bitter",
   },
 });

@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -35,7 +36,11 @@ export const Details = ({ navigation, route }) => {
   //handle buy button method
   const handleBuyBtn = () => {
     if (quantity === 0) {
-      Alert.alert("please add quantity");
+      ToastAndroid.showWithGravity(
+        "Please add quantity",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
     } else {
       disptach(addToCart({ ...fish, quantity }));
     }
@@ -43,7 +48,11 @@ export const Details = ({ navigation, route }) => {
   //handle cart?
   const cartPressed = () => {
     cart === 0
-      ? Alert.alert("sorry your cart is empty")
+      ?   ToastAndroid.showWithGravity(
+        "sorry your car is empty",
+        ToastAndroid.LONG,
+        ToastAndroid.CENTER
+      )
       : navigation.navigate("Cart");
   };
   return (
@@ -84,8 +93,8 @@ export const Details = ({ navigation, route }) => {
       </View>
       <View style={style.imgContainer}>
         <Image
-          source={fish?.img}
-          style={{ resizeMode: "contain", flex: 1, height: 250, width: 250 }}
+          source={{uri:'https://media.istockphoto.com/photos/cajun-shrimp-picture-id610264540?k=20&m=610264540&s=612x612&w=0&h=t8itrUvoPswsVV7FiHdVKTNuMjA8m3hGPa7b1rXZXls='}}
+          style={{ resizeMode: "cover", flex: 1, height:"100%", width: "100%" }}
         />
       </View>
       <View style={style.detailsContaner}>
@@ -97,7 +106,7 @@ export const Details = ({ navigation, route }) => {
           }}
         >
           <View style={style.line} />
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>Best Choice</Text>
+          <Text style={{ fontSize: 13,  fontFamily:"Bitter",}}>Best Choice</Text>
         </View>
         <View
           style={{
@@ -108,7 +117,7 @@ export const Details = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          <Text style={{ fontSize: 22, fontWeight: "bold" }}>{fish?.name}</Text>
+          <Text style={{ fontSize: 22, fontFamily:"Bitter", }}>{fish?.name}</Text>
           <View style={style.priceTag}>
             <Text
               style={{
@@ -116,7 +125,7 @@ export const Details = ({ navigation, route }) => {
                 color: "white",
                 fontSize: 16,
                 textAlign: "center",
-                fontWeight: "bold",
+                fontFamily:"Bitter",
               }}
             >
               &#x20B5;{fish?.price}
@@ -127,9 +136,10 @@ export const Details = ({ navigation, route }) => {
           <Text
             style={{
               color: "gray",
-              fontSize: 16,
+              fontSize: 13,
               lineHeight: 22,
               marginTop: 10,
+              fontFamily:"Bitter",
             }}
             numberOfLines={3}
           >
@@ -152,7 +162,7 @@ export const Details = ({ navigation, route }) => {
                 style={{
                   fontSize: 20,
                   marginHorizontal: 10,
-                  fontWeight: "bold",
+                  fontFamily:"Bitter",
                 }}
               >
                 {quantity}
@@ -170,11 +180,12 @@ export const Details = ({ navigation, route }) => {
                 <Text
                   style={{
                     color: COLORS.white,
-                    fontSize: 18,
+                    fontSize: 12,
+                    fontFamily:"Bitter",
                     fontWeight: "bold",
                   }}
                 >
-                  ADD
+                  ADD TO CART
                 </Text>
               </TouchableOpacity>
             </View>

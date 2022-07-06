@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pinwheel",
     "slug": "pinwheel",
-    "version": "1.0.0",
+    "version": "2.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -20,10 +20,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.oceansmall.pinwheel",
-      "buildNumber": "1.0.0"
+      "buildNumber": "2.1.0"
     },
     "android": {
       "package":"oceansmall.pinwheel",
+      "versionCode": 5,
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffff"
